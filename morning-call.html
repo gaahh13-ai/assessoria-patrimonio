@@ -11,7 +11,7 @@
   :root{--ink:#111114;--ink2:#1c1c22;--acc:#1f7a68;--acc-d:#14574a;--gold:#c9a94a;--white:#e8edf5;--muted:#9a9aa8;--up:#3fb950;--down:#f85149}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Barlow',sans-serif;color:var(--white);background:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:50px}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
   a{color:inherit}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
   .logo{display:flex;align-items:center;gap:12px}
@@ -25,43 +25,49 @@
   .titlerow h1 span{color:var(--acc)}
   .date{color:var(--muted);font-size:13.5px;text-align:right}
   .date strong{color:var(--white);display:block;font-size:14.5px}
-  .sec-title{font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:1.5px;color:var(--gold);margin:36px 0 15px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
-  .sec-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
   .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
   .summary p{font-size:14.5px;color:#cfd3dc}
   .summary p+p{margin-top:10px}
   .summary strong{color:var(--gold)}
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:460px){.grid{grid-template-columns:1fr 1fr}}
-  .card{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;position:relative;overflow:hidden}
-  .card .lbl{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
-  .card .val{font-family:'Poppins';font-size:20px;font-weight:700;margin-top:8px;font-variant-numeric:tabular-nums}
-  .card .chg{font-size:13px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums}
-  .up{color:var(--up)}.down{color:var(--down)}
-  .card .note{font-size:10.5px;color:var(--muted);margin-top:6px}
-  .card .bar{position:absolute;left:0;top:0;bottom:0;width:3px}
-  .bar-up{background:var(--up)}.bar-down{background:var(--down)}.bar-acc{background:var(--acc)}
-  .movers{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:700px){.movers{grid-template-columns:1fr}}
-  .panel{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:6px 4px}
-  .panel h3{font-family:'Poppins';font-size:12.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:15px 18px 10px}
-  .panel.gain h3{color:var(--up)}.panel.loss h3{color:var(--down)}
-  .row{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;border-top:1px solid rgba(255,255,255,.06)}
-  .row .tk{font-family:'Poppins';font-weight:600;font-size:14px}
-  .row .nm{font-size:11.5px;color:var(--muted);margin-top:1px}
-  .row .pc{font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
-  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  @media(max-width:700px){.news-grid{grid-template-columns:1fr}}
+
+  .sec-title{font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:1.5px;color:var(--gold);margin:0 0 16px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
+  .sec-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .sec-title.sub{margin-top:30px}
+
+  /* two-column: news (left) + market (right) */
+  .layout{display:grid;grid-template-columns:1fr 322px;gap:30px;align-items:start;margin-top:38px}
+  @media(max-width:880px){.layout{grid-template-columns:1fr;gap:36px}}
+
+  /* NEWS (left) */
+  .ncol+.ncol{margin-top:26px}
   .ncol h3{font-family:'Poppins';font-size:12.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.1)}
-  .item{display:block;text-decoration:none;color:inherit;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:padding .15s}
-  .item:hover{padding-left:6px}
-  .item:hover .it-title{color:var(--gold)}
+  .item{display:block;text-decoration:none;color:inherit;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}
   .it-tag{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
   .it-tag.pol{color:var(--acc)}.it-tag.eco{color:var(--gold)}.it-tag.mkt{color:var(--up)}
-  .it-title{font-family:'Poppins';font-size:14.5px;font-weight:600;margin:5px 0;line-height:1.3}
-  .it-src{font-size:12px;color:var(--muted)}
+  .it-title{font-family:'Poppins';font-size:16px;font-weight:600;margin:5px 0 7px;line-height:1.3}
+  .item:hover .it-title{color:var(--gold)}
+  .it-sum{font-size:13.5px;color:#b3b3c0;line-height:1.5;margin-bottom:9px}
+  .it-src{font-size:12px;color:var(--muted);font-weight:500}
   .it-src .arrow{color:var(--gold)}
+
+  /* MARKET (right, smaller) */
+  .side{position:relative}
+  .grid-mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .cmini{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
+  .cmini .lbl{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .cmini .val{font-family:'Poppins';font-size:15px;font-weight:700;margin-top:5px;font-variant-numeric:tabular-nums}
+  .cmini .chg{font-size:11px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+  .cmini .bar{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .up{color:var(--up)}.down{color:var(--down)}
+  .bar-up{background:var(--up)}.bar-down{background:var(--down)}.bar-acc{background:var(--acc)}
+  .panel{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:4px 2px;margin-bottom:12px}
+  .panel h4{font-family:'Poppins';font-size:11.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:12px 14px 8px}
+  .panel.gain h4{color:var(--up)}.panel.loss h4{color:var(--down)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
+  .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+
   footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
   footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
 </style>
@@ -84,56 +90,124 @@
     <p>O foco do mercado se volta agora ao <strong>IPCA de junho</strong>, divulgado nesta sexta (10) pelo IBGE — leitura decisiva para o debate sobre os próximos passos da Selic. No campo fiscal, o governo adiou a retirada da subvenção da gasolina após a alta do petróleo, e a decisão dos EUA sobre tarifas ao Brasil é esperada até 15 de julho.</p>
   </div>
 
-  <div class="sec-title">Painel de Mercado</div>
-  <div class="grid">
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">172.742,12</div><div class="chg up">▲ +1,22%</div></div>
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,1227</div><div class="chg up">▼ −0,50%</div><div class="note">Menor patamar em ~3 semanas</div></div>
-    <div class="card"><div class="bar bar-acc"></div><div class="lbl">Juros Futuros (DI)</div><div class="val">Curva ▼</div><div class="chg up">Recuo em toda a curva</div><div class="note">Alívio nos Treasuries · Selic 14,25% a.a.</div></div>
-    <div class="card"><div class="bar bar-down"></div><div class="lbl">Petróleo Brent (set)</div><div class="val">US$ 76,30</div><div class="chg down">▼ −2,20%</div></div>
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.543,64</div><div class="chg up">▲ +0,81%</div></div>
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">26.206,89</div><div class="chg up">▲ +1,30%</div></div>
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.487,41</div><div class="chg up">▲ +0,27%</div></div>
-    <div class="card"><div class="bar bar-up"></div><div class="lbl">Stoxx 600 (Europa)</div><div class="val">640,87</div><div class="chg up">▲ +0,78%</div></div>
-  </div>
+  <div class="layout">
 
-  <div class="sec-title">Destaques da Bolsa · B3</div>
-  <div class="movers">
-    <div class="panel gain">
-      <h3>▲ Maiores Altas</h3>
-      <div class="row"><div><div class="tk">MGLU3</div><div class="nm">Magazine Luiza</div></div><div class="pc up">+7,76%</div></div>
-      <div class="row"><div><div class="tk">BPAC11</div><div class="nm">BTG Pactual</div></div><div class="pc up">+3,21%</div></div>
-      <div class="row"><div><div class="tk">SANB11</div><div class="nm">Santander Brasil</div></div><div class="pc up">+2,54%</div></div>
-      <div class="row"><div><div class="tk">BBAS3</div><div class="nm">Banco do Brasil</div></div><div class="pc up">+2,41%</div></div>
-      <div class="row"><div><div class="tk">BBDC4</div><div class="nm">Bradesco</div></div><div class="pc up">+1,75%</div></div>
-    </div>
-    <div class="panel loss">
-      <h3>▼ Maiores Baixas</h3>
-      <div class="row"><div><div class="tk">AXIA3</div><div class="nm">Axia Energia</div></div><div class="pc down">−2,68%</div></div>
-      <div class="row"><div><div class="tk">HAPV3</div><div class="nm">Hapvida</div></div><div class="pc down">−2,00%*</div></div>
-      <div class="row"><div><div class="tk">CSAN3</div><div class="nm">Cosan</div></div><div class="pc down">−2,00%*</div></div>
-      <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="pc down">−1,43%</div></div>
-      <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras PN</div></div><div class="pc down">−1,11%</div></div>
-    </div>
-  </div>
+    <!-- ESQUERDA: NOTÍCIAS -->
+    <main>
+      <div class="sec-title">Principais Notícias do Dia</div>
 
-  <div class="sec-title">Principais Notícias do Dia</div>
-  <div class="news-grid">
-    <div class="ncol">
-      <h3>Mercado &amp; Economia</h3>
-      <a class="item" href="https://www.moneytimes.com.br/juros-futuros-recuam-em-toda-a-curva-na-esteira-dos-treasuries-lils/" target="_blank" rel="noopener"><div class="it-tag mkt">Mercado</div><div class="it-title">Juros futuros recuam em toda a curva na esteira dos Treasuries</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://www.terra.com.br/economia/decisao-sobre-extinguir-subvencao-a-gasolina-ficara-para-a-proxima-semana-diz-durigan,291ee8f6e8b9c699e50a8297711544c5w77bkqak.html" target="_blank" rel="noopener"><div class="it-tag eco">Economia · Fiscal</div><div class="it-title">Governo adia fim da subvenção à gasolina após nova alta do petróleo, diz Durigan</div><div class="it-src">Terra Economia <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://moneytimes.com.br/tesouro-ipca-juro-real-recorde-impulsiona-corrida-de-investidores-e-vendas-saltam-73-no-semestre-jcav/" target="_blank" rel="noopener"><div class="it-tag eco">Renda Fixa</div><div class="it-title">Tesouro IPCA+: juro real recorde impulsiona corrida de investidores; vendas saltam 73% no semestre</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://www.moneytimes.com.br/azul-azulazul3-estreia-em-alta-na-bolsa-de-nova-york-acoes-tambem-sobem-na-b3-lmrs/" target="_blank" rel="noopener"><div class="it-tag mkt">Empresas</div><div class="it-title">Azul (AZUL3) estreia em alta na Bolsa de Nova York; ações também sobem na B3</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://moneytimes.com.br/sem-licitacao-banco-do-brasil-bbas3-fecha-contrato-de-r-23-bilhoes-com-correios/" target="_blank" rel="noopener"><div class="it-tag mkt">Empresas</div><div class="it-title">Sem licitação, Banco do Brasil (BBAS3) fecha contrato de R$ 2,3 bilhões com os Correios</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-    </div>
-    <div class="ncol">
-      <h3>Política &amp; Internacional</h3>
-      <a class="item" href="https://www.moneytimes.com.br/decisao-sobre-tarifas-contra-brasil-deve-ser-divulgada-ate-15-de-julho-diz-representante-comercial-dos-eua/" target="_blank" rel="noopener"><div class="it-tag pol">Internacional · Comércio</div><div class="it-title">Decisão dos EUA sobre tarifas contra o Brasil deve ser divulgada até 15 de julho, diz Greer (USTR)</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://www.moneytimes.com.br/governo-vai-endurecer-regras-de-publicidade-de-bets-no-brasil-diz-durigan-gaep/" target="_blank" rel="noopener"><div class="it-tag pol">Política · Regulação</div><div class="it-title">Governo vai endurecer regras de publicidade de bets no Brasil, diz Durigan</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://moneytimes.com.br/governo-podera-rever-tributacao-de-lcis-e-lcas-para-corrigir-distorcoes-diz-tesouro-jcav/" target="_blank" rel="noopener"><div class="it-tag pol">Política · Tributação</div><div class="it-title">Governo poderá rever tributação de LCIs e LCAs para corrigir distorções, diz Tesouro</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://www.band.com.br/bandnews-fm/noticias/governo-adia-fim-do-subsidio-a-gasolina-apos-nova-alta-do-petroleo-202607091108" target="_blank" rel="noopener"><div class="it-tag pol">Política Econômica</div><div class="it-title">Com nova alta mundial do petróleo, governo mantém desconto na gasolina</div><div class="it-src">BandNews FM <span class="arrow">↗</span></div></a>
-      <a class="item" href="https://www.moneytimes.com.br/natura-natu3-itau-bba-corta-acao-para-market-perform-com-perspectiva-de-recuperacao-mais-lenta-da-receita/" target="_blank" rel="noopener"><div class="it-tag mkt">Análise</div><div class="it-title">Natura (NATU3): Itaú BBA corta ação para 'market perform' com recuperação de receita mais lenta</div><div class="it-src">Money Times <span class="arrow">↗</span></div></a>
-    </div>
+      <div class="ncol">
+        <h3>Mercado &amp; Economia</h3>
+
+        <a class="item" href="https://www.moneytimes.com.br/juros-futuros-recuam-em-toda-a-curva-na-esteira-dos-treasuries-lils/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Mercado</div>
+          <div class="it-title">Juros futuros recuam em toda a curva na esteira dos Treasuries</div>
+          <div class="it-sum">Com o alívio nas tensões geopolíticas e a queda dos rendimentos dos títulos americanos (Treasuries), os juros futuros brasileiros (DI) cederam ao longo de toda a curva. O movimento reflete um cenário externo mais favorável e antecipa a atenção do mercado ao IPCA de junho, que pode reforçar ou não a expectativa de cortes na Selic.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.terra.com.br/economia/decisao-sobre-extinguir-subvencao-a-gasolina-ficara-para-a-proxima-semana-diz-durigan,291ee8f6e8b9c699e50a8297711544c5w77bkqak.html" target="_blank" rel="noopener">
+          <div class="it-tag eco">Economia · Fiscal</div>
+          <div class="it-title">Governo adia fim da subvenção à gasolina após nova alta do petróleo</div>
+          <div class="it-sum">O ministro da Fazenda, Dario Durigan, afirmou que a decisão de retirar a subvenção de R$ 0,44 por litro da gasolina ficará para a próxima semana. O adiamento é resposta à escalada do petróleo (Brent saltando de cerca de US$ 72 para US$ 78) provocada pela tensão entre EUA e Irã, para evitar repasse imediato do custo aos consumidores.</div>
+          <div class="it-src">Terra Economia <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://moneytimes.com.br/tesouro-ipca-juro-real-recorde-impulsiona-corrida-de-investidores-e-vendas-saltam-73-no-semestre-jcav/" target="_blank" rel="noopener">
+          <div class="it-tag eco">Renda Fixa</div>
+          <div class="it-title">Tesouro IPCA+: juro real recorde impulsiona corrida de investidores</div>
+          <div class="it-sum">Com o juro real em patamar historicamente elevado (na casa de IPCA + 8% ao ano), cresceu a procura por títulos do Tesouro IPCA+, que travam um ganho acima da inflação. As vendas do papel avançaram 73% no semestre — sinal de que o investidor está aproveitando as taxas altas para garantir rentabilidade real de longo prazo.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/azul-azulazul3-estreia-em-alta-na-bolsa-de-nova-york-acoes-tambem-sobem-na-b3-lmrs/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Empresas</div>
+          <div class="it-title">Azul (AZUL3) estreia em alta na Bolsa de Nova York</div>
+          <div class="it-sum">A companhia aérea estreou com valorização em sua listagem na Bolsa de Nova York (NYSE), movimento bem recebido pelo mercado que também impulsionou as ações da empresa na B3. A dupla listagem amplia o acesso da Azul a investidores internacionais.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://moneytimes.com.br/sem-licitacao-banco-do-brasil-bbas3-fecha-contrato-de-r-23-bilhoes-com-correios/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Empresas</div>
+          <div class="it-title">Sem licitação, Banco do Brasil (BBAS3) fecha contrato de R$ 2,3 bi com os Correios</div>
+          <div class="it-sum">O Banco do Brasil firmou um contrato de R$ 2,3 bilhões com os Correios sem processo licitatório. O negócio chama atenção pelo porte e pela forma de contratação direta entre duas estatais, reacendendo o debate sobre governança em acordos desse tipo.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+      </div>
+
+      <div class="ncol">
+        <h3>Política &amp; Internacional</h3>
+
+        <a class="item" href="https://www.moneytimes.com.br/decisao-sobre-tarifas-contra-brasil-deve-ser-divulgada-ate-15-de-julho-diz-representante-comercial-dos-eua/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional · Comércio</div>
+          <div class="it-title">Decisão dos EUA sobre tarifas contra o Brasil deve sair até 15 de julho</div>
+          <div class="it-sum">O representante comercial dos Estados Unidos (USTR), Jamieson Greer, afirmou que o resultado da investigação sobre práticas comerciais brasileiras será divulgado até 15 de julho, definindo se haverá aplicação de tarifas. O tema é acompanhado de perto pelo mercado por seu potencial impacto no câmbio e nos setores exportadores.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/governo-vai-endurecer-regras-de-publicidade-de-bets-no-brasil-diz-durigan-gaep/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política · Regulação</div>
+          <div class="it-title">Governo vai endurecer regras de publicidade de bets no Brasil</div>
+          <div class="it-sum">Segundo Durigan, o governo prepara regras mais rígidas para a publicidade de apostas esportivas (bets). A medida atende à pressão por maior controle sobre o setor, em meio ao debate sobre os impactos sociais do endividamento e sobre a arrecadação fiscal ligada às apostas.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://moneytimes.com.br/governo-podera-rever-tributacao-de-lcis-e-lcas-para-corrigir-distorcoes-diz-tesouro-jcav/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política · Tributação</div>
+          <div class="it-title">Governo poderá rever tributação de LCIs e LCAs, diz Tesouro</div>
+          <div class="it-sum">O Tesouro Nacional sinalizou que pode revisar a tributação de LCIs e LCAs para corrigir distorções no mercado. Como esses papéis são hoje isentos de imposto de renda para pessoa física, qualquer mudança afetaria diretamente a rentabilidade líquida e a atratividade desses investimentos.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.band.com.br/bandnews-fm/noticias/governo-adia-fim-do-subsidio-a-gasolina-apos-nova-alta-do-petroleo-202607091108" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política Econômica</div>
+          <div class="it-title">Com nova alta do petróleo, governo mantém desconto na gasolina</div>
+          <div class="it-sum">Diante da nova alta internacional do petróleo, o governo optou por manter o desconto na gasolina no curto prazo, adiando o fim da subvenção. A equipe econômica segue defendendo a retirada gradual do subsídio, mas reavaliou o cronograma para não pressionar a inflação em um momento sensível.</div>
+          <div class="it-src">BandNews FM <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/natura-natu3-itau-bba-corta-acao-para-market-perform-com-perspectiva-de-recuperacao-mais-lenta-da-receita/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Análise</div>
+          <div class="it-title">Natura (NATU3): Itaú BBA corta recomendação para 'market perform'</div>
+          <div class="it-sum">O Itaú BBA rebaixou a recomendação das ações da Natura de compra para 'market perform' (desempenho em linha com o mercado), citando uma recuperação de receita mais lenta do que o esperado. A revisão reflete cautela com o ritmo de retomada operacional da companhia.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+      </div>
+    </main>
+
+    <!-- DIREITA: MERCADO -->
+    <aside class="side">
+      <div class="sec-title">Painel de Mercado</div>
+      <div class="grid-mini">
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">172.742</div><div class="chg up">▲ +1,22%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,12</div><div class="chg up">▼ −0,50%</div></div>
+        <div class="cmini"><div class="bar bar-acc"></div><div class="lbl">Juros Futuros (DI)</div><div class="val">Curva ▼</div><div class="chg up">Selic 14,25%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Brent</div><div class="val">US$ 76,30</div><div class="chg down">▼ −2,20%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.543,64</div><div class="chg up">▲ +0,81%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">26.206,89</div><div class="chg up">▲ +1,30%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.487,41</div><div class="chg up">▲ +0,27%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Stoxx 600</div><div class="val">640,87</div><div class="chg up">▲ +0,78%</div></div>
+      </div>
+
+      <div class="sec-title sub">Destaques · B3</div>
+      <div class="panel gain">
+        <h4>▲ Maiores Altas</h4>
+        <div class="row"><div><div class="tk">MGLU3</div><div class="nm">Magazine Luiza</div></div><div class="pc up">+7,76%</div></div>
+        <div class="row"><div><div class="tk">BPAC11</div><div class="nm">BTG Pactual</div></div><div class="pc up">+3,21%</div></div>
+        <div class="row"><div><div class="tk">SANB11</div><div class="nm">Santander</div></div><div class="pc up">+2,54%</div></div>
+        <div class="row"><div><div class="tk">BBAS3</div><div class="nm">Banco do Brasil</div></div><div class="pc up">+2,41%</div></div>
+        <div class="row"><div><div class="tk">BBDC4</div><div class="nm">Bradesco</div></div><div class="pc up">+1,75%</div></div>
+      </div>
+      <div class="panel loss">
+        <h4>▼ Maiores Baixas</h4>
+        <div class="row"><div><div class="tk">AXIA3</div><div class="nm">Axia Energia</div></div><div class="pc down">−2,68%</div></div>
+        <div class="row"><div><div class="tk">HAPV3</div><div class="nm">Hapvida</div></div><div class="pc down">−2,00%*</div></div>
+        <div class="row"><div><div class="tk">CSAN3</div><div class="nm">Cosan</div></div><div class="pc down">−2,00%*</div></div>
+        <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="pc down">−1,43%</div></div>
+        <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras PN</div></div><div class="pc down">−1,11%</div></div>
+      </div>
+    </aside>
+
   </div>
 
   <footer>
