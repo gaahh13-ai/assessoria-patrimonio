@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Barbosa — Assessoria de Patrimônio</title>
+<style>
+  :root{
+    --bg:#0a0e14;--bg-grad:#0d1220;--surface:#141b28;--surface-2:#1a2333;--border:#26314a;
+    --text:#e8edf5;--muted:#8a97ad;--gold:#c9a961;--gold-soft:#e4cf9a;--up:#3fb950;--down:#f85149;--blue:#5b8def;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 50% -10%,var(--bg-grad),var(--bg)) fixed;
+    color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;padding:0 0 60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border)}
+  .nav .logo{display:flex;align-items:center;gap:12px}
+  .mark{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:18px;color:var(--gold);letter-spacing:1px;flex-shrink:0;background:radial-gradient(circle at 30% 30%,rgba(201,169,97,0.15),transparent)}
+  .nav .logo h1{font-family:Georgia,serif;font-size:19px;font-weight:600;line-height:1.1}
+  .nav .logo .sub{color:var(--gold-soft);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;margin-top:2px}
+  .nav .links{display:flex;gap:22px;font-size:13.5px}
+  .nav .links a{color:var(--muted);text-decoration:none;transition:color .15s}
+  .nav .links a:hover{color:var(--gold-soft)}
+  @media(max-width:640px){.nav .links{display:none}}
+  .hero{padding:64px 0 40px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:20px}
+  .hero .eyebrow{color:var(--gold);font-size:12px;letter-spacing:4px;text-transform:uppercase;margin-bottom:18px}
+  .hero h2{font-family:Georgia,serif;font-size:38px;font-weight:600;line-height:1.15;max-width:760px;margin:0 auto 20px}
+  .hero h2 span{color:var(--gold-soft)}
+  .hero p{color:#c1cbdb;font-size:16px;max-width:640px;margin:0 auto}
+  .hero .cta{display:inline-flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-block;text-decoration:none;padding:12px 26px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:0.3px;transition:all .15s}
+  .btn-gold{background:linear-gradient(180deg,#d8bd77,var(--gold));color:#1a1206}
+  .btn-gold:hover{filter:brightness(1.08)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-soft)}
+  .sec{padding:46px 0 6px}
+  .sec-eyebrow{color:var(--gold);font-size:12px;letter-spacing:3px;text-transform:uppercase;text-align:center}
+  .sec h3{font-family:Georgia,serif;font-size:27px;font-weight:600;text-align:center;margin:10px 0 6px}
+  .sec .lead{color:var(--muted);font-size:14.5px;text-align:center;max-width:620px;margin:0 auto 30px}
+  .areas{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:720px){.areas{grid-template-columns:1fr}}
+  .area{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:14px;padding:26px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+  .area:hover{border-color:rgba(201,169,97,0.5);transform:translateY(-2px)}
+  .area .ic{width:46px;height:46px;border-radius:11px;background:rgba(201,169,97,0.1);border:1px solid rgba(201,169,97,0.35);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+  .area h4{font-family:Georgia,serif;font-size:19px;font-weight:600;margin-bottom:6px}
+  .area p{color:#b4c0d2;font-size:14px}
+  .area ul{list-style:none;margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .area li{font-size:11.5px;color:var(--gold-soft);background:rgba(201,169,97,0.08);border:1px solid rgba(201,169,97,0.25);padding:4px 11px;border-radius:20px}
+  .edu{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:720px){.edu{grid-template-columns:1fr}}
+  .ind{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:18px 20px}
+  .ind .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .ind .tag{font-size:11px;font-weight:700;letter-spacing:0.5px;color:var(--gold-soft);background:rgba(201,169,97,0.1);padding:3px 10px;border-radius:6px}
+  .ind h5{font-size:15px;font-weight:600}
+  .ind p{color:#b4c0d2;font-size:13.5px}
+  .ind .why{margin-top:8px;font-size:12.5px;color:var(--muted)}
+  .ind .why b{color:var(--gold-soft);font-weight:600}
+  .contact{background:linear-gradient(180deg,rgba(201,169,97,0.07),var(--surface));border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;margin-top:46px}
+  .contact h3{font-family:Georgia,serif;font-size:25px;margin-bottom:10px}
+  .contact p{color:#c1cbdb;font-size:15px;max-width:520px;margin:0 auto 22px}
+  .contact .info{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:8px;font-size:13.5px;color:var(--muted)}
+  .contact .info b{color:var(--gold-soft);font-weight:600}
+  footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:11.5px;line-height:1.7;text-align:center}
+  footer .name{color:var(--gold-soft);font-family:Georgia,serif;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="logo">
+      <div class="mark">GB</div>
+      <div>
+        <h1>Gabriel Barbosa</h1>
+        <div class="sub">Assessoria de Patrimônio</div>
+      </div>
+    </div>
+    <div class="links">
+      <a href="#areas">Áreas de atuação</a>
+      <a href="#educacao">Educação financeira</a>
+      <a href="morning-call-2026-07-09.html">Morning Call</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Planejamento &amp; Gestão de Patrimônio</div>
+    <h2>Seu patrimônio conduzido com <span>estratégia, proteção e visão de longo prazo</span></h2>
+    <p>Assessoria personalizada para famílias e investidores que buscam preservar, diversificar e transmitir patrimônio com segurança — no Brasil e no exterior.</p>
+    <div class="cta">
+      <a href="#contato" class="btn btn-gold">Falar com o assessor</a>
+      <a href="morning-call-2026-07-09.html" class="btn btn-ghost">Ver o Morning Call do dia</a>
+    </div>
+  </section>
+
+  <section class="sec" id="areas">
+    <div class="sec-eyebrow">O que fazemos</div>
+    <h3>Áreas de atuação</h3>
+    <p class="lead">Soluções integradas para cada etapa da sua vida financeira, construídas de forma independente e alinhadas aos seus objetivos.</p>
+    <div class="areas">
+
+      <div class="area">
+        <div class="ic">🌐</div>
+        <h4>Investimentos Internacionais</h4>
+        <p>Diversificação do portfólio em moeda forte, com acesso a ações, ETFs, fundos e renda fixa dos principais mercados globais para reduzir a exposição ao risco Brasil.</p>
+        <ul><li>Dólar e euro</li><li>ETFs globais</li><li>Renda fixa internacional</li><li>Diversificação cambial</li></ul>
+      </div>
+
+      <div class="area">
+        <div class="ic">🏛️</div>
+        <h4>Offshore e Planejamento Sucessório</h4>
+        <p>Estruturação de investimentos no exterior e organização patrimonial para uma sucessão eficiente, com previsibilidade tributária e proteção do patrimônio familiar.</p>
+        <ul><li>Contas offshore</li><li>Holdings</li><li>Sucessão</li><li>Eficiência tributária</li></ul>
+      </div>
+
+      <div class="area">
+        <div class="ic">🛡️</div>
+        <h4>Previdência e Seguros</h4>
+        <p>Planejamento de aposentadoria com PGBL e VGBL e proteção da família por meio de seguros de vida e estratégias de blindagem patrimonial.</p>
+        <ul><li>PGBL / VGBL</li><li>Seguro de vida</li><li>Aposentadoria</li><li>Proteção familiar</li></ul>
+      </div>
+
+      <div class="area">
+        <div class="ic">🔑</div>
+        <h4>Consórcio</h4>
+        <p>Uso estratégico do consórcio como ferramenta de planejamento e aquisição de bens sem juros, com cartas de crédito para imóveis, veículos e capital de investimento.</p>
+        <ul><li>Sem juros</li><li>Carta de crédito</li><li>Imóveis e veículos</li><li>Planejamento</li></ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec" id="educacao">
+    <div class="sec-eyebrow">Educação financeira</div>
+    <h3>Como ler os indicadores</h3>
+    <p class="lead">Um guia rápido para entender os números que aparecem no Morning Call diário — sem jargão.</p>
+    <div class="edu">
+
+      <div class="ind">
+        <div class="top"><span class="tag">BOLSA</span><h5>Ibovespa</h5></div>
+        <p>É o principal índice da bolsa brasileira (B3). Reúne as ações mais negociadas e funciona como um "termômetro" do mercado acionário nacional.</p>
+        <div class="why"><b>Por que importa:</b> mostra, em um só número, se a bolsa brasileira subiu ou caiu no dia.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">CÂMBIO</span><h5>Dólar (USD/BRL)</h5></div>
+        <p>Quanto custa 1 dólar em reais. Sobe quando há aversão a risco ou incerteza; cai quando o cenário melhora e entra capital estrangeiro.</p>
+        <div class="why"><b>Por que importa:</b> afeta preços de importados, inflação e investimentos no exterior.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">JUROS</span><h5>Juros Futuros (DI)</h5></div>
+        <p>Refletem a expectativa do mercado para a taxa de juros no futuro. Quando a "curva" sobe, o mercado projeta juros mais altos adiante; quando recua, o oposto.</p>
+        <div class="why"><b>Por que importa:</b> influencia renda fixa, crédito e o valor das ações.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">JUROS</span><h5>Selic</h5></div>
+        <p>A taxa básica de juros da economia, definida pelo Banco Central (Copom). É a referência para praticamente todos os investimentos e financiamentos.</p>
+        <div class="why"><b>Por que importa:</b> Selic alta favorece a renda fixa; Selic baixa tende a estimular a bolsa.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">INFLAÇÃO</span><h5>IPCA</h5></div>
+        <p>O índice oficial de inflação do Brasil, medido pelo IBGE. Mostra a variação média dos preços ao consumidor.</p>
+        <div class="why"><b>Por que importa:</b> corrói o poder de compra e orienta as decisões de juros do Banco Central.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">EUA</span><h5>S&amp;P 500 · Nasdaq · Dow Jones</h5></div>
+        <p>Os três principais índices dos EUA: o S&amp;P 500 reúne 500 grandes empresas; o Nasdaq concentra tecnologia; o Dow Jones agrupa 30 gigantes tradicionais.</p>
+        <div class="why"><b>Por que importa:</b> ditam o humor global e costumam influenciar a bolsa brasileira.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">COMMODITIES</span><h5>Petróleo (Brent)</h5></div>
+        <p>Referência internacional de preço do barril de petróleo. Movimenta ações do setor (como a Petrobras) e pressiona a inflação quando sobe.</p>
+        <div class="why"><b>Por que importa:</b> impacta combustíveis, inflação e boa parte da bolsa.</div>
+      </div>
+
+      <div class="ind">
+        <div class="top"><span class="tag">DICA</span><h5>Alta ≠ boa, baixa ≠ ruim</h5></div>
+        <p>Depende do ativo: a queda do dólar ou dos juros costuma ser lida como positiva pelo mercado, enquanto a queda da bolsa é negativa. Contexto é tudo.</p>
+        <div class="why"><b>Regra de ouro:</b> nenhum indicador conta a história sozinho — olhe o conjunto.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="contact" id="contato">
+    <h3>Vamos conversar sobre o seu patrimônio</h3>
+    <p>Cada estratégia começa com uma conversa. Entre em contato para uma análise personalizada e sem compromisso.</p>
+    <a href="#" class="btn btn-gold">Agendar conversa</a>
+    <div class="info">
+      <span><b>E-mail:</b> [seu e-mail profissional]</span>
+      <span><b>Telefone / WhatsApp:</b> [seu contato]</span>
+      <span><b>Escritório:</b> [cidade / assessoria]</span>
+    </div>
+  </section>
+
+  <footer>
+    <p class="name">Gabriel Barbosa · Assessoria de Patrimônio</p>
+    <p>Conteúdo de caráter informativo e educacional. Não constitui recomendação, oferta ou solicitação de compra ou venda de ativos. Rentabilidade passada não é garantia de resultados futuros. Investimentos envolvem riscos.</p>
+  </footer>
+
+</div>
+</body>
+</html>
