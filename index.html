@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gabriel Barbosa — Assessoria de Patrimônio</title>
+<meta name="description" content="Assessoria de patrimônio independente com Gabriel Barbosa. Planejamento, proteção e diversificação de investimentos no Brasil e no exterior, com Morning Call diário de mercado.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gabriel Barbosa — Assessoria de Patrimônio">
+<meta property="og:title" content="Gabriel Barbosa — Assessoria de Patrimônio">
+<meta property="og:description" content="Planejamento, proteção e visão de longo prazo. Áreas de atuação, educação financeira e Morning Call diário de mercado.">
+<meta property="og:image" content="https://gaahh13-ai.github.io/assessoria-patrimonio/og-image.png">
+<meta property="og:url" content="https://gaahh13-ai.github.io/assessoria-patrimonio/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -34,6 +44,18 @@
   .hero p{color:#c7c7d3;font-size:17px;max-width:560px;margin:22px 0 30px}
   .cta{display:flex;gap:13px;flex-wrap:wrap}
   .blob{position:absolute;right:-100px;top:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(31,122,104,.38),transparent 65%);pointer-events:none}
+  .about{padding:56px 30px;max-width:1120px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:44px;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}
+  @media(max-width:760px){.about{grid-template-columns:1fr;gap:28px;text-align:center}}
+  .photo{width:210px;height:210px;border-radius:26px;background:linear-gradient(160deg,#237f6c,#123f36);display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.12);margin:0 auto}
+  .photo .pin{font-family:'Poppins';font-weight:800;font-size:66px;color:#fff;line-height:1}
+  .photo .pcap{font-size:10.5px;color:rgba(255,255,255,.75);margin-top:8px;letter-spacing:.3px}
+  .about .kicker{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+  .about h2{font-family:'Poppins';font-weight:700;font-size:29px;letter-spacing:-.5px;margin:8px 0 14px}
+  .about p{color:#c7c7d3;font-size:15px;margin-bottom:12px;max-width:660px}
+  @media(max-width:760px){.about p{margin-left:auto;margin-right:auto}}
+  .creds{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+  @media(max-width:760px){.creds{justify-content:center}}
+  .creds span{font-size:12px;font-weight:600;color:var(--gold);background:rgba(201,169,74,.1);border:1px solid rgba(201,169,74,.25);padding:6px 13px;border-radius:20px}
   .light{background:var(--cream);color:#141414;padding:60px 30px}
   .sec{max-width:1120px;margin:0 auto}
   .kicker{color:var(--acc-d);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
@@ -77,6 +99,7 @@
   <nav class="nav">
     <div class="logo"><div class="mk">GB</div><div><b>Gabriel Barbosa</b><div class="sub">Assessoria de Patrimônio</div></div></div>
     <div class="nlinks">
+      <a href="#sobre">Sobre</a>
       <a href="#areas">Áreas</a>
       <a href="#educacao">Educação</a>
       <a href="morning-call.html">Morning Call</a>
@@ -92,6 +115,25 @@
     <div class="cta">
       <a href="https://wa.me/5519984009404" target="_blank" rel="noopener" class="pill">Agendar conversa</a>
       <a href="morning-call.html" class="pill ghost">Ver o Morning Call</a>
+    </div>
+  </section>
+
+  <section class="about" id="sobre">
+    <div class="photo">
+      <div class="pin">GB</div>
+      <div class="pcap">Adicione sua foto</div>
+    </div>
+    <div>
+      <div class="kicker">Quem sou</div>
+      <h2>Sobre mim</h2>
+      <p>Sou <strong style="color:#fff">Gabriel Barbosa</strong>, assessor de investimentos em Indaiatuba/SP, dedicado a ajudar famílias e investidores a organizar, proteger e fazer crescer seu patrimônio com clareza e independência.</p>
+      <p>Meu trabalho parte de entender o seu momento de vida, seus objetivos e seu perfil de risco, para então construir uma estratégia que faça sentido no curto e no longo prazo — de investimentos nacionais e internacionais a previdência, sucessão e proteção patrimonial. Atendimento próximo, presencial e online.</p>
+      <div class="creds">
+        <span>[Certificação — ex.: ANCORD]</span>
+        <span>[Formação]</span>
+        <span>[X anos de experiência]</span>
+        <span>Indaiatuba/SP</span>
+      </div>
     </div>
   </section>
 

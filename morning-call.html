@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Morning Call | Gabriel Barbosa — Assessoria de Patrimônio</title>
+<meta name="description" content="Morning Call diário de mercado por Gabriel Barbosa: resumo das principais notícias de economia, mercado e política, painel de cotações e destaques da bolsa.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Gabriel Barbosa — Assessoria de Patrimônio">
+<meta property="og:title" content="Morning Call — Resumo Diário de Mercado">
+<meta property="og:description" content="As principais notícias de economia, mercado e política do dia, com painel de cotações (Ibovespa, dólar, juros, S&P, Nasdaq) e destaques da bolsa.">
+<meta property="og:image" content="https://gaahh13-ai.github.io/assessoria-patrimonio/og-image.png">
+<meta property="og:url" content="https://gaahh13-ai.github.io/assessoria-patrimonio/morning-call.html">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -67,6 +77,14 @@
   .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
   .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
   .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .agenda{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:2px 2px 4px}
+  .agenda .ar{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .agenda .ar:first-of-type{border-top:none}
+  .agenda .day{font-family:'Poppins';font-weight:700;font-size:10px;color:var(--gold);background:rgba(201,169,74,.12);padding:4px 7px;border-radius:6px;min-width:54px;text-align:center;letter-spacing:.3px;flex-shrink:0}
+  .agenda .ev{font-size:11.5px;color:#bcbcc8;line-height:1.35}
+  .agenda .ev b{color:var(--white);font-weight:600}
+  .agenda .ar.hl .day{color:#141414;background:var(--gold)}
+  .agenda .ar.hl .ev b{color:var(--gold)}
 
   footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
   footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
@@ -205,6 +223,15 @@
         <div class="row"><div><div class="tk">CSAN3</div><div class="nm">Cosan</div></div><div class="pc down">−2,00%*</div></div>
         <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="pc down">−1,43%</div></div>
         <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras PN</div></div><div class="pc down">−1,11%</div></div>
+      </div>
+
+      <div class="sec-title sub">Agenda da Semana</div>
+      <div class="agenda">
+        <div class="ar"><span class="day">SEG 06</span><div class="ev">PMI de Serviços (Brasil e EUA) · <b>Boletim Focus</b></div></div>
+        <div class="ar"><span class="day">TER 07</span><div class="ev">Balança comercial (EUA) · Reunião da <b>OPEP+</b></div></div>
+        <div class="ar"><span class="day">QUA 08</span><div class="ev"><b>Ata do FOMC</b> (Federal Reserve) · Produção industrial (Alemanha)</div></div>
+        <div class="ar"><span class="day">QUI 09</span><div class="ev">Relatório mensal da AIE (energia)</div></div>
+        <div class="ar hl"><span class="day">SEX 10</span><div class="ev"><b>IPCA de junho</b> (IBGE) — consenso ~+0,32% no mês. Destaque da semana.</div></div>
       </div>
     </aside>
 
