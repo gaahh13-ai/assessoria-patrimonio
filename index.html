@@ -46,9 +46,7 @@
   .blob{position:absolute;right:-100px;top:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(31,122,104,.38),transparent 65%);pointer-events:none}
   .about{padding:56px 30px;max-width:1120px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:44px;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}
   @media(max-width:760px){.about{grid-template-columns:1fr;gap:28px;text-align:center}}
-  .photo{width:210px;height:210px;border-radius:26px;background:linear-gradient(160deg,#237f6c,#123f36);display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.12);margin:0 auto}
-  .photo .pin{font-family:'Poppins';font-weight:800;font-size:66px;color:#fff;line-height:1}
-  .photo .pcap{font-size:10.5px;color:rgba(255,255,255,.75);margin-top:8px;letter-spacing:.3px}
+  .photo{width:220px;height:220px;border-radius:26px;object-fit:cover;object-position:center 30%;border:1px solid rgba(255,255,255,.14);margin:0 auto;display:block}
   .about .kicker{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
   .about h2{font-family:'Poppins';font-weight:700;font-size:29px;letter-spacing:-.5px;margin:8px 0 14px}
   .about p{color:#c7c7d3;font-size:15px;margin-bottom:12px;max-width:660px}
@@ -119,10 +117,7 @@
   </section>
 
   <section class="about" id="sobre">
-    <div class="photo">
-      <div class="pin">GB</div>
-      <div class="pcap">Adicione sua foto</div>
-    </div>
+    <img class="photo" src="sobre-foto.jpg" alt="Gabriel Barbosa com a família" loading="lazy">
     <div>
       <div class="kicker">Quem sou</div>
       <h2>Sobre mim</h2>
