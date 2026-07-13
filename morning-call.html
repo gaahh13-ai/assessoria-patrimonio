@@ -77,6 +77,7 @@
   .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
   .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
   .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .pnote{padding:9px 14px;font-size:10.5px;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);line-height:1.4}
   .agenda{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:2px 2px 4px}
   .agenda .ar{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
   .agenda .ar:first-of-type{border-top:none}
@@ -100,55 +101,55 @@
 
   <div class="titlerow">
     <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
-    <div class="date"><strong>Quinta-feira, 9 de julho de 2026</strong>Fechamento do pregão</div>
+    <div class="date"><strong>Segunda-feira, 13 de julho de 2026</strong>Abertura da semana · fechamento de sexta (10/07)</div>
   </div>
 
   <div class="summary">
-    <p><strong>Panorama do dia.</strong> O Ibovespa acompanhou a melhora do apetite a risco no exterior e subiu <strong>1,22%</strong>, aos <strong>172.742 pontos</strong>, puxado pelos grandes bancos, enquanto o dólar recuou a <strong>R$ 5,12</strong>. Em Nova York, os índices fecharam em alta com a recuperação das ações de tecnologia e o alívio no petróleo.</p>
-    <p>O foco do mercado se volta agora ao <strong>IPCA de junho</strong>, divulgado nesta sexta (10) pelo IBGE — leitura decisiva para o debate sobre os próximos passos da Selic. No campo fiscal, o governo adiou a retirada da subvenção da gasolina após a alta do petróleo, e a decisão dos EUA sobre tarifas ao Brasil é esperada até 15 de julho.</p>
+    <p><strong>Panorama.</strong> A semana passada terminou em clima de euforia: o Ibovespa disparou <strong>2,97%</strong> na sexta, aos <strong>177.866 pontos</strong> — maior nível desde meados de maio —, depois que o <strong>IPCA de junho</strong> veio bem abaixo do esperado (0,16%), reforçando a aposta em um novo corte da Selic em agosto. O dólar recuou a <strong>R$ 5,11</strong> e os bancos lideraram os ganhos.</p>
+    <p>Para esta semana, o foco se volta ao exterior — com a inflação ao consumidor dos EUA e o início da temporada de balanços dos grandes bancos americanos —, enquanto no Brasil o mercado segue precificando a queda dos juros. A curva de juros futuros recuou com o IPCA fraco, e o petróleo cedeu levemente após Trump sinalizar a retomada das negociações com o Irã.</p>
   </div>
 
   <div class="layout">
 
     <!-- ESQUERDA: NOTÍCIAS -->
     <main>
-      <div class="sec-title">Principais Notícias do Dia</div>
+      <div class="sec-title">Principais Notícias</div>
 
       <div class="ncol">
         <h3>Mercado &amp; Economia</h3>
 
-        <a class="item" href="https://www.moneytimes.com.br/juros-futuros-recuam-em-toda-a-curva-na-esteira-dos-treasuries-lils/" target="_blank" rel="noopener">
+        <a class="item" href="https://www.moneytimes.com.br/ibovespa-10-7-26-lils/" target="_blank" rel="noopener">
           <div class="it-tag mkt">Mercado</div>
-          <div class="it-title">Juros futuros recuam em toda a curva na esteira dos Treasuries</div>
-          <div class="it-sum">Com o alívio nas tensões geopolíticas e a queda dos rendimentos dos títulos americanos (Treasuries), os juros futuros brasileiros (DI) cederam ao longo de toda a curva. O movimento reflete um cenário externo mais favorável e antecipa a atenção do mercado ao IPCA de junho, que pode reforçar ou não a expectativa de cortes na Selic.</div>
+          <div class="it-title">Ibovespa salta 2,97% e fecha aos 177.866 pontos com IPCA fraco</div>
+          <div class="it-sum">A bolsa disparou na sexta e atingiu o maior nível de fechamento desde meados de maio, após o IPCA de junho surpreender para baixo. O Índice Financeiro (bancos) subiu mais de 4% e liderou os ganhos; no acumulado da semana, o Ibovespa avançou 2,18%.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://www.terra.com.br/economia/decisao-sobre-extinguir-subvencao-a-gasolina-ficara-para-a-proxima-semana-diz-durigan,291ee8f6e8b9c699e50a8297711544c5w77bkqak.html" target="_blank" rel="noopener">
-          <div class="it-tag eco">Economia · Fiscal</div>
-          <div class="it-title">Governo adia fim da subvenção à gasolina após nova alta do petróleo</div>
-          <div class="it-sum">O ministro da Fazenda, Dario Durigan, afirmou que a decisão de retirar a subvenção de R$ 0,44 por litro da gasolina ficará para a próxima semana. O adiamento é resposta à escalada do petróleo (Brent saltando de cerca de US$ 72 para US$ 78) provocada pela tensão entre EUA e Irã, para evitar repasse imediato do custo aos consumidores.</div>
-          <div class="it-src">Terra Economia <span class="arrow">↗</span></div>
+        <a class="item" href="https://bpmoney.com.br/economia/ipca-inflacao-junho-2026-016-abaixo-esperado/" target="_blank" rel="noopener">
+          <div class="it-tag eco">Economia · Inflação</div>
+          <div class="it-title">IPCA sobe 0,16% em junho e fica bem abaixo do esperado</div>
+          <div class="it-sum">A inflação oficial desacelerou a 0,16% em junho, ante 0,58% em maio e abaixo da mediana das projeções (0,31%). No acumulado de 12 meses, o IPCA está em 4,64% — ainda acima da meta, mas o resultado reforçou a aposta em um novo corte da Selic na reunião de agosto.</div>
+          <div class="it-src">BPMoney <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://moneytimes.com.br/tesouro-ipca-juro-real-recorde-impulsiona-corrida-de-investidores-e-vendas-saltam-73-no-semestre-jcav/" target="_blank" rel="noopener">
-          <div class="it-tag eco">Renda Fixa</div>
-          <div class="it-title">Tesouro IPCA+: juro real recorde impulsiona corrida de investidores</div>
-          <div class="it-sum">Com o juro real em patamar historicamente elevado (na casa de IPCA + 8% ao ano), cresceu a procura por títulos do Tesouro IPCA+, que travam um ganho acima da inflação. As vendas do papel avançaram 73% no semestre — sinal de que o investidor está aproveitando as taxas altas para garantir rentabilidade real de longo prazo.</div>
-          <div class="it-src">Money Times <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://www.moneytimes.com.br/azul-azulazul3-estreia-em-alta-na-bolsa-de-nova-york-acoes-tambem-sobem-na-b3-lmrs/" target="_blank" rel="noopener">
+        <a class="item" href="https://moneytimes.com.br/vale-vale3-fecha-contrato-de-r-513-bilhoes-com-mrs-logistica-igdl/" target="_blank" rel="noopener">
           <div class="it-tag mkt">Empresas</div>
-          <div class="it-title">Azul (AZUL3) estreia em alta na Bolsa de Nova York</div>
-          <div class="it-sum">A companhia aérea estreou com valorização em sua listagem na Bolsa de Nova York (NYSE), movimento bem recebido pelo mercado que também impulsionou as ações da empresa na B3. A dupla listagem amplia o acesso da Azul a investidores internacionais.</div>
+          <div class="it-title">Vale (VALE3) fecha contrato de R$ 51,3 bilhões com a MRS Logística</div>
+          <div class="it-sum">A mineradora assinou um contrato de longo prazo de R$ 51,3 bilhões com a MRS Logística para o transporte ferroviário de minério, garantindo previsibilidade no escoamento da produção nos próximos anos. A ação subiu 1,41% no pregão.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://moneytimes.com.br/sem-licitacao-banco-do-brasil-bbas3-fecha-contrato-de-r-23-bilhoes-com-correios/" target="_blank" rel="noopener">
-          <div class="it-tag mkt">Empresas</div>
-          <div class="it-title">Sem licitação, Banco do Brasil (BBAS3) fecha contrato de R$ 2,3 bi com os Correios</div>
-          <div class="it-sum">O Banco do Brasil firmou um contrato de R$ 2,3 bilhões com os Correios sem processo licitatório. O negócio chama atenção pelo porte e pela forma de contratação direta entre duas estatais, reacendendo o debate sobre governança em acordos desse tipo.</div>
+        <a class="item" href="https://moneytimes.com.br/wall-street-10-7-26-apsa/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Internacional</div>
+          <div class="it-title">Wall Street fecha em alta com estreia da SK Hynix no Nasdaq</div>
+          <div class="it-sum">Os índices de Nova York encerraram a sexta no positivo, sustentados pelo setor de tecnologia. Destaque para a estreia da sul-coreana SK Hynix no Nasdaq, cuja ação saltou cerca de 13% e reacendeu o apetite pelo tema de memórias para inteligência artificial.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/fiis-e-fi-infra-os-melhores-fundos-para-investir-em-julho-segundo-o-btg-igdl/" target="_blank" rel="noopener">
+          <div class="it-tag eco">Renda Fixa · Fundos</div>
+          <div class="it-title">FIIs e FI-Infra: os melhores fundos para julho, segundo o BTG</div>
+          <div class="it-sum">O BTG divulgou suas carteiras recomendadas de fundos imobiliários e de infraestrutura para julho. Com a perspectiva de queda dos juros, esses ativos tendem a ganhar atratividade — vale acompanhar como alternativa de diversificação e renda passiva.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
       </div>
@@ -156,38 +157,38 @@
       <div class="ncol">
         <h3>Política &amp; Internacional</h3>
 
-        <a class="item" href="https://www.moneytimes.com.br/decisao-sobre-tarifas-contra-brasil-deve-ser-divulgada-ate-15-de-julho-diz-representante-comercial-dos-eua/" target="_blank" rel="noopener">
-          <div class="it-tag pol">Internacional · Comércio</div>
-          <div class="it-title">Decisão dos EUA sobre tarifas contra o Brasil deve sair até 15 de julho</div>
-          <div class="it-sum">O representante comercial dos Estados Unidos (USTR), Jamieson Greer, afirmou que o resultado da investigação sobre práticas comerciais brasileiras será divulgado até 15 de julho, definindo se haverá aplicação de tarifas. O tema é acompanhado de perto pelo mercado por seu potencial impacto no câmbio e nos setores exportadores.</div>
+        <a class="item" href="https://www.moneytimes.com.br/trump-diz-que-eua-aceitaram-pedido-do-ira-para-continuar-negociacoes-mas-que-cessar-fogo-acabou/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional · Geopolítica</div>
+          <div class="it-title">Trump: EUA aceitam continuar negociações com o Irã, mas cessar-fogo "acabou"</div>
+          <div class="it-sum">O presidente americano afirmou que aceitou o pedido do Irã para retomar as conversas diplomáticas, mas declarou que o cessar-fogo "acabou". A sinalização de negociação aliviou levemente o petróleo (Brent a US$ 76), ainda que o risco geopolítico permaneça no radar do mercado.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://www.moneytimes.com.br/governo-vai-endurecer-regras-de-publicidade-de-bets-no-brasil-diz-durigan-gaep/" target="_blank" rel="noopener">
-          <div class="it-tag pol">Política · Regulação</div>
-          <div class="it-title">Governo vai endurecer regras de publicidade de bets no Brasil</div>
-          <div class="it-sum">Segundo Durigan, o governo prepara regras mais rígidas para a publicidade de apostas esportivas (bets). A medida atende à pressão por maior controle sobre o setor, em meio ao debate sobre os impactos sociais do endividamento e sobre a arrecadação fiscal ligada às apostas.</div>
+        <a class="item" href="https://moneytimes.com.br/federal-reserve-nomeia-arminio-fraga-para-forca-tarefa-de-revisao-da-comunicacao/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional · Juros</div>
+          <div class="it-title">Federal Reserve nomeia Armínio Fraga para força-tarefa de comunicação</div>
+          <div class="it-sum">O ex-presidente do Banco Central do Brasil, Armínio Fraga, foi convidado a integrar uma força-tarefa do Federal Reserve para revisar a forma como o banco central americano comunica suas decisões — um reconhecimento internacional a um nome respeitado no mercado.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://moneytimes.com.br/governo-podera-rever-tributacao-de-lcis-e-lcas-para-corrigir-distorcoes-diz-tesouro-jcav/" target="_blank" rel="noopener">
-          <div class="it-tag pol">Política · Tributação</div>
-          <div class="it-title">Governo poderá rever tributação de LCIs e LCAs, diz Tesouro</div>
-          <div class="it-sum">O Tesouro Nacional sinalizou que pode revisar a tributação de LCIs e LCAs para corrigir distorções no mercado. Como esses papéis são hoje isentos de imposto de renda para pessoa física, qualquer mudança afetaria diretamente a rentabilidade líquida e a atratividade desses investimentos.</div>
-          <div class="it-src">Money Times <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://www.band.com.br/bandnews-fm/noticias/governo-adia-fim-do-subsidio-a-gasolina-apos-nova-alta-do-petroleo-202607091108" target="_blank" rel="noopener">
+        <a class="item" href="https://www.moneytimes.com.br/haddad-sobre-taxa-de-juros-banco-central-esta-criando-problema-desnecessariamente-lils/" target="_blank" rel="noopener">
           <div class="it-tag pol">Política Econômica</div>
-          <div class="it-title">Com nova alta do petróleo, governo mantém desconto na gasolina</div>
-          <div class="it-sum">Diante da nova alta internacional do petróleo, o governo optou por manter o desconto na gasolina no curto prazo, adiando o fim da subvenção. A equipe econômica segue defendendo a retirada gradual do subsídio, mas reavaliou o cronograma para não pressionar a inflação em um momento sensível.</div>
-          <div class="it-src">BandNews FM <span class="arrow">↗</span></div>
+          <div class="it-title">Haddad critica o BC: "está criando problema desnecessariamente"</div>
+          <div class="it-sum">O ministro da Fazenda, Fernando Haddad, voltou a criticar o nível dos juros, afirmando que o Banco Central estaria "criando problema desnecessariamente" ao manter a Selic elevada. A fala reacende a discussão sobre o ritmo de cortes e a relação entre o governo e a autoridade monetária.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://www.moneytimes.com.br/natura-natu3-itau-bba-corta-acao-para-market-perform-com-perspectiva-de-recuperacao-mais-lenta-da-receita/" target="_blank" rel="noopener">
-          <div class="it-tag mkt">Análise</div>
-          <div class="it-title">Natura (NATU3): Itaú BBA corta recomendação para 'market perform'</div>
-          <div class="it-sum">O Itaú BBA rebaixou a recomendação das ações da Natura de compra para 'market perform' (desempenho em linha com o mercado), citando uma recuperação de receita mais lenta do que o esperado. A revisão reflete cautela com o ritmo de retomada operacional da companhia.</div>
+        <a class="item" href="https://www.moneytimes.com.br/oi-oibr3-assina-venda-de-unidade-de-telefonia-para-metodo-lils/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Empresas</div>
+          <div class="it-title">Oi (OIBR3) assina venda de unidade de telefonia para a Método</div>
+          <div class="it-sum">Dentro do seu plano de reestruturação, a Oi assinou a venda de uma unidade de telefonia para a Método Telecomunicações. O desinvestimento faz parte do esforço da companhia para reduzir dívidas e simplificar a operação após anos de dificuldades.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/suno-adquire-46-das-acoes-da-gafisa-gfsa3-objetivo-e-estritamente-de-investimento-lils/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Empresas</div>
+          <div class="it-title">Suno adquire 4,6% das ações da Gafisa (GFSA3)</div>
+          <div class="it-sum">A casa de análise Suno comunicou a compra de 4,6% das ações da incorporadora Gafisa, informando que o objetivo é "estritamente de investimento". Participações relevantes como essa costumam chamar a atenção do mercado para os rumos da empresa.</div>
           <div class="it-src">Money Times <span class="arrow">↗</span></div>
         </a>
       </div>
@@ -197,41 +198,38 @@
     <aside class="side">
       <div class="sec-title">Painel de Mercado</div>
       <div class="grid-mini">
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">172.742</div><div class="chg up">▲ +1,22%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,12</div><div class="chg up">▼ −0,50%</div></div>
-        <div class="cmini"><div class="bar bar-acc"></div><div class="lbl">Juros Futuros (DI)</div><div class="val">Curva ▼</div><div class="chg up">Selic 14,25%</div></div>
-        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Brent</div><div class="val">US$ 76,30</div><div class="chg down">▼ −2,20%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.543,64</div><div class="chg up">▲ +0,81%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">26.206,89</div><div class="chg up">▲ +1,30%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.487,41</div><div class="chg up">▲ +0,27%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Stoxx 600</div><div class="val">640,87</div><div class="chg up">▲ +0,78%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">177.866</div><div class="chg up">▲ +2,97%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,1084</div><div class="chg up">▼ −0,28%</div></div>
+        <div class="cmini"><div class="bar bar-acc"></div><div class="lbl">Juros Futuros (DI)</div><div class="val">Curva ▼</div><div class="chg up">Aposta: Selic 14,00%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Brent (set)</div><div class="val">US$ 76,01</div><div class="chg down">▼ −0,38%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.575,39</div><div class="chg up">▲ +0,42%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">26.281,11</div><div class="chg up">▲ +0,29%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.637,01</div><div class="chg up">▲ +0,29%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Stoxx 600</div><div class="val">641,10</div><div class="chg up">▲ +0,04%</div></div>
       </div>
 
       <div class="sec-title sub">Destaques · B3</div>
       <div class="panel gain">
-        <h4>▲ Maiores Altas</h4>
-        <div class="row"><div><div class="tk">MGLU3</div><div class="nm">Magazine Luiza</div></div><div class="pc up">+7,76%</div></div>
-        <div class="row"><div><div class="tk">BPAC11</div><div class="nm">BTG Pactual</div></div><div class="pc up">+3,21%</div></div>
-        <div class="row"><div><div class="tk">SANB11</div><div class="nm">Santander</div></div><div class="pc up">+2,54%</div></div>
-        <div class="row"><div><div class="tk">BBAS3</div><div class="nm">Banco do Brasil</div></div><div class="pc up">+2,41%</div></div>
-        <div class="row"><div><div class="tk">BBDC4</div><div class="nm">Bradesco</div></div><div class="pc up">+1,75%</div></div>
+        <h4>▲ Maiores Altas (sexta)</h4>
+        <div class="row"><div><div class="tk">CMIN3</div><div class="nm">CSN Mineração</div></div><div class="pc up">+8,28%</div></div>
+        <div class="row"><div><div class="tk">CSNA3</div><div class="nm">CSN</div></div><div class="pc up">+7,92%</div></div>
+        <div class="row"><div><div class="tk">ITUB4</div><div class="nm">Itaú</div></div><div class="pc up">+4,02%</div></div>
+        <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="pc up">+1,52%</div></div>
+        <div class="row"><div><div class="tk">VALE3</div><div class="nm">Vale</div></div><div class="pc up">+1,41%</div></div>
       </div>
       <div class="panel loss">
-        <h4>▼ Maiores Baixas</h4>
-        <div class="row"><div><div class="tk">AXIA3</div><div class="nm">Axia Energia</div></div><div class="pc down">−2,68%</div></div>
-        <div class="row"><div><div class="tk">HAPV3</div><div class="nm">Hapvida</div></div><div class="pc down">−2,00%*</div></div>
-        <div class="row"><div><div class="tk">CSAN3</div><div class="nm">Cosan</div></div><div class="pc down">−2,00%*</div></div>
-        <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="pc down">−1,43%</div></div>
-        <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras PN</div></div><div class="pc down">−1,11%</div></div>
+        <h4>▼ Maiores Baixas (sexta)</h4>
+        <div class="row"><div><div class="tk">PRIO3</div><div class="nm">PRIO</div></div><div class="pc down">−0,29%</div></div>
+        <div class="pnote">Pregão de alta generalizada — a PRIO foi o único papel do Ibovespa a fechar em queda, pressionada pela prorrogação do imposto de exportação de petróleo.</div>
       </div>
 
       <div class="sec-title sub">Agenda da Semana</div>
       <div class="agenda">
-        <div class="ar"><span class="day">SEG 06</span><div class="ev">PMI de Serviços (Brasil e EUA) · <b>Boletim Focus</b></div></div>
-        <div class="ar"><span class="day">TER 07</span><div class="ev">Balança comercial (EUA) · Reunião da <b>OPEP+</b></div></div>
-        <div class="ar"><span class="day">QUA 08</span><div class="ev"><b>Ata do FOMC</b> (Federal Reserve) · Produção industrial (Alemanha)</div></div>
-        <div class="ar"><span class="day">QUI 09</span><div class="ev">Relatório mensal da AIE (energia)</div></div>
-        <div class="ar hl"><span class="day">SEX 10</span><div class="ev"><b>IPCA de junho</b> (IBGE) — consenso ~+0,32% no mês. Destaque da semana.</div></div>
+        <div class="ar"><span class="day">SEG 13</span><div class="ev"><b>Boletim Focus</b> (projeções de mercado do BC)</div></div>
+        <div class="ar"><span class="day">TER 14</span><div class="ev">Início da <b>temporada de balanços</b> nos EUA (grandes bancos)</div></div>
+        <div class="ar"><span class="day">QUA 15</span><div class="ev"><b>Inflação ao consumidor dos EUA</b> (CPI de junho)</div></div>
+        <div class="ar"><span class="day">QUI 16</span><div class="ev">Vendas no varejo e produção industrial (EUA)</div></div>
+        <div class="ar hl"><span class="day">RADAR</span><div class="ev"><b>Copom em 4–5/08:</b> mercado precifica corte da Selic para 14,00%.</div></div>
       </div>
     </aside>
 
@@ -239,8 +237,8 @@
 
   <footer>
     <p class="name">Gabriel Barbosa · Assessoria de Patrimônio</p>
-    <p>Morning Call gerado em 9 de julho de 2026, após o fechamento do pregão. Cotações e variações referentes ao fechamento da sessão. (*) Alguns destaques de baixa refletem variação intradia e podem diferir do fechamento oficial.</p>
-    <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas (Money Times, InfoMoney, Terra, BandNews). <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros.</p>
+    <p>Morning Call atualizado em 13 de julho de 2026. Cotações e variações referentes ao fechamento do pregão de sexta-feira (10/07).</p>
+    <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas (Money Times, BPMoney, IBGE). <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros.</p>
   </footer>
 
 </div>
