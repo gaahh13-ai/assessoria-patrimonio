@@ -12,267 +12,278 @@
 <meta property="og:url" content="https://gaahh13-ai.github.io/assessoria-patrimonio/morning-call.html">
 <meta property="og:image" content="https://gaahh13-ai.github.io/assessoria-patrimonio/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
 <style>
-  :root{
-    --bg:#0d0f14;
-    --bg-soft:#141821;
-    --card:#171c27;
-    --card-2:#1c2230;
-    --line:#262d3d;
-    --text:#e8eaf0;
-    --muted:#9aa3b5;
-    --gold:#c9a227;
-    --gold-2:#e6c455;
-    --up:#3ecf8e;
-    --down:#ff5c6c;
-  }
+  :root{--ink:#111114;--ink2:#1c1c22;--acc:#1f7a68;--acc-d:#14574a;--gold:#c9a94a;--white:#e8edf5;--muted:#9a9aa8;--up:#3fb950;--down:#f85149}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  body{font-family:'Barlow',sans-serif;color:var(--white);background:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:50px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
+  a{color:inherit}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .mk{width:42px;height:42px;border-radius:12px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:800;font-size:18px;color:#fff}
+  .logo b{font-family:'Poppins';font-weight:700;font-size:16px;display:block;line-height:1}
+  .logo .sub{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .backlink{color:#d6d6e0;text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.18);padding:9px 16px;border-radius:30px;transition:all .15s}
+  .backlink:hover{border-color:var(--gold);color:var(--gold)}
+  .titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin:30px 0 6px}
+  .titlerow h1{font-family:'Poppins';font-weight:700;font-size:26px;letter-spacing:-.5px}
+  .titlerow h1 span{color:var(--acc)}
+  .date{color:var(--muted);font-size:13.5px;text-align:right}
+  .date strong{color:var(--white);display:block;font-size:14.5px}
+  .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
+  .summary p{font-size:14.5px;color:#cfd3dc}
+  .summary p+p{margin-top:10px}
+  .summary strong{color:var(--gold)}
 
-  /* Header */
-  header{
-    border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,#10131b,#0d0f14);
-    position:sticky;top:0;z-index:10;
-  }
-  .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:920px;margin:0 auto}
-  .brand{display:flex;align-items:center;gap:12px}
-  .monogram{
-    width:44px;height:44px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;letter-spacing:.5px;color:#0d0f14;
-    background:linear-gradient(135deg,var(--gold-2),var(--gold));
-    box-shadow:0 2px 10px rgba(201,162,39,.25);
-  }
-  .brand-name{font-weight:700;font-size:1.05rem;line-height:1.15}
-  .brand-sub{font-size:.78rem;color:var(--muted);letter-spacing:.4px}
-  .nav-link{font-size:.85rem;color:var(--gold-2);border:1px solid var(--line);padding:8px 14px;border-radius:8px;transition:.2s}
-  .nav-link:hover{border-color:var(--gold);background:rgba(201,162,39,.08)}
+  .sec-title{font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:1.5px;color:var(--gold);margin:0 0 16px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
+  .sec-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .sec-title.sub{margin-top:30px}
 
-  /* Hero */
-  .hero{padding:38px 0 12px}
-  .hero h1{font-size:1.9rem;font-weight:700;letter-spacing:-.02em}
-  .hero .accent{color:var(--gold-2)}
-  .date-line{margin-top:10px;font-size:1.02rem;color:var(--text);font-weight:600}
-  .date-sub{font-size:.85rem;color:var(--muted);margin-top:2px}
-  .rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:18px 0 6px;border-radius:2px}
+  /* two-column: news (left) + market (right) */
+  .layout{display:grid;grid-template-columns:1fr 322px;gap:30px;align-items:start;margin-top:38px}
+  @media(max-width:880px){.layout{grid-template-columns:1fr;gap:36px}}
 
-  /* Summary */
-  .summary{background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:20px 0}
-  .summary p{margin-bottom:12px;font-size:.98rem;color:#dfe3ec}
-  .summary p:last-child{margin-bottom:0}
-  .summary strong{color:var(--gold-2);font-weight:700}
+  /* NEWS (left) */
+  .ncol+.ncol{margin-top:26px}
+  .ncol h3{font-family:'Poppins';font-size:12.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .item{display:block;text-decoration:none;color:inherit;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .it-tag{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  .it-tag.pol{color:var(--acc)}.it-tag.eco{color:var(--gold)}.it-tag.mkt{color:var(--up)}
+  .it-title{font-family:'Poppins';font-size:16px;font-weight:600;margin:5px 0 7px;line-height:1.3}
+  .item:hover .it-title{color:var(--gold)}
+  .it-sum{font-size:13.5px;color:#b3b3c0;line-height:1.5;margin-bottom:9px}
+  .it-src{font-size:12px;color:var(--muted);font-weight:500}
+  .it-src .arrow{color:var(--gold)}
 
-  /* Section titles */
-  .section-title{font-size:1.25rem;font-weight:700;margin:34px 0 6px;display:flex;align-items:center;gap:10px}
-  .section-title::before{content:"";width:6px;height:22px;background:var(--gold);border-radius:3px;display:inline-block}
-  .subhead{font-size:1rem;font-weight:700;color:var(--gold-2);margin:20px 0 10px;text-transform:uppercase;letter-spacing:.6px}
+  /* MARKET (right, smaller) */
+  .side{position:relative}
+  .grid-mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .cmini{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
+  .cmini .lbl{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .cmini .val{font-family:'Poppins';font-size:15px;font-weight:700;margin-top:5px;font-variant-numeric:tabular-nums}
+  .cmini .chg{font-size:11px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+  .cmini .bar{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .up{color:var(--up)}.down{color:var(--down)}
+  .bar-up{background:var(--up)}.bar-down{background:var(--down)}.bar-acc{background:var(--acc)}
+  .panel{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:4px 2px;margin-bottom:12px}
+  .panel h4{font-family:'Poppins';font-size:11.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:12px 14px 8px}
+  .panel.gain h4{color:var(--up)}.panel.loss h4{color:var(--down)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
+  .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .agenda{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:2px 2px 4px}
+  .agenda .ar{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .agenda .ar:first-of-type{border-top:none}
+  .agenda .day{font-family:'Poppins';font-weight:700;font-size:10px;color:var(--gold);background:rgba(201,169,74,.12);padding:4px 7px;border-radius:6px;min-width:54px;text-align:center;letter-spacing:.3px;flex-shrink:0}
+  .agenda .ev{font-size:11.5px;color:#bcbcc8;line-height:1.35}
+  .agenda .ev b{color:var(--white);font-weight:600}
+  .agenda .ar.hl .day{color:#141414;background:var(--gold)}
+  .agenda .ar.hl .ev b{color:var(--gold)}
 
-  /* News */
-  .news-grid{display:grid;gap:12px}
-  .news{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;transition:.2s;display:block}
-  .news:hover{border-color:var(--gold);background:var(--card-2)}
-  .news .cat{font-size:.72rem;text-transform:uppercase;letter-spacing:.7px;color:var(--gold);font-weight:700;margin-bottom:6px}
-  .news .headline{font-size:1.02rem;font-weight:700;margin-bottom:6px;color:#fff}
-  .news .desc{font-size:.9rem;color:var(--muted)}
-  .news .src{font-size:.78rem;color:var(--gold-2);margin-top:8px;display:inline-block}
-  .news .src::after{content:" ↗"}
-
-  /* Panel */
-  .panel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
-  .tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .tile .label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-  .tile .val{font-size:1.28rem;font-weight:700;margin-top:6px;color:#fff}
-  .tile .chg{font-size:.9rem;font-weight:700;margin-top:2px}
-  .up{color:var(--up)}
-  .down{color:var(--down)}
-  .neutral{color:var(--muted)}
-
-  /* B3 highlights */
-  .b3{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
-  .b3col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 16px 14px}
-  .b3col h4{font-size:.95rem;margin:12px 0 6px;font-weight:700}
-  .b3row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
-  .b3row:last-child{border-bottom:none}
-  .b3row .tk{font-weight:700;color:#fff;font-size:.9rem;min-width:64px}
-  .b3row .nm{color:var(--muted);font-size:.85rem;flex:1;margin:0 10px}
-  .b3row .pc{font-weight:700;font-size:.9rem}
-
-  /* Agenda */
-  .agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
-  .day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
-  .day .d{font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-  .day .ev{font-size:.82rem;color:#dfe3ec;margin-top:6px}
-  .day.today{border-color:var(--gold);background:rgba(201,162,39,.06)}
-
-  /* Footer */
-  footer{border-top:1px solid var(--line);margin-top:44px;padding:26px 0 44px;background:var(--bg-soft)}
-  .foot-name{font-weight:700;color:var(--gold-2)}
-  .gen{font-size:.82rem;color:var(--muted);margin-top:8px}
-  .disclaimer{font-size:.78rem;color:#7b8497;margin-top:14px;line-height:1.6}
-  .disclaimer strong{color:#9aa3b5}
-
-  @media(max-width:720px){
-    .panel{grid-template-columns:repeat(2,1fr)}
-    .b3{grid-template-columns:1fr}
-    .agenda{grid-template-columns:1fr 1fr}
-    .hero h1{font-size:1.5rem}
-  }
+  footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
+  footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
 </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="monogram">GB</div>
-      <div>
-        <div class="brand-name">Gabriel Barbosa</div>
-        <div class="brand-sub">Assessoria de Patrimônio</div>
-      </div>
-    </div>
-    <a class="nav-link" href="https://gaahh13-ai.github.io/assessoria-patrimonio/index.html">Áreas de atuação &amp; Educação →</a>
-  </div>
-</header>
-
-<div class="wrap">
-  <section class="hero">
-    <h1>Morning Call — <span class="accent">Resumo Diário de Mercado</span></h1>
-    <div class="date-line">Sexta-feira, 17 de julho de 2026</div>
-    <div class="date-sub">Fechamento do pregão de quinta-feira (16)</div>
-    <div class="rule"></div>
-  </section>
-
-  <section class="summary">
-    <p><strong>Panorama do dia.</strong> O Ibovespa caiu <strong>1,24%</strong> na quinta-feira (16), aos <strong>173.825 pontos</strong>, em sessão dominada pela confirmação da tarifa adicional de <strong>25%</strong> dos Estados Unidos sobre produtos brasileiros — que entra em vigor em 22 de julho — e pela realização de lucros em Wall Street. Vale, Itaú e as siderúrgicas pesaram no índice; do lado das quedas, Braskem (−4,84%) e Cury (−4,40%) lideraram, enquanto CSN Mineração (+4,01%) e Ultrapar (+2,86%) ficaram na ponta positiva. O dólar avançou <strong>0,40%</strong>, a <strong>R$ 5,10</strong>, refletindo a aversão a risco e o ruído comercial.</p>
-    <p>Em Nova York, o tombo dos semicondutores derrubou os índices: o Nasdaq recuou <strong>1,47%</strong>, o S&amp;P 500 caiu 0,51% e o Dow Jones cedeu 0,20%, com Alphabet e ações de chips liderando as perdas apesar de balanços sólidos. Na Europa, o Stoxx 600 fechou praticamente estável (642,72), pressionado por tecnologia e pela escalada entre EUA e Irã. O Brent recuou 0,9%, a <strong>US$ 84,23</strong>, mas seguiu perto da máxima de um mês diante do conflito no Oriente Médio. Nesta sexta, atenção ao <strong>IBC-Br</strong> (prévia do PIB do BC) e ao IGP-10 da FGV.</p>
-  </section>
-
-  <div class="section-title">Principais Notícias do Dia</div>
-
-  <div class="subhead">Mercado &amp; Economia</div>
-  <div class="news-grid">
-    <a class="news" href="https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-16072026/" target="_blank" rel="noopener">
-      <div class="cat">Mercado · Ibovespa</div>
-      <div class="headline">Ibovespa fecha em queda de 1,24% com tarifaço dos EUA; dólar sobe a R$ 5,09</div>
-      <div class="desc">Índice recuou aos 173.825 pontos após os EUA confirmarem tarifa adicional de 25% sobre produtos brasileiros. Vale, Itaú e siderúrgicas pressionaram, com realização de lucros também em Wall Street.</div>
-      <span class="src">InfoMoney</span>
-    </a>
-    <a class="news" href="https://finance.yahoo.com/markets/live/stock-market-today-thursday-july-16-dow-sp-500-nasdaq-chip-stocks-slide-103116735.html" target="_blank" rel="noopener">
-      <div class="cat">Mercado · Wall Street</div>
-      <div class="headline">Nasdaq lidera perdas com tombo dos semicondutores; Alphabet recua</div>
-      <div class="desc">S&amp;P 500 −0,51%, Nasdaq −1,47% e Dow Jones −0,20%. A venda em ações de chips ofuscou uma série de balanços sólidos e derrubou os índices de tecnologia.</div>
-      <span class="src">Yahoo Finance</span>
-    </a>
-    <a class="news" href="https://br.investing.com/news/economy-news/petroleo-fecha-em-baixa-mas-permanece-proximo-da-maxima-de-um-mes-2004631" target="_blank" rel="noopener">
-      <div class="cat">Commodities · Petróleo</div>
-      <div class="headline">Petróleo fecha em baixa, mas segue perto da máxima de um mês</div>
-      <div class="desc">O Brent recuou cerca de 0,9%, a US$ 84,23 o barril, mantendo-se próximo do maior nível desde meados de junho à medida que o conflito entre EUA e Irã se agravava.</div>
-      <span class="src">Investing.com</span>
-    </a>
-    <a class="news" href="https://br.advfn.com/jornal/2026/07/ibovespa-cai-pressionado-por-vale-itau-e-realizacao-de-lucros-em-wall-street" target="_blank" rel="noopener">
-      <div class="cat">Mercado · B3</div>
-      <div class="headline">Ibovespa cai pressionado por Vale, Itaú e realização de lucros em Wall Street</div>
-      <div class="desc">Blue chips e siderúrgicas puxaram o índice para baixo em dia de aversão a risco global, com o tarifaço americano e as tensões no Oriente Médio no radar dos investidores.</div>
-      <span class="src">ADVFN News</span>
-    </a>
-    <a class="news" href="https://br.advfn.com/jornal/2026/07/bolsas-europeias-fecham-sem-sentido-unico-com-pressao-do-setor-de-tecnologia" target="_blank" rel="noopener">
-      <div class="cat">Mercado · Europa</div>
-      <div class="headline">Bolsas europeias fecham sem sentido único com pressão do setor de tecnologia</div>
-      <div class="desc">O Stoxx 600 terminou praticamente estável (642,72). Londres subiu 0,52%, enquanto Frankfurt cedeu 0,46% e Paris ficou perto da estabilidade, com quedas em semicondutores.</div>
-      <span class="src">ADVFN News</span>
-    </a>
-  </div>
-
-  <div class="subhead">Política &amp; Internacional</div>
-  <div class="news-grid">
-    <a class="news" href="https://ndmais.com.br/politica/governo-lula-rebate-tarifa-de-25-a-produtos-brasileiros/" target="_blank" rel="noopener">
-      <div class="cat">Internacional · Comércio</div>
-      <div class="headline">Governo Lula chama tarifa de 25% dos EUA de "marco lastimável" e anuncia retaliação</div>
-      <div class="desc">A Presidência classificou a medida como um marco lastimável nas relações bilaterais e anunciou que acionará imediatamente a Lei da Reciprocidade e recorrerá à OMC.</div>
-      <span class="src">ND Mais</span>
-    </a>
-    <a class="news" href="https://www.cruzeirofm.com.br/2026/07/16/noticias/lula-convoca-ministros-apos-eua-confirmarem-nova-tarifa-de-25-sobre-produtos-brasileiros/" target="_blank" rel="noopener">
-      <div class="cat">Política · Governo</div>
-      <div class="headline">Lula convoca ministros após EUA confirmarem tarifa de 25% sobre produtos brasileiros</div>
-      <div class="desc">O presidente reuniu a equipe no Palácio do Planalto para definir a resposta ao tarifaço, que atinge máquinas agrícolas, calçados e vestuário, mas poupa café, carne e laranja.</div>
-      <span class="src">Cruzeiro FM</span>
-    </a>
-    <a class="news" href="https://agenciabrasil.ebc.com.br/justica/noticia/2026-07/dino-intima-partidos-explicar-controle-de-emendas-parlamentares" target="_blank" rel="noopener">
-      <div class="cat">Política · STF</div>
-      <div class="headline">Dino intima partidos a explicar controle de emendas parlamentares</div>
-      <div class="desc">O ministro determinou que dirigentes de 21 legendas esclareçam, em até dez dias úteis, se interferem na destinação de emendas, após declarações do presidente do PL, Valdemar Costa Neto.</div>
-      <span class="src">Agência Brasil</span>
-    </a>
-    <a class="news" href="https://www.otempo.com.br/mundo/2026/7/16/guerra-no-ira-teera-ameaca-expandir-ofensiva-no-golfo-apos-bombardeios-aos-arredores-da-capital" target="_blank" rel="noopener">
-      <div class="cat">Internacional · Oriente Médio</div>
-      <div class="headline">Guerra no Irã: Teerã ameaça expandir ofensiva no Golfo após bombardeios à capital</div>
-      <div class="desc">Após novos ataques dos EUA e represálias iranianas contra bases no Golfo, o Irã voltou a tratar o Estreito de Ormuz como "linha vermelha", sustentando a pressão sobre o petróleo.</div>
-      <span class="src">O Tempo</span>
-    </a>
-    <a class="news" href="https://credited.com.br/noticias/2026/07/16/lula-reafirma-defesa-da-soberania-apos-tarifa-de-25-dos-eua/" target="_blank" rel="noopener">
-      <div class="cat">Internacional · Soberania</div>
-      <div class="headline">Lula reafirma defesa da soberania após tarifa de 25% dos EUA</div>
-      <div class="desc">O governo afirmou não reconhecer a legitimidade da investigação que embasou a decisão americana e prometeu medidas de apoio aos setores exportadores mais afetados.</div>
-      <span class="src">Credited</span>
-    </a>
-  </div>
-
-  <div class="section-title">Painel de Mercado</div>
-  <div class="panel">
-    <div class="tile"><div class="label">Ibovespa</div><div class="val">173.825</div><div class="chg down">▼ −1,24%</div></div>
-    <div class="tile"><div class="label">Dólar (USD/BRL)</div><div class="val">R$ 5,10</div><div class="chg up">▲ +0,40%</div></div>
-    <div class="tile"><div class="label">Juros Futuros (DI)</div><div class="val">Curva ▲</div><div class="chg neutral">Selic 14,25%</div></div>
-    <div class="tile"><div class="label">Brent</div><div class="val">US$ 84,23</div><div class="chg down">▼ −0,90%</div></div>
-    <div class="tile"><div class="label">S&amp;P 500</div><div class="val">7.533,77</div><div class="chg down">▼ −0,51%</div></div>
-    <div class="tile"><div class="label">Nasdaq</div><div class="val">25.881,95</div><div class="chg down">▼ −1,47%</div></div>
-    <div class="tile"><div class="label">Dow Jones</div><div class="val">52.552,97</div><div class="chg down">▼ −0,20%</div></div>
-    <div class="tile"><div class="label">Stoxx 600</div><div class="val">642,72</div><div class="chg down">▼ −0,04%</div></div>
-  </div>
-
-  <div class="section-title">Destaques · B3</div>
-  <div class="b3">
-    <div class="b3col">
-      <h4 class="up">▲ Maiores Altas</h4>
-      <div class="b3row"><span class="tk">CMIN3</span><span class="nm">CSN Mineração</span><span class="pc up">+4,01%</span></div>
-      <div class="b3row"><span class="tk">UGPA3</span><span class="nm">Ultrapar</span><span class="pc up">+2,86%</span></div>
-      <div class="b3row"><span class="tk">VBBR3</span><span class="nm">Vibra Energia</span><span class="pc up">+1,84%</span></div>
-      <div class="b3row"><span class="tk">COGN3</span><span class="nm">Cogna</span><span class="pc up">+1,33%</span></div>
-      <div class="b3row"><span class="tk">VAMO3</span><span class="nm">Vamos</span><span class="pc up">+1,28%</span></div>
-    </div>
-    <div class="b3col">
-      <h4 class="down">▼ Maiores Baixas</h4>
-      <div class="b3row"><span class="tk">BRKM5</span><span class="nm">Braskem</span><span class="pc down">−4,84%</span></div>
-      <div class="b3row"><span class="tk">CURY3</span><span class="nm">Cury</span><span class="pc down">−4,40%</span></div>
-      <div class="b3row"><span class="tk">ENEV3</span><span class="nm">Eneva</span><span class="pc down">−3,71%</span></div>
-      <div class="b3row"><span class="tk">RENT3</span><span class="nm">Localiza</span><span class="pc down">−3,69%</span></div>
-      <div class="b3row"><span class="tk">USIM5</span><span class="nm">Usiminas</span><span class="pc down">−3,66%</span></div>
-    </div>
-  </div>
-
-  <div class="section-title">Agenda da Semana</div>
-  <div class="agenda">
-    <div class="day"><div class="d">SEG 13</div><div class="ev"><strong>Boletim Focus</strong> (BC) · IPCA e INPC de junho</div></div>
-    <div class="day"><div class="d">TER 14</div><div class="ev"><strong>CPI de junho (EUA)</strong> · PIB do 2º tri da China</div></div>
-    <div class="day"><div class="d">QUA 15</div><div class="ev"><strong>PPI de junho (EUA)</strong> · Livro Bege do Fed</div></div>
-    <div class="day"><div class="d">QUI 16</div><div class="ev"><strong>Vendas no varejo — PMC</strong> (IBGE) · Auxílio-desemprego (EUA)</div></div>
-    <div class="day today"><div class="d">SEX 17</div><div class="ev"><strong>IBC-Br</strong> (prévia do PIB) · IGP-10 (FGV). Destaque de hoje.</div></div>
-  </div>
-</div>
-
-<footer>
   <div class="wrap">
-    <div class="foot-name">Gabriel Barbosa · Assessoria de Patrimônio</div>
-    <div class="gen">Morning Call gerado em 17 de julho de 2026, referente ao fechamento do pregão de quinta-feira, 16 de julho. Cotações e variações referentes ao fechamento da sessão. Brent refere-se ao contrato de referência na ICE. A curva de DI abriu (juros em alta) com a aversão a risco em torno do tarifaço dos EUA; a Selic vigente é de 14,25% ao ano. Stoxx 600 encerrou praticamente estável.</div>
-    <div class="disclaimer">Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas (InfoMoney, Money Times, CNN Brasil, B3, Finance News, ADVFN, Yahoo Finance, Investing.com, Agência Brasil, O Tempo). <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros.</div>
+    <div class="nav">
+      <div class="logo">
+        <div class="mk">GB</div>
+        <div>
+          <b>Gabriel Barbosa</b>
+          <span class="sub">Assessoria de Patrimônio</span>
+        </div>
+      </div>
+      <a class="backlink" href="https://gaahh13-ai.github.io/assessoria-patrimonio/index.html">Áreas de atuação &amp; Educação →</a>
+    </div>
+
+    <div class="titlerow">
+      <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
+      <div class="date"><strong>Sexta-feira, 17 de julho de 2026</strong>Fechamento do pregão de quinta (16)</div>
+    </div>
+
+    <div class="summary">
+      <p><strong>Panorama do dia.</strong> O Ibovespa caiu <strong>1,24%</strong> na quinta-feira (16), aos <strong>173.825 pontos</strong>, em sessão dominada pela confirmação da tarifa adicional de <strong>25%</strong> dos EUA sobre produtos brasileiros — que entra em vigor em 22 de julho — e pela realização de lucros em Wall Street. Vale, Itaú e as siderúrgicas pesaram no índice; Braskem (−4,84%) e Cury (−4,40%) lideraram as quedas, enquanto CSN Mineração (+4,01%) e Ultrapar (+2,86%) ficaram na ponta positiva. O dólar avançou <strong>0,40%</strong>, a <strong>R$ 5,10</strong>, refletindo a aversão a risco.</p>
+      <p>Em Nova York, o tombo dos semicondutores derrubou os índices: o Nasdaq recuou <strong>1,47%</strong>, o S&amp;P 500 caiu 0,51% e o Dow Jones cedeu 0,20%, com Alphabet e ações de chips liderando as perdas apesar de balanços sólidos. Na Europa, o Stoxx 600 fechou praticamente estável (642,72), pressionado por tecnologia e pela escalada entre EUA e Irã. O Brent recuou 0,9%, a <strong>US$ 84,23</strong>, mas seguiu perto da máxima de um mês diante do conflito no Oriente Médio. Nesta sexta, atenção ao <strong>IBC-Br</strong> (prévia do PIB) e ao IGP-10 da FGV.</p>
+    </div>
+
+    <div class="layout">
+      <main>
+        <div class="sec-title">Principais Notícias do Dia</div>
+
+        <div class="ncol">
+          <h3>Mercado &amp; Economia</h3>
+
+          <a class="item" href="https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-16072026/" target="_blank" rel="noopener">
+            <div class="it-tag mkt">Mercado · Ibovespa</div>
+            <div class="it-title">Ibovespa fecha em queda de 1,24% com tarifaço dos EUA; dólar sobe a R$ 5,09</div>
+            <div class="it-sum">Índice recuou aos 173.825 pontos após os EUA confirmarem tarifa adicional de 25% sobre produtos brasileiros. Vale, Itaú e siderúrgicas pressionaram, com realização de lucros também em Wall Street.</div>
+            <div class="it-src">InfoMoney <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://finance.yahoo.com/markets/live/stock-market-today-thursday-july-16-dow-sp-500-nasdaq-chip-stocks-slide-103116735.html" target="_blank" rel="noopener">
+            <div class="it-tag mkt">Mercado · Wall Street</div>
+            <div class="it-title">Nasdaq lidera perdas com tombo dos semicondutores; Alphabet recua</div>
+            <div class="it-sum">S&amp;P 500 −0,51%, Nasdaq −1,47% e Dow Jones −0,20%. A venda em ações de chips ofuscou uma série de balanços sólidos e derrubou os índices de tecnologia.</div>
+            <div class="it-src">Yahoo Finance <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://br.investing.com/news/economy-news/petroleo-fecha-em-baixa-mas-permanece-proximo-da-maxima-de-um-mes-2004631" target="_blank" rel="noopener">
+            <div class="it-tag eco">Commodities · Petróleo</div>
+            <div class="it-title">Petróleo fecha em baixa, mas segue perto da máxima de um mês</div>
+            <div class="it-sum">O Brent recuou cerca de 0,9%, a US$ 84,23 o barril, mantendo-se próximo do maior nível desde meados de junho à medida que o conflito entre EUA e Irã se agravava.</div>
+            <div class="it-src">Investing.com <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://br.advfn.com/jornal/2026/07/ibovespa-cai-pressionado-por-vale-itau-e-realizacao-de-lucros-em-wall-street" target="_blank" rel="noopener">
+            <div class="it-tag mkt">Mercado · B3</div>
+            <div class="it-title">Ibovespa cai pressionado por Vale, Itaú e realização de lucros em Wall Street</div>
+            <div class="it-sum">Blue chips e siderúrgicas puxaram o índice para baixo em dia de aversão a risco global, com o tarifaço americano e as tensões no Oriente Médio no radar dos investidores.</div>
+            <div class="it-src">ADVFN News <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://br.advfn.com/jornal/2026/07/bolsas-europeias-fecham-sem-sentido-unico-com-pressao-do-setor-de-tecnologia" target="_blank" rel="noopener">
+            <div class="it-tag mkt">Mercado · Europa</div>
+            <div class="it-title">Bolsas europeias fecham sem sentido único com pressão do setor de tecnologia</div>
+            <div class="it-sum">O Stoxx 600 terminou praticamente estável (642,72). Londres subiu 0,52%, enquanto Frankfurt cedeu 0,46% e Paris ficou perto da estabilidade, com quedas em semicondutores.</div>
+            <div class="it-src">ADVFN News <span class="arrow">↗</span></div>
+          </a>
+        </div>
+
+        <div class="ncol">
+          <h3>Política &amp; Internacional</h3>
+
+          <a class="item" href="https://ndmais.com.br/politica/governo-lula-rebate-tarifa-de-25-a-produtos-brasileiros/" target="_blank" rel="noopener">
+            <div class="it-tag pol">Internacional · Comércio</div>
+            <div class="it-title">Governo Lula chama tarifa de 25% dos EUA de "marco lastimável" e anuncia retaliação</div>
+            <div class="it-sum">A Presidência classificou a medida como um marco lastimável nas relações bilaterais e anunciou que acionará imediatamente a Lei da Reciprocidade e recorrerá à OMC.</div>
+            <div class="it-src">ND Mais <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://www.cruzeirofm.com.br/2026/07/16/noticias/lula-convoca-ministros-apos-eua-confirmarem-nova-tarifa-de-25-sobre-produtos-brasileiros/" target="_blank" rel="noopener">
+            <div class="it-tag pol">Política · Governo</div>
+            <div class="it-title">Lula convoca ministros após EUA confirmarem tarifa de 25% sobre produtos brasileiros</div>
+            <div class="it-sum">O presidente reuniu a equipe no Palácio do Planalto para definir a resposta ao tarifaço, que atinge máquinas agrícolas, calçados e vestuário, mas poupa café, carne e laranja.</div>
+            <div class="it-src">Cruzeiro FM <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://agenciabrasil.ebc.com.br/justica/noticia/2026-07/dino-intima-partidos-explicar-controle-de-emendas-parlamentares" target="_blank" rel="noopener">
+            <div class="it-tag pol">Política · STF</div>
+            <div class="it-title">Dino intima partidos a explicar controle de emendas parlamentares</div>
+            <div class="it-sum">O ministro determinou que dirigentes de 21 legendas esclareçam, em até dez dias úteis, se interferem na destinação de emendas, após declarações do presidente do PL, Valdemar Costa Neto.</div>
+            <div class="it-src">Agência Brasil <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://www.otempo.com.br/mundo/2026/7/16/guerra-no-ira-teera-ameaca-expandir-ofensiva-no-golfo-apos-bombardeios-aos-arredores-da-capital" target="_blank" rel="noopener">
+            <div class="it-tag pol">Internacional · Oriente Médio</div>
+            <div class="it-title">Guerra no Irã: Teerã ameaça expandir ofensiva no Golfo após bombardeios à capital</div>
+            <div class="it-sum">Após novos ataques dos EUA e represálias iranianas contra bases no Golfo, o Irã voltou a tratar o Estreito de Ormuz como "linha vermelha", sustentando a pressão sobre o petróleo.</div>
+            <div class="it-src">O Tempo <span class="arrow">↗</span></div>
+          </a>
+
+          <a class="item" href="https://credited.com.br/noticias/2026/07/16/lula-reafirma-defesa-da-soberania-apos-tarifa-de-25-dos-eua/" target="_blank" rel="noopener">
+            <div class="it-tag pol">Internacional · Soberania</div>
+            <div class="it-title">Lula reafirma defesa da soberania após tarifa de 25% dos EUA</div>
+            <div class="it-sum">O governo afirmou não reconhecer a legitimidade da investigação que embasou a decisão americana e prometeu medidas de apoio aos setores exportadores mais afetados.</div>
+            <div class="it-src">Credited <span class="arrow">↗</span></div>
+          </a>
+        </div>
+      </main>
+
+      <aside class="side">
+        <div class="sec-title">Painel de Mercado</div>
+        <div class="grid-mini">
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">Ibovespa</div>
+            <div class="val">173.825</div>
+            <div class="chg down">▼ −1,24%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-up"></div>
+            <div class="lbl">Dólar (USD/BRL)</div>
+            <div class="val">R$ 5,10</div>
+            <div class="chg up">▲ +0,40%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-acc"></div>
+            <div class="lbl">Juros Futuros (DI)</div>
+            <div class="val">Curva ▲</div>
+            <div class="chg up">Selic 14,25%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">Brent</div>
+            <div class="val">US$ 84,23</div>
+            <div class="chg down">▼ −0,90%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">S&amp;P 500</div>
+            <div class="val">7.533,77</div>
+            <div class="chg down">▼ −0,51%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">Nasdaq</div>
+            <div class="val">25.881,95</div>
+            <div class="chg down">▼ −1,47%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">Dow Jones</div>
+            <div class="val">52.552,97</div>
+            <div class="chg down">▼ −0,20%</div>
+          </div>
+          <div class="cmini">
+            <div class="bar bar-down"></div>
+            <div class="lbl">Stoxx 600</div>
+            <div class="val">642,72</div>
+            <div class="chg down">▼ −0,04%</div>
+          </div>
+        </div>
+
+        <div class="sec-title sub">Destaques · B3</div>
+        <div class="panel gain">
+          <h4>▲ Maiores Altas</h4>
+          <div class="row"><div><div class="tk">CMIN3</div><div class="nm">CSN Mineração</div></div><div class="pc up">+4,01%</div></div>
+          <div class="row"><div><div class="tk">UGPA3</div><div class="nm">Ultrapar</div></div><div class="pc up">+2,86%</div></div>
+          <div class="row"><div><div class="tk">VBBR3</div><div class="nm">Vibra Energia</div></div><div class="pc up">+1,84%</div></div>
+          <div class="row"><div><div class="tk">COGN3</div><div class="nm">Cogna</div></div><div class="pc up">+1,33%</div></div>
+          <div class="row"><div><div class="tk">VAMO3</div><div class="nm">Vamos</div></div><div class="pc up">+1,28%</div></div>
+        </div>
+
+        <div class="panel loss">
+          <h4>▼ Maiores Baixas</h4>
+          <div class="row"><div><div class="tk">BRKM5</div><div class="nm">Braskem</div></div><div class="pc down">−4,84%</div></div>
+          <div class="row"><div><div class="tk">CURY3</div><div class="nm">Cury</div></div><div class="pc down">−4,40%</div></div>
+          <div class="row"><div><div class="tk">ENEV3</div><div class="nm">Eneva</div></div><div class="pc down">−3,71%</div></div>
+          <div class="row"><div><div class="tk">RENT3</div><div class="nm">Localiza</div></div><div class="pc down">−3,69%</div></div>
+          <div class="row"><div><div class="tk">USIM5</div><div class="nm">Usiminas</div></div><div class="pc down">−3,66%</div></div>
+        </div>
+
+        <div class="sec-title sub">Agenda da Semana</div>
+        <div class="agenda">
+          <div class="ar"><span class="day">SEG 13</span><div class="ev"><b>Boletim Focus</b> (BC) · IPCA e INPC de junho</div></div>
+          <div class="ar"><span class="day">TER 14</span><div class="ev"><b>CPI de junho (EUA)</b> · PIB do 2º tri da China</div></div>
+          <div class="ar"><span class="day">QUA 15</span><div class="ev"><b>PPI de junho (EUA)</b> · Livro Bege do Fed</div></div>
+          <div class="ar"><span class="day">QUI 16</span><div class="ev"><b>Vendas no varejo — PMC</b> (IBGE) · Auxílio-desemprego (EUA)</div></div>
+          <div class="ar hl"><span class="day">SEX 17</span><div class="ev"><b>IBC-Br</b> (prévia do PIB) · IGP-10 (FGV). Destaque de hoje.</div></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <p class="name">Gabriel Barbosa · Assessoria de Patrimônio</p>
+      <p>Morning Call gerado em 17 de julho de 2026, referente ao fechamento do pregão de quinta-feira, 16 de julho. Cotações e variações referentes ao fechamento da sessão. Brent refere-se ao contrato de referência na ICE. A curva de DI abriu (juros em alta) com a aversão a risco em torno do tarifaço dos EUA; a Selic vigente é de 14,25% ao ano. Stoxx 600 encerrou praticamente estável.</p>
+      <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas (InfoMoney, Money Times, CNN Brasil, B3, ADVFN, Yahoo Finance, Investing.com, Agência Brasil, O Tempo). <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros.</p>
+    </footer>
   </div>
-</footer>
 </body>
 </html>
