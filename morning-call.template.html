@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Call | Gabriel Barbosa — Assessoria de Patrimônio</title>
+<meta name="description" content="Morning Call diário de mercado por Gabriel Barbosa: resumo das principais notícias de economia, mercado e política, painel de cotações e destaques da bolsa.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Gabriel Barbosa — Assessoria de Patrimônio">
+<meta property="og:title" content="Morning Call — Resumo Diário de Mercado">
+<meta property="og:description" content="As principais notícias de economia, mercado e política do dia, com painel de cotações (Ibovespa, dólar, juros, S&P, Nasdaq) e destaques da bolsa.">
+<meta property="og:image" content="https://gaahh13-ai.github.io/assessoria-patrimonio/og-image.png">
+<meta property="og:url" content="https://gaahh13-ai.github.io/assessoria-patrimonio/morning-call.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111114;--ink2:#1c1c22;--acc:#1f7a68;--acc-d:#14574a;--gold:#c9a94a;--white:#e8edf5;--muted:#9a9aa8;--up:#3fb950;--down:#f85149}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Barlow',sans-serif;color:var(--white);background:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:50px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 26px}
+  a{color:inherit}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .mk{width:42px;height:42px;border-radius:12px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:800;font-size:18px;color:#fff}
+  .logo b{font-family:'Poppins';font-weight:700;font-size:16px;display:block;line-height:1}
+  .logo .sub{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .backlink{color:#d6d6e0;text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.18);padding:9px 16px;border-radius:30px;transition:all .15s}
+  .backlink:hover{border-color:var(--gold);color:var(--gold)}
+  .titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin:30px 0 6px}
+  .titlerow h1{font-family:'Poppins';font-weight:700;font-size:26px;letter-spacing:-.5px}
+  .titlerow h1 span{color:var(--acc)}
+  .date{color:var(--muted);font-size:13.5px;text-align:right}
+  .date strong{color:var(--white);display:block;font-size:14.5px}
+  .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
+  .summary p{font-size:14.5px;color:#cfd3dc}
+  .summary p+p{margin-top:10px}
+  .summary strong{color:var(--gold)}
+
+  .sec-title{font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:1.5px;color:var(--gold);margin:0 0 16px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
+  .sec-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .sec-title.sub{margin-top:30px}
+
+  .layout{display:grid;grid-template-columns:1fr 322px;gap:30px;align-items:start;margin-top:38px}
+  @media(max-width:880px){.layout{grid-template-columns:1fr;gap:36px}}
+
+  .ncol+.ncol{margin-top:26px}
+  .ncol h3{font-family:'Poppins';font-size:12.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .item{display:block;text-decoration:none;color:inherit;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .it-tag{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  .it-tag.pol{color:var(--acc)}.it-tag.eco{color:var(--gold)}.it-tag.mkt{color:var(--up)}
+  .it-title{font-family:'Poppins';font-size:16px;font-weight:600;margin:5px 0 7px;line-height:1.3}
+  .item:hover .it-title{color:var(--gold)}
+  .it-sum{font-size:13.5px;color:#b3b3c0;line-height:1.5;margin-bottom:9px}
+  .it-src{font-size:12px;color:var(--muted);font-weight:500}
+  .it-src .arrow{color:var(--gold)}
+
+  .side{position:relative}
+  .grid-mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .cmini{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
+  .cmini .lbl{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .cmini .val{font-family:'Poppins';font-size:15px;font-weight:700;margin-top:5px;font-variant-numeric:tabular-nums}
+  .cmini .chg{font-size:11px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+  .cmini .bar{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .up{color:var(--up)}.down{color:var(--down)}
+  .bar-up{background:var(--up)}.bar-down{background:var(--down)}.bar-acc{background:var(--acc)}
+  .panel{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:4px 2px;margin-bottom:12px}
+  .panel h4{font-family:'Poppins';font-size:11.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:12px 14px 8px}
+  .panel.gain h4{color:var(--up)}.panel.loss h4{color:var(--down)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
+  .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .pnote{padding:9px 14px;font-size:10.5px;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);line-height:1.4}
+  .agenda{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:2px 2px 4px}
+  .agenda .ar{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .agenda .ar:first-of-type{border-top:none}
+  .agenda .day{font-family:'Poppins';font-weight:700;font-size:10px;color:var(--gold);background:rgba(201,169,74,.12);padding:4px 7px;border-radius:6px;min-width:54px;text-align:center;letter-spacing:.3px;flex-shrink:0}
+  .agenda .ev{font-size:11.5px;color:#bcbcc8;line-height:1.35}
+  .agenda .ev b{color:var(--white);font-weight:600}
+  .agenda .ar.hl .day{color:#141414;background:var(--gold)}
+  .agenda .ar.hl .ev b{color:var(--gold)}
+
+  footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
+  footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="logo"><div class="mk">GB</div><div><b>Gabriel Barbosa</b><div class="sub">Assessoria de Patrimônio</div></div></div>
+    <a href="index.html" class="backlink">Áreas de atuação &amp; Educação →</a>
+  </nav>
+
+  <div class="titlerow">
+    <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
+    <div class="date"><strong>{{DATE}}</strong>{{SUBTITLE}}</div>
+  </div>
+
+  <div class="summary">
+{{SUMMARY}}
+  </div>
+
+  <div class="layout">
+
+    <main>
+      <div class="sec-title">Principais Notícias</div>
+
+      <div class="ncol">
+        <h3>Mercado &amp; Economia</h3>
+{{NEWS_ECO}}
+      </div>
+
+      <div class="ncol">
+        <h3>Política &amp; Internacional</h3>
+{{NEWS_POL}}
+      </div>
+    </main>
+
+    <aside class="side">
+      <div class="sec-title">Painel de Mercado</div>
+      <div class="grid-mini">
+{{PANEL}}
+      </div>
+
+      <div class="sec-title sub">Destaques · B3</div>
+      <div class="panel gain">
+        <h4>▲ Maiores Altas</h4>
+{{GAINS}}
+      </div>
+      <div class="panel loss">
+        <h4>▼ Maiores Baixas</h4>
+{{LOSSES}}
+      </div>
+
+      <div class="sec-title sub">Agenda da Semana</div>
+      <div class="agenda">
+{{AGENDA}}
+      </div>
+    </aside>
+
+  </div>
+
+  <footer>
+    <p class="name">Gabriel Barbosa · Assessoria de Patrimônio</p>
+    <p>Morning Call atualizado em {{FOOTER_DATE}}. Cotações e variações referentes ao fechamento do pregão anterior.</p>
+    <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas. <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros. Gerado automaticamente e pode conter imprecisões.</p>
+  </footer>
+
+</div>
+</body>
+</html>
