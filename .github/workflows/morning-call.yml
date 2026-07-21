@@ -1,0 +1,49 @@
+name: Morning Call diário
+
+# Roda de segunda a sexta às 09:00 UTC = 06:00 no horário de Brasília (BRT, UTC-3).
+# Também pode ser disparado manualmente pela aba "Actions" (workflow_dispatch).
+on:
+  schedule:
+    - cron: "0 9 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: morning-call
+  cancel-in-progress: false
+
+jobs:
+  gerar-e-publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Gerar o Morning Call
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: claude-sonnet-5
+        run: python generate_morning_call.py
+
+      - name: Publicar (commit e push se houve mudança)
+        run: |
+          git config user.name "morning-call-bot"
+          git config user.email "actions@github.com"
+          if git status --porcelain | grep -q "morning-call.html"; then
+            git add morning-call.html
+            git commit -m "Atualiza Morning Call ($(TZ='America/Sao_Paulo' date '+%d/%m/%Y'))"
+            git push
+            echo "Morning Call publicado."
+          else
+            echo "Sem alterações no Morning Call."
+          fi
