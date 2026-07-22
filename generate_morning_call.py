@@ -10,7 +10,7 @@ Fluxo:
   4. Grava morning-call.html (o commit/push é feito pelo workflow do GitHub Actions).
 
 Requer a variável de ambiente ANTHROPIC_API_KEY.
-Modelo configurável via CLAUDE_MODEL (padrão: claude-sonnet-5).
+Modelo configurável via CLAUDE_MODEL (padrão: claude-haiku-4-5-20251001).
 """
 
 import os
@@ -23,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 import anthropic
 
-MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
+MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 TEMPLATE_PATH = "morning-call.template.html"
 OUTPUT_PATH = "morning-call.html"
 
@@ -47,13 +47,15 @@ Como é de manhã cedo, os dados de mercado devem ser do FECHAMENTO DO ÚLTIMO P
 
 PESQUISE NA WEB (use a ferramenta de busca) e confirme cada dado numa fonte confiável
 (Money Times, InfoMoney, B3, Investing, CNBC, Yahoo Finance). NUNCA invente números ou links.
+SEJA ECONÔMICO NAS BUSCAS: faça no MÁXIMO 4 buscas, bem direcionadas (ex.: 1 para o fechamento
+do pregão, 1 para altas/baixas, 1 a 2 para notícias). Reaproveite o que já encontrou; não repita buscas.
 
 Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e variação %), Dólar USD/BRL (cotação e %),
   Juros Futuros/DI (direção da curva; cite a Selic vigente), Petróleo Brent, S&P 500, Nasdaq, Dow Jones, Stoxx 600.
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação %). Se quase tudo subiu/caiu,
   liste o que houver e explique numa nota.
-- 5 notícias de "Mercado & Economia" e 5 de "Política & Internacional", cada uma com um bom RESUMO autoral
+- 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
   (2 a 4 frases, escrito por você, sem copiar o texto da fonte), o veículo e a URL REAL da matéria (verifique cada link).
 - Agenda econômica da semana (4 a 6 itens) com dia e evento; marque o item mais importante com "hl": true.
 
@@ -219,7 +221,7 @@ def main():
         resp = client.messages.create(
             model=MODEL,
             max_tokens=16000,
-            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
+            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}],
             messages=messages,
         )
         stop_reason = resp.stop_reason
