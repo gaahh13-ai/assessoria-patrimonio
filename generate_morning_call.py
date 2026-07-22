@@ -213,7 +213,6 @@ def main():
     resp = client.messages.create(
         model=MODEL,
         max_tokens=8000,
-        temperature=0,
         tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
         messages=[{"role": "user", "content": build_prompt(hoje)}],
     )
