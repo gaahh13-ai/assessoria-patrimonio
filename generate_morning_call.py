@@ -98,14 +98,35 @@ Formato numérico brasileiro (milhar com ".", decimal com ","). O campo "subtitl
 Retorne SOMENTE o bloco <json>...</json>, nada além disso."""
 
 
+def _try_load(candidate):
+    candidate = candidate.strip()
+    candidate = re.sub(r"^```(?:json)?", "", candidate).strip()
+    candidate = re.sub(r"```$", "", candidate).strip()
+    try:
+        return json.loads(candidate)
+    except Exception:
+        # remove vírgulas sobrando antes de } ou ]
+        fixed = re.sub(r",(\s*[}\]])", r"\1", candidate)
+        return json.loads(fixed)
+
+
 def extract_json(text):
+    """Extrai o objeto JSON da resposta do modelo, tentando várias estratégias."""
+    candidates = []
     m = re.search(r"<json>(.*?)</json>", text, re.DOTALL)
-    raw = m.group(1) if m else text
-    raw = raw.strip()
-    # remove cercas de código eventuais
-    raw = re.sub(r"^```(?:json)?", "", raw).strip()
-    raw = re.sub(r"```$", "", raw).strip()
-    return json.loads(raw)
+    if m:
+        candidates.append(m.group(1))
+    for fm in re.finditer(r"```(?:json)?\s*(.*?)```", text, re.DOTALL):
+        candidates.append(fm.group(1))
+    if "{" in text and "}" in text:
+        candidates.append(text[text.index("{"): text.rindex("}") + 1])
+    candidates.append(text)
+    for c in candidates:
+        try:
+            return _try_load(c)
+        except Exception:
+            continue
+    raise ValueError("Não consegui extrair JSON da resposta do modelo. Início da resposta:\n" + text[:1000])
 
 
 def esc(s):
@@ -192,11 +213,13 @@ def main():
     resp = client.messages.create(
         model=MODEL,
         max_tokens=8000,
+        temperature=0,
         tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
         messages=[{"role": "user", "content": build_prompt(hoje)}],
     )
 
     text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+    print(f"Resposta do modelo: {len(text)} caracteres de texto.")
     data = extract_json(text)
 
     # validações mínimas
