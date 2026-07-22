@@ -1,10 +1,11 @@
 name: Morning Call diário
 
-# Roda de segunda a sexta às 09:00 UTC = 06:00 no horário de Brasília (BRT, UTC-3).
+# Roda de segunda a sexta às 08:53 UTC = 05:53 no horário de Brasília (BRT, UTC-3).
+# Minuto "quebrado" e fora do pico para reduzir atraso/pulo do agendador do GitHub.
 # Também pode ser disparado manualmente pela aba "Actions" (workflow_dispatch).
 on:
   schedule:
-    - cron: "0 9 * * 1-5"
+    - cron: "53 8 * * 1-5"
   workflow_dispatch:
 
 permissions:
