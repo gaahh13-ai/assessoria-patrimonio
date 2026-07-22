@@ -47,8 +47,9 @@ Como é de manhã cedo, os dados de mercado devem ser do FECHAMENTO DO ÚLTIMO P
 
 PESQUISE NA WEB (use a ferramenta de busca) e confirme cada dado numa fonte confiável
 (Money Times, InfoMoney, B3, Investing, CNBC, Yahoo Finance). NUNCA invente números ou links.
-SEJA ECONÔMICO NAS BUSCAS: faça no MÁXIMO 4 buscas, bem direcionadas (ex.: 1 para o fechamento
-do pregão, 1 para altas/baixas, 1 a 2 para notícias). Reaproveite o que já encontrou; não repita buscas.
+SEJA ECONÔMICO NAS BUSCAS: faça no MÁXIMO 6 buscas, bem direcionadas (ex.: 1-2 para o fechamento
+do pregão e cotações, 1 para altas/baixas, 2-3 para notícias). Reaproveite o que já encontrou; não repita buscas.
+Reserve buscas suficientes para as notícias — você PRECISA entregar 4 de Mercado/Economia e 4 de Política.
 
 Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e variação %), Dólar USD/BRL (cotação e %),
@@ -97,7 +98,14 @@ Regras: variação positiva usa seta ▲ e "cls": "up"; negativa usa ▼ e "cls"
 Para o card de juros/DI, "bar" pode ser "acc" (cor de destaque). Use o sinal de menos tipográfico "−" (U+2212).
 Formato numérico brasileiro (milhar com ".", decimal com ","). O campo "subtitle" deve refletir o dia real
 (ex.: "Fechamento do pregão de ontem (DD/MM)"). Em "ev" da agenda pode usar <b>...</b>. Não use aspas triplas.
-Retorne SOMENTE o bloco <json>...</json>, nada além disso."""
+
+IMPORTANTÍSSIMO — FORMATO DA RESPOSTA:
+- Responda EXCLUSIVAMENTE com o bloco <json>...</json>. NUNCA escreva explicações, comentários ou qualquer
+  texto em prosa — nem antes, nem depois, nem para avisar que faltou algum dado.
+- Se não encontrar algum dado, preencha o campo com o melhor valor disponível ou "n/d" e SIGA em frente.
+- O painel precisa ter no mínimo Ibovespa, Dólar, S&P 500, Nasdaq e Dow Jones (Brent e Stoxx 600 são opcionais).
+- Para os juros, se não achar a taxa exata, use "Selic 14,25%".
+- Comece a resposta com <json>{{ e termine com }}</json>. Retorne SEMPRE o JSON completo, com todos os campos."""
 
 
 def _try_load(candidate):
@@ -129,6 +137,26 @@ def extract_json(text):
         except Exception:
             continue
     raise ValueError("Não consegui extrair JSON da resposta do modelo. Início da resposta:\n" + text[:1000])
+
+
+def repair_to_json(client, text):
+    """Passo de reparo barato (sem busca): converte a resposta do modelo em JSON válido."""
+    prompt = (
+        "O texto a seguir contém dados de mercado e notícias, possivelmente em prosa. "
+        "Converta em UM ÚNICO objeto JSON válido do Morning Call, com as chaves: date, subtitle, "
+        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), altas (lista {tk,nm,pc}), "
+        "baixas (lista {tk,nm,pc}), baixas_nota, noticias_eco e noticias_pol (listas de "
+        "{tag,tag_class,titulo,resumo,fonte,url}), agenda (lista {day,ev,hl}) e footer_date. "
+        "Use os dados presentes no texto; se algo faltar, use \"n/d\" ou omita itens da lista. "
+        "Responda SOMENTE com o JSON entre <json> e </json>, sem nenhum texto extra.\n\nTEXTO:\n" + text
+    )
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=8000,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    rtext = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+    return extract_json(rtext)
 
 
 def esc(s):
@@ -221,7 +249,7 @@ def main():
         resp = client.messages.create(
             model=MODEL,
             max_tokens=16000,
-            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}],
+            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 6}],
             messages=messages,
         )
         stop_reason = resp.stop_reason
@@ -235,10 +263,14 @@ def main():
 
     text = "".join(text_parts)
     print(f"Resposta do modelo: {len(text)} caracteres de texto (stop_reason={stop_reason}).")
-    data = extract_json(text)
+    try:
+        data = extract_json(text)
+    except Exception as e:
+        print(f"JSON não veio limpo ({str(e)[:120]}); acionando o passo de reparo...")
+        data = repair_to_json(client, text)
 
     # validações mínimas
-    assert data.get("painel") and len(data["painel"]) >= 6, "painel incompleto"
+    assert data.get("painel") and len(data["painel"]) >= 5, "painel incompleto"
     assert data.get("noticias_eco") and data.get("noticias_pol"), "notícias faltando"
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
