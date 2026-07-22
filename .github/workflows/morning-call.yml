@@ -33,7 +33,7 @@ jobs:
       - name: Gerar o Morning Call
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_MODEL: claude-sonnet-5
+          CLAUDE_MODEL: claude-haiku-4-5-20251001
         run: python generate_morning_call.py
 
       - name: Publicar (commit e push se houve mudança)
