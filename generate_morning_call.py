@@ -210,15 +210,29 @@ def main():
         template = f.read()
 
     client = anthropic.Anthropic()
-    resp = client.messages.create(
-        model=MODEL,
-        max_tokens=8000,
-        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
-        messages=[{"role": "user", "content": build_prompt(hoje)}],
-    )
+    messages = [{"role": "user", "content": build_prompt(hoje)}]
+    text_parts = []
+    stop_reason = None
+    # A busca na web pode pausar turnos longos (stop_reason="pause_turn");
+    # nesse caso retomamos devolvendo o conteúdo do assistente e chamando de novo.
+    for _ in range(8):
+        resp = client.messages.create(
+            model=MODEL,
+            max_tokens=16000,
+            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 10}],
+            messages=messages,
+        )
+        stop_reason = resp.stop_reason
+        for b in resp.content:
+            if getattr(b, "type", "") == "text":
+                text_parts.append(b.text)
+        if stop_reason == "pause_turn":
+            messages.append({"role": "assistant", "content": resp.content})
+            continue
+        break
 
-    text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
-    print(f"Resposta do modelo: {len(text)} caracteres de texto.")
+    text = "".join(text_parts)
+    print(f"Resposta do modelo: {len(text)} caracteres de texto (stop_reason={stop_reason}).")
     data = extract_json(text)
 
     # validações mínimas
