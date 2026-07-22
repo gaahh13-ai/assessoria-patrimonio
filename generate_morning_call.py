@@ -105,6 +105,7 @@ IMPORTANTÍSSIMO — FORMATO DA RESPOSTA:
 - Se não encontrar algum dado, preencha o campo com o melhor valor disponível ou "n/d" e SIGA em frente.
 - O painel precisa ter no mínimo Ibovespa, Dólar, S&P 500, Nasdaq e Dow Jones (Brent e Stoxx 600 são opcionais).
 - Para os juros, se não achar a taxa exata, use "Selic 14,25%".
+- Você DEVE concluir a tarefa e devolver o JSON. Se uma busca falhar, tente outra abordagem; JAMAIS responda que "não conseguiu".
 - Comece a resposta com <json>{{ e termine com }}</json>. Retorne SEMPRE o JSON completo, com todos os campos."""
 
 
@@ -240,38 +241,56 @@ def main():
         template = f.read()
 
     client = anthropic.Anthropic()
-    messages = [{"role": "user", "content": build_prompt(hoje)}]
-    text_parts = []
-    stop_reason = None
-    # A busca na web pode pausar turnos longos (stop_reason="pause_turn");
-    # nesse caso retomamos devolvendo o conteúdo do assistente e chamando de novo.
-    for _ in range(8):
-        resp = client.messages.create(
-            model=MODEL,
-            max_tokens=16000,
-            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 6}],
-            messages=messages,
-        )
-        stop_reason = resp.stop_reason
-        for b in resp.content:
-            if getattr(b, "type", "") == "text":
-                text_parts.append(b.text)
-        if stop_reason == "pause_turn":
-            messages.append({"role": "assistant", "content": resp.content})
-            continue
-        break
+    prompt = build_prompt(hoje)
 
-    text = "".join(text_parts)
-    print(f"Resposta do modelo: {len(text)} caracteres de texto (stop_reason={stop_reason}).")
-    try:
-        data = extract_json(text)
-    except Exception as e:
-        print(f"JSON não veio limpo ({str(e)[:120]}); acionando o passo de reparo...")
-        data = repair_to_json(client, text)
+    def gerar_texto():
+        """Uma rodada de geração com busca na web; trata turnos pausados (pause_turn)."""
+        messages = [{"role": "user", "content": prompt}]
+        parts = []
+        sr = None
+        for _ in range(8):
+            resp = client.messages.create(
+                model=MODEL,
+                max_tokens=16000,
+                tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 6}],
+                messages=messages,
+            )
+            sr = resp.stop_reason
+            for b in resp.content:
+                if getattr(b, "type", "") == "text":
+                    parts.append(b.text)
+            if sr == "pause_turn":
+                messages.append({"role": "assistant", "content": resp.content})
+                continue
+            break
+        return "".join(parts), sr
 
-    # validações mínimas
-    assert data.get("painel") and len(data["painel"]) >= 5, "painel incompleto"
-    assert data.get("noticias_eco") and data.get("noticias_pol"), "notícias faltando"
+    def valido(d):
+        return bool(d and d.get("painel") and len(d["painel"]) >= 5
+                    and d.get("noticias_eco") and d.get("noticias_pol"))
+
+    # O Haiku às vezes devolve dados incompletos; tentamos algumas vezes antes de desistir.
+    data = None
+    for tentativa in range(3):
+        text, sr = gerar_texto()
+        print(f"Tentativa {tentativa + 1}: {len(text)} caracteres (stop_reason={sr}).")
+        d = None
+        try:
+            d = extract_json(text)
+        except Exception as e:
+            print(f"JSON não veio limpo ({str(e)[:100]}); acionando o passo de reparo...")
+            try:
+                d = repair_to_json(client, text)
+            except Exception as e2:
+                print(f"Reparo falhou: {str(e2)[:100]}")
+                d = None
+        if valido(d):
+            data = d
+            break
+        print(f"Tentativa {tentativa + 1} incompleta; nova tentativa...")
+
+    if not valido(data):
+        sys.exit("Não consegui gerar dados completos após 3 tentativas. Página anterior mantida.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
 
