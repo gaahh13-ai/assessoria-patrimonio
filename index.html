@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gabriel Barbosa — Assessoria de Patrimônio</title>
-<meta name="description" content="Assessoria de patrimônio independente com Gabriel Barbosa. Planejamento, proteção e diversificação de investimentos no Brasil e no exterior, com Morning Call diário de mercado.">
+<title>Morning Call | Gabriel Barbosa — Assessoria de Investimentos</title>
+<meta name="description" content="Morning Call diário de mercado por Gabriel Barbosa: resumo das principais notícias de economia, mercado e política, painel de cotações e destaques da bolsa.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Gabriel Barbosa — Assessoria de Patrimônio">
-<meta property="og:title" content="Gabriel Barbosa — Assessoria de Patrimônio">
-<meta property="og:description" content="Planejamento, proteção e visão de longo prazo. Áreas de atuação, educação financeira e Morning Call diário de mercado.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Gabriel Barbosa — Assessoria de Investimentos">
+<meta property="og:title" content="Morning Call — Resumo Diário de Mercado">
+<meta property="og:description" content="As principais notícias de economia, mercado e política do dia, com painel de cotações (Ibovespa, dólar, juros, S&P, Nasdaq) e destaques da bolsa.">
 <meta property="og:image" content="https://gaahh13-ai.github.io/assessoria-patrimonio/og-image.png">
 <meta property="og:url" content="https://gaahh13-ai.github.io/assessoria-patrimonio/">
 <meta name="twitter:card" content="summary_large_image">
@@ -18,157 +18,221 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#111114;--ink2:#1c1c22;--acc:#1f7a68;--acc-d:#14574a;--gold:#c9a94a;--cream:#f6f1ec;--white:#fff;--muted:#a9a9b8}
+  :root{--ink:#111114;--ink2:#1c1c22;--acc:#1f7a68;--acc-d:#14574a;--gold:#c9a94a;--white:#e8edf5;--muted:#9a9aa8;--up:#3fb950;--down:#f85149}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Barlow',sans-serif;color:var(--white);background:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1440px;margin:0 auto}
+  body{font-family:'Barlow',sans-serif;color:var(--white);background:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:50px}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 26px}
   a{color:inherit}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 30px;border-bottom:1px solid rgba(255,255,255,.08);max-width:1440px;margin:0 auto}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
   .logo{display:flex;align-items:center;gap:12px}
   .mk{width:42px;height:42px;border-radius:12px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:800;font-size:18px;color:#fff}
   .logo b{font-family:'Poppins';font-weight:700;font-size:16px;display:block;line-height:1}
   .logo .sub{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
-  .nlinks{display:flex;gap:20px;align-items:center;font-size:13.5px;font-weight:500}
-  .nlinks a{color:#d6d6e0;text-decoration:none;transition:color .15s}
-  .nlinks a:hover{color:var(--gold)}
-  .pill{background:var(--acc);color:#fff;padding:10px 20px;border-radius:40px;font-weight:600;font-size:13.5px;text-decoration:none;display:inline-block;transition:filter .15s}
-  .pill:hover{filter:brightness(1.1)}
-  .pill.gold{background:var(--gold);color:#141414}
-  .pill.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.25);color:#fff}
-  .pill.ghost:hover{border-color:var(--gold);color:var(--gold)}
-  @media(max-width:680px){.nlinks a:not(.pill){display:none}}
-  .hero{padding:70px 30px 56px;position:relative;overflow:hidden;max-width:1440px;margin:0 auto}
-  .eyebrow{display:inline-block;background:rgba(201,169,74,.14);color:var(--gold);font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 15px;border-radius:30px;margin-bottom:22px}
-  .hero h1{font-family:'Poppins';font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-1px;max-width:760px}
-  .hero h1 em{font-style:normal;color:var(--acc)}
-  .hero p{color:#c7c7d3;font-size:17px;max-width:560px;margin:22px 0 30px}
-  .cta{display:flex;gap:13px;flex-wrap:wrap}
-  .blob{position:absolute;right:-100px;top:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(31,122,104,.38),transparent 65%);pointer-events:none}
-  .about{padding:56px 30px;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:44px;align-items:center;border-bottom:1px solid rgba(255,255,255,.08)}
-  @media(max-width:760px){.about{grid-template-columns:1fr;gap:28px;text-align:center}}
-  .photo{width:220px;height:220px;border-radius:26px;object-fit:cover;object-position:center 30%;border:1px solid rgba(255,255,255,.14);margin:0 auto;display:block}
-  .about .kicker{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
-  .about h2{font-family:'Poppins';font-weight:700;font-size:29px;letter-spacing:-.5px;margin:8px 0 14px}
-  .about p{color:#c7c7d3;font-size:15px;margin-bottom:12px;max-width:660px}
-  @media(max-width:760px){.about p{margin-left:auto;margin-right:auto}}
-  .creds{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
-  @media(max-width:760px){.creds{justify-content:center}}
-  .creds span{font-size:12px;font-weight:600;color:var(--gold);background:rgba(201,169,74,.1);border:1px solid rgba(201,169,74,.25);padding:6px 13px;border-radius:20px}
-  .light{background:var(--cream);color:#141414;padding:60px 30px}
-  .sec{max-width:1440px;margin:0 auto}
-  .kicker{color:var(--acc-d);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
-  .light h2,.dark h2{font-family:'Poppins';font-weight:700;font-size:30px;letter-spacing:-.5px;margin:8px 0 6px}
-  .light .lead{color:#5a5a63;font-size:15px;max-width:580px;margin-bottom:34px}
-  .areas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  @media(max-width:900px){.areas{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:520px){.areas{grid-template-columns:1fr}}
-  .area{background:#fff;border:1px solid #eadfd4;border-radius:16px;padding:20px 18px;transition:transform .18s,box-shadow .18s}
-  .area:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(20,20,20,.08)}
-  .area .ic{width:42px;height:42px;border-radius:12px;background:rgba(31,122,104,.12);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:13px}
-  .area h3{font-family:'Poppins';font-weight:700;font-size:15px;line-height:1.2;margin-bottom:5px}
-  .area p{color:#6a6a72;font-size:12.5px;line-height:1.4}
-  .dark{padding:60px 30px;background:var(--ink)}
-  .dark .kicker{color:var(--gold)}
-  .dark .lead{color:#b9b9c6;font-size:15px;max-width:580px;margin-bottom:34px}
-  .edu{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  @media(max-width:900px){.edu{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:520px){.edu{grid-template-columns:1fr}}
-  .ind{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:15px;padding:18px 19px}
-  .ind .top{display:flex;align-items:center;gap:9px;margin-bottom:8px;flex-wrap:wrap}
-  .ind .tg{font-size:10px;font-weight:700;letter-spacing:.5px;color:#141414;background:var(--gold);padding:3px 9px;border-radius:6px}
-  .ind h4{font-family:'Poppins';font-weight:600;font-size:14.5px}
-  .ind p{color:#b0b0be;font-size:13px}
-  .ind .why{margin-top:8px;font-size:12px;color:#8a8a99}
-  .ind .why b{color:var(--gold);font-weight:600}
-  .contact{max-width:1440px;margin:30px auto;border-radius:26px;background:var(--acc);padding:52px 30px;text-align:center;position:relative;overflow:hidden}
-  .contact::after{content:"";position:absolute;right:-50px;bottom:-50px;width:220px;height:220px;background:radial-gradient(circle,rgba(201,169,74,.45),transparent 65%)}
-  .contact h2{font-family:'Poppins';font-weight:800;font-size:29px;color:#fff;letter-spacing:-.5px}
-  .contact p{color:#dcece7;font-size:15px;max-width:480px;margin:12px auto 24px}
-  .contact .info{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:1}
-  .chip{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-weight:500;font-size:13px;background:rgba(255,255,255,.13);padding:10px 16px;border-radius:30px;transition:background .15s}
-  .chip:hover{background:rgba(255,255,255,.22)}
-  .chip svg{width:16px;height:16px;flex-shrink:0}
-  footer{padding:30px;font-size:11.5px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);text-align:center;line-height:1.7}
+  .backlink{color:#d6d6e0;text-decoration:none;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.18);padding:9px 16px;border-radius:30px;transition:all .15s}
+  .backlink:hover{border-color:var(--gold);color:var(--gold)}
+  .titlerow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin:30px 0 6px}
+  .titlerow h1{font-family:'Poppins';font-weight:700;font-size:26px;letter-spacing:-.5px}
+  .titlerow h1 span{color:var(--acc)}
+  .date{color:var(--muted);font-size:13.5px;text-align:right}
+  .date strong{color:var(--white);display:block;font-size:14.5px}
+  .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
+  .summary p{font-size:14.5px;color:#cfd3dc}
+  .summary p+p{margin-top:10px}
+  .summary strong{color:var(--gold)}
+
+  .sec-title{font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:1.5px;color:var(--gold);margin:0 0 16px;display:flex;align-items:center;gap:12px;text-transform:uppercase}
+  .sec-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .sec-title.sub{margin-top:30px}
+
+  .layout{display:grid;grid-template-columns:1fr 322px;gap:30px;align-items:start;margin-top:38px}
+  @media(max-width:880px){.layout{grid-template-columns:1fr;gap:36px}}
+
+  .ncol+.ncol{margin-top:26px}
+  .ncol h3{font-family:'Poppins';font-size:12.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .item{display:block;text-decoration:none;color:inherit;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .it-tag{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  .it-tag.pol{color:var(--acc)}.it-tag.eco{color:var(--gold)}.it-tag.mkt{color:var(--up)}
+  .it-title{font-family:'Poppins';font-size:16px;font-weight:600;margin:5px 0 7px;line-height:1.3}
+  .item:hover .it-title{color:var(--gold)}
+  .it-sum{font-size:13.5px;color:#b3b3c0;line-height:1.5;margin-bottom:9px}
+  .it-src{font-size:12px;color:var(--muted);font-weight:500}
+  .it-src .arrow{color:var(--gold)}
+
+  .side{position:relative}
+  .macro{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+  .mbox{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 13px}
+  .mbox.hl{border-color:rgba(201,169,74,.5);background:linear-gradient(180deg,rgba(201,169,74,.10),var(--ink2))}
+  .mbox.wide{grid-column:1 / -1}
+  .mbox .ml{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .mbox.hl .ml{color:var(--gold)}
+  .mbox .mv{font-family:'Poppins';font-size:18px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+  .mbox.hl .mv{color:var(--gold)}
+  .mbox .mu{font-size:10px;color:var(--muted);font-weight:500}
+  .mbox .ms{font-size:10px;color:var(--muted);margin-top:3px}
+  .grid-mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .cmini{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
+  .cmini .lbl{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);line-height:1.2}
+  .cmini .val{font-family:'Poppins';font-size:15px;font-weight:700;margin-top:5px;font-variant-numeric:tabular-nums}
+  .cmini .chg{font-size:11px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+  .cmini .bar{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .up{color:var(--up)}.down{color:var(--down)}
+  .bar-up{background:var(--up)}.bar-down{background:var(--down)}.bar-acc{background:var(--acc)}
+  .panel{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:4px 2px;margin-bottom:12px}
+  .panel h4{font-family:'Poppins';font-size:11.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:12px 14px 8px}
+  .panel.gain h4{color:var(--up)}.panel.loss h4{color:var(--down)}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .row .tk{font-family:'Poppins';font-weight:600;font-size:12.5px}
+  .row .nm{font-size:10.5px;color:var(--muted);margin-top:1px}
+  .row .pc{font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .row .rt{text-align:right}
+  .row .prc{font-size:10px;color:var(--muted);font-weight:500;margin-top:1px;font-variant-numeric:tabular-nums}
+  .pnote{padding:9px 14px;font-size:10.5px;color:var(--muted);border-top:1px solid rgba(255,255,255,.06);line-height:1.4}
+  .agenda{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:2px 2px 4px}
+  .agenda .ar{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .agenda .ar:first-of-type{border-top:none}
+  .agenda .day{font-family:'Poppins';font-weight:700;font-size:10px;color:var(--gold);background:rgba(201,169,74,.12);padding:4px 7px;border-radius:6px;min-width:54px;text-align:center;letter-spacing:.3px;flex-shrink:0}
+  .agenda .ev{font-size:11.5px;color:#bcbcc8;line-height:1.35}
+  .agenda .ev b{color:var(--white);font-weight:600}
+  .agenda .ar.hl .day{color:#141414;background:var(--gold)}
+  .agenda .ar.hl .ev b{color:var(--gold)}
+
+  footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
   footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
 </style>
 </head>
 <body>
+<div class="wrap">
 
   <nav class="nav">
-    <div class="logo"><div class="mk">GB</div><div><b>Gabriel Barbosa</b><div class="sub">Assessoria de Patrimônio</div></div></div>
-    <div class="nlinks">
-      <a href="#sobre">Sobre</a>
-      <a href="#areas">Áreas</a>
-      <a href="#educacao">Educação</a>
-      <a href="morning-call.html">Morning Call</a>
-    </div>
+    <div class="logo"><div class="mk">GB</div><div><b>Gabriel Barbosa</b><div class="sub">Assessoria de Investimentos</div></div></div>
   </nav>
 
-  <section class="hero">
-    <div class="blob"></div>
-    <div class="eyebrow">Planejamento &amp; Gestão de Patrimônio</div>
-    <h1>Seu patrimônio com <em>estratégia</em>, proteção e visão de longo prazo</h1>
-    <p>Assessoria personalizada para famílias e investidores que querem preservar, diversificar e transmitir patrimônio — no Brasil e no exterior.</p>
-    <div class="cta">
-      <a href="morning-call.html" class="pill ghost">Ver o Morning Call</a>
-    </div>
-  </section>
+  <div class="titlerow">
+    <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
+    <div class="date"><strong>Segunda-feira, 27 de julho de 2026</strong>Abertura da semana · fechamento de sexta (25/07)</div>
+  </div>
 
-  <section class="about" id="sobre">
-    <img class="photo" src="sobre-foto.jpg" alt="Gabriel Barbosa com a família" loading="lazy">
-    <div>
-      <div class="kicker">Quem sou</div>
-      <h2>Sobre mim</h2>
-      <p>Sou <strong style="color:#fff">Gabriel Barbosa</strong>, assessor de patrimônio em Indaiatuba/SP. Em 2026 completo <strong style="color:#fff">10 anos de carreira</strong> dedicados à assessoria de patrimônio, período em que venho ajudando famílias e investidores a organizar, proteger e fazer crescer seu patrimônio — sempre com clareza, independência e estratégias construídas sob medida para cada objetivo. Sou formado em Administração de Empresas pela ESAMC Campinas.</p>
-      <p>Casado com a Juliana e pai do Gabriel, aguardo a chegada da Maria Eduarda para completar a família. É esse compromisso com as pessoas que me são mais importantes que orienta o meu trabalho: conduzir o patrimônio de cada cliente com a mesma responsabilidade e o mesmo cuidado que dedico à minha própria família.</p>
-      <div class="creds">
-        <span>10 anos de carreira</span>
-        <span>Atendimento presencial e online</span>
-        <span>Indaiatuba/SP</span>
-      </div>
-    </div>
-  </section>
+  <div class="summary">
+    <p>O Ibovespa fechou a sexta-feira em queda de 1,52%, aos 174.042 pontos, pressionado pela realização de lucros em commodities, especialmente Petrobras, que recuou com a suavização do preço do Brent. As expectativas do Boletim Focus trouxeram alívio sobre a inflação para 2026, com a mediana do IPCA recuando para 5,30%, ampliando as apostas em corte da Selic no próximo Copom.</p>
+    <p>Nos mercados internacionais, Wall Street encerrou sexta com resultados mistos: S&P 500 praticamente estável (+0,05%), Nasdaq em queda (-0,64%) e Dow Jones em alta (+0,46%), penalizado pelos semicondutores em meio a tensões no Oriente Médio e discussões sobre gastos em IA. O dólar manteve o real praticamente estável, fechando a R$ 5,0873.</p>
+  </div>
 
-  <section class="light" id="areas">
-    <div class="sec">
-      <div class="kicker">O que fazemos</div>
-      <h2>Áreas de atuação</h2>
-      <p class="lead">Soluções integradas para cada etapa da sua vida financeira, de forma independente e alinhada aos seus objetivos.</p>
-      <div class="areas">
-        <div class="area"><div class="ic">📈</div><h3>Investimentos Nacionais</h3><p>Renda fixa, variável e fundos de investimento</p></div>
-        <div class="area"><div class="ic">🌐</div><h3>Investimentos Internacionais</h3><p>Diversificação em moeda forte nos mercados globais</p></div>
-        <div class="area"><div class="ic">🏛️</div><h3>Offshore e Sucessão</h3><p>Estruturas no exterior e planejamento sucessório</p></div>
-        <div class="area"><div class="ic">🛡️</div><h3>Previdência e Seguro de Vida</h3><p>Aposentadoria e proteção familiar</p></div>
-        <div class="area"><div class="ic">🔑</div><h3>Consórcio</h3><p>Aquisição de bens sem juros, com carta de crédito</p></div>
-        <div class="area"><div class="ic">⚖️</div><h3>Ativos Judiciais</h3><p>Precatórios e créditos judiciais</p></div>
-        <div class="area"><div class="ic">💱</div><h3>Câmbio</h3><p>Remessas e operações em moedas estrangeiras</p></div>
-        <div class="area"><div class="ic">☂️</div><h3>Seguros em Geral</h3><p>Veículos, residencial e empresarial</p></div>
-      </div>
-    </div>
-  </section>
+  <div class="layout">
 
-  <section class="dark" id="educacao">
-    <div class="sec">
-      <div class="kicker">Educação financeira</div>
-      <h2>Como ler os indicadores</h2>
-      <p class="lead">Um guia rápido para entender os números que aparecem no Morning Call diário — sem jargão.</p>
-      <div class="edu">
-        <div class="ind"><div class="top"><span class="tg">BOLSA</span><h4>Ibovespa</h4></div><p>O principal índice da bolsa brasileira (B3) — o "termômetro" do mercado acionário.</p><div class="why"><b>Importa:</b> mostra se a bolsa subiu ou caiu no dia.</div></div>
-        <div class="ind"><div class="top"><span class="tg">CÂMBIO</span><h4>Dólar (USD/BRL)</h4></div><p>Quanto custa 1 dólar em reais; sobe na incerteza, cai quando entra capital.</p><div class="why"><b>Importa:</b> afeta inflação e investimentos no exterior.</div></div>
-        <div class="ind"><div class="top"><span class="tg">JUROS</span><h4>Juros Futuros (DI)</h4></div><p>A expectativa do mercado para os juros à frente; a curva sobe ou recua.</p><div class="why"><b>Importa:</b> influencia renda fixa, crédito e ações.</div></div>
-        <div class="ind"><div class="top"><span class="tg">JUROS</span><h4>Selic</h4></div><p>A taxa básica de juros da economia, definida pelo Banco Central (Copom).</p><div class="why"><b>Importa:</b> Selic alta favorece a renda fixa; baixa estimula a bolsa.</div></div>
-        <div class="ind"><div class="top"><span class="tg">INFLAÇÃO</span><h4>IPCA</h4></div><p>O índice oficial de inflação do Brasil, medido pelo IBGE.</p><div class="why"><b>Importa:</b> corrói o poder de compra e orienta os juros.</div></div>
-        <div class="ind"><div class="top"><span class="tg">EUA</span><h4>S&amp;P · Nasdaq · Dow</h4></div><p>Os três principais índices dos EUA; o Nasdaq concentra tecnologia.</p><div class="why"><b>Importa:</b> ditam o humor global e influenciam a B3.</div></div>
-        <div class="ind"><div class="top"><span class="tg">COMMODITIES</span><h4>Petróleo (Brent)</h4></div><p>Referência internacional do barril; move ações do setor (Petrobras).</p><div class="why"><b>Importa:</b> impacta combustíveis, inflação e a bolsa.</div></div>
-        <div class="ind"><div class="top"><span class="tg">DICA</span><h4>Alta ≠ boa</h4></div><p>Depende do ativo: dólar/juros em queda costumam ser lidos como positivos.</p><div class="why"><b>Regra de ouro:</b> olhe o conjunto, não um indicador isolado.</div></div>
+    <main>
+      <div class="sec-title">Principais Notícias</div>
+
+      <div class="ncol">
+        <h3>Mercado &amp; Economia</h3>
+        <a class="item" href="https://agenciabrasil.ebc.com.br/economia/noticia/2026-07/boletim-focus-mercado-reduz-para-516-expectativa-de-inflacao" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Mercado</div>
+          <div class="it-title">Focus reduz expectativa de inflação para 2026</div>
+          <div class="it-sum">O Boletim Focus do Banco Central revisou para baixo a projeção de IPCA de 2026, reduzindo a mediana para 5,30%. A diminuição das expectativas de inflação amplia as apostas de mercado em novo corte da Selic no próximo Copom, refletindo confiança na desaceleração dos preços após o ciclo de aperto monetário.</div>
+          <div class="it-src">Agência Brasil <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://conteudos.xpi.com.br/politica/news-xpress-23-07-2026-2/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Economia</div>
+          <div class="it-title">Governo anuncia tarifas adicionais contra exportações brasileiras</div>
+          <div class="it-sum">Os Estados Unidos impuseram uma tarifa adicional de 12,5% sobre exportações brasileiras com base em investigação sobre trabalho forçado, que se soma aos 25% já aplicados em 22 de julho. Conforme o Planalto, a sobretaxa pode chegar a 37,5% para determinados setores, aumentando a incerteza para cadeias produtivas nacionais.</div>
+          <div class="it-src">XP Investimentos <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.riotimesonline.com/brazil-markets-ibovespa-real-saturday-july-25-2026/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Mercado</div>
+          <div class="it-title">Petrobras lidera queda do Ibovespa com realização de lucros</div>
+          <div class="it-sum">A estatal petrolífera registrou forte desvalorização com recuo das cotações internacionais de crude. Os papéis acumularam ganhos na semana anterior e investidores aproveitaram a queda do Brent para realizar lucros, impactando significativamente o índice dado o peso da companhia no Ibovespa.</div>
+          <div class="it-src">Rio Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://investidor10.com.br/indices/ipca/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Economia</div>
+          <div class="it-title">IPCA acumulado em 12 meses desacelera para 4,64%</div>
+          <div class="it-sum">A inflação acumulada em 12 meses recuou de 4,72% para 4,64%, com IPCA de junho vindo surpreendentemente baixo em +0,16%. O resultado favoreceu a ata para cortes na Selic e aliviou preocupações do mercado sobre pressões inflacionárias persistentes, especialmente com alívio nos preços administrados.</div>
+          <div class="it-src">Investidor10 <span class="arrow">↗</span></div>
+        </a>
       </div>
-    </div>
-  </section>
+
+      <div class="ncol">
+        <h3>Política &amp; Internacional</h3>
+        <a class="item" href="https://agenciabrasil.ebc.com.br/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional</div>
+          <div class="it-title">Presidente de Cuba acusa EUA de genocídio político</div>
+          <div class="it-sum">Em discurso à nação, o presidente cubano acusou os Estados Unidos de praticar genocídio político em meio ao acirramento de tensões bilaterais. As declarações ocorrem em contexto de crescente instabilidade no Caribe e impactam percepção de risco geopolítico global dos investidores.</div>
+          <div class="it-src">Agência Brasil <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.jota.info/opiniao-e-analise/colunas/elas-no-jota/o-julgamento-politico-de-bolsonaro-e-seus-reflexos-no-brasil-de-2026" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política</div>
+          <div class="it-title">Julgamento de Bolsonaro marca momento crítico da política brasileira</div>
+          <div class="it-sum">A 1ª Turma do STF prossegue com o julgamento do ex-presidente Bolsonaro e aliados por crimes como tentativa de golpe. O processo intensifica polarização política e promete reverberar nas eleições de 2026, criando ambiente de incerteza para investidores sobre cenário político doméstico.</div>
+          <div class="it-src">JOTA.Info <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.cnbc.com/2026/07/23/stock-market-today-live-updates.html" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional</div>
+          <div class="it-title">Paquistão discute negociações para paz entre EUA e Irã</div>
+          <div class="it-sum">Segundo relato de fontes paquistanesas, o país estuda possibilidades de iniciar novo ciclo de negociações de paz entre Estados Unidos e Irã, com apoio da China. A notícia moveu preços de commodities na sexta-feira, aliviando pressões sobre o petróleo que havia alcançado patamares elevados.</div>
+          <div class="it-src">CNBC <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.washingtonpost.com/business/2026/07/24/stocks-dow-nasdaq-iran-oil/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política</div>
+          <div class="it-title">Tensões EUA-Irã impactam mercados globais</div>
+          <div class="it-sum">Desdobramentos do conflito entre Estados Unidos e Irã continuam a pressionar os mercados, com destaque para volatilidade em preços de petróleo e comportamento defensivo de investidores. O cenário reforça procura por ativos considerados portos seguros e aumenta aversão ao risco em posições de renda variável.</div>
+          <div class="it-src">Washington Post <span class="arrow">↗</span></div>
+        </a>
+      </div>
+    </main>
+
+    <aside class="side">
+      <div class="sec-title">Painel de Mercado</div>
+      <div class="macro">
+        <div class="mbox hl"><div class="ml">Selic (hoje)</div><div class="mv">14,25% a.a.</div><div class="ms">Taxa básica de juros</div></div>
+        <div class="mbox"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">+4,64%</div><div class="ms">Junho: +0,16%</div></div>
+        <div class="mbox wide"><div class="ml">Juros DI · Jan/2029</div><div class="mv">n/d</div><div class="ms">Curva de juros futuros</div></div>
+      </div>
+      <div class="grid-mini">
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Ibovespa</div><div class="val">174.042</div><div class="chg down">▼ −1,52%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,0873</div><div class="chg down">▼ −0,04%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Brent (set)</div><div class="val">US$ 76,01</div><div class="chg down">n/d</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.411,98</div><div class="chg up">▲ +0,05%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Nasdaq</div><div class="val">24.975,82</div><div class="chg down">▼ −0,64%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">51.947,25</div><div class="chg up">▲ +0,46%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Stoxx 600</div><div class="val">n/d</div><div class="chg up">n/d</div></div>
+      </div>
+
+      <div class="sec-title sub">Destaques · B3</div>
+      <div class="panel gain">
+        <h4>▲ Maiores Altas</h4>
+        <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras PN</div></div><div class="rt"><div class="pc up">−1,70%</div><div class="prc">R$ n/d</div></div></div>
+        <div class="row"><div><div class="tk">VALE3</div><div class="nm">Vale</div></div><div class="rt"><div class="pc up">−0,60%</div><div class="prc">R$ n/d</div></div></div>
+        <div class="row"><div><div class="tk">ITUB4</div><div class="nm">Itaú PN</div></div><div class="rt"><div class="pc up">−1,10%</div><div class="prc">R$ n/d</div></div></div>
+      </div>
+      <div class="panel loss">
+        <h4>▼ Maiores Baixas</h4>
+        <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras ON</div></div><div class="rt"><div class="pc down">−2,40%</div><div class="prc">R$ n/d</div></div></div>
+        <div class="pnote">Pregão marcado por realização de lucros em blue chips após sequência de ganhos. Brent em queda aproximadamente 0,38% influenciou desempenho de energéticas. Mercado repercute tensões geopolíticas e expectativas de corte de Selic.</div>
+      </div>
+
+      <div class="sec-title sub">Agenda da Semana</div>
+      <div class="agenda">
+        <div class="ar"><span class="day">SEG 27</span><div class="ev"><b>Abertura de pregão:</b> B3 e Wall Street retomam atividades após fim de semana</div></div>
+        <div class="ar"><span class="day">TER 28</span><div class="ev"><b>Índices econômicos Brasil:</b> Fluxo cambial semanal e atividade industrial sob monitoramento</div></div>
+        <div class="ar hl"><span class="day">QUA 29</span><div class="ev"><b>Fed decision week:</b> Mercado atento a sinais sobre política monetária americana</div></div>
+        <div class="ar hl"><span class="day">QUI 30</span><div class="ev"><b>Copom em 4-5/08:</b> Mercado precifica corte adicional da Selic para 14,00% a.a.</div></div>
+        <div class="ar"><span class="day">SEM DATA</span><div class="ev"><b>Ata do Copom de julho:</b> Publicação aguardada para subsidiar debate sobre ritmo de cortes</div></div>
+      </div>
+    </aside>
+
+  </div>
 
   <footer>
-    <p class="name">Gabriel Barbosa · Assessoria de Patrimônio</p>
-    <p>Conteúdo de caráter informativo e educacional. Não constitui recomendação, oferta ou solicitação de compra ou venda de ativos. Rentabilidade passada não é garantia de resultados futuros. Investimentos envolvem riscos.</p>
+    <p class="name">Gabriel Barbosa · Assessoria de Investimentos</p>
+    <p>Morning Call atualizado em 27 de julho de 2026. Cotações e variações referentes ao fechamento do pregão anterior.</p>
+    <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas. <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros. Gerado automaticamente e pode conter imprecisões.</p>
   </footer>
 
+</div>
 </body>
 </html>
