@@ -25,7 +25,7 @@ import anthropic
 
 MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 TEMPLATE_PATH = "morning-call.template.html"
-OUTPUT_PATH = "morning-call.html"
+OUTPUT_PATH = "index.html"
 
 TZ = ZoneInfo("America/Sao_Paulo")
 DIAS = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira",
@@ -40,7 +40,7 @@ def data_extenso(dt):
 
 def build_prompt(hoje):
     return f"""Hoje é {data_extenso(hoje)} (horário de Brasília), por volta das 6h da manhã.
-Você vai montar o "Morning Call" diário de mercado da assessoria de patrimônio de Gabriel Barbosa.
+Você vai montar o "Morning Call" diário de mercado da assessoria de investimentos de Gabriel Barbosa.
 
 Como é de manhã cedo, os dados de mercado devem ser do FECHAMENTO DO ÚLTIMO PREGÃO
 (o dia útil anterior na B3 e em Wall Street). Se hoje for segunda-feira, o último pregão foi na sexta.
@@ -54,8 +54,8 @@ Reserve buscas suficientes para as notícias — você PRECISA entregar 4 de Mer
 Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e variação %), Dólar USD/BRL (cotação e %),
   Juros Futuros/DI (direção da curva; cite a Selic vigente), Petróleo Brent, S&P 500, Nasdaq, Dow Jones, Stoxx 600.
-- As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação %). Se quase tudo subiu/caiu,
-  liste o que houver e explique numa nota.
+- As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
+  fechamento da ação em reais, ex.: "R$ 5,23"). Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
   (2 a 4 frases, escrito por você, sem copiar o texto da fonte), o veículo e a URL REAL da matéria (verifique cada link).
 - Agenda econômica da semana (4 a 6 itens) com dia e evento; marque o item mais importante com "hl": true.
@@ -77,8 +77,8 @@ Responda APENAS com um objeto JSON válido entre as marcas <json> e </json>, no 
     {{"lbl": "Dow Jones", "val": "52.637,01", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}},
     {{"lbl": "Stoxx 600", "val": "641,10", "chg": "▲ +0,04%", "bar": "up", "cls": "up"}}
   ],
-  "altas": [{{"tk": "CMIN3", "nm": "CSN Mineração", "pc": "+8,28%"}}],
-  "baixas": [{{"tk": "PRIO3", "nm": "PRIO", "pc": "−0,29%"}}],
+  "altas": [{{"tk": "CMIN3", "nm": "CSN Mineração", "pc": "+8,28%", "preco": "R$ 5,23"}}],
+  "baixas": [{{"tk": "PRIO3", "nm": "PRIO", "pc": "−0,29%", "preco": "R$ 55,45"}}],
   "baixas_nota": "Opcional: nota curta se o pregão foi de alta/queda generalizada. Use string vazia se não precisar.",
   "noticias_eco": [
     {{"tag": "Mercado", "tag_class": "mkt", "titulo": "...", "resumo": "...", "fonte": "Money Times", "url": "https://..."}}
@@ -145,8 +145,8 @@ def repair_to_json(client, text):
     prompt = (
         "O texto a seguir contém dados de mercado e notícias, possivelmente em prosa. "
         "Converta em UM ÚNICO objeto JSON válido do Morning Call, com as chaves: date, subtitle, "
-        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), altas (lista {tk,nm,pc}), "
-        "baixas (lista {tk,nm,pc}), baixas_nota, noticias_eco e noticias_pol (listas de "
+        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), altas (lista {tk,nm,pc,preco}), "
+        "baixas (lista {tk,nm,pc,preco}), baixas_nota, noticias_eco e noticias_pol (listas de "
         "{tag,tag_class,titulo,resumo,fonte,url}), agenda (lista {day,ev,hl}) e footer_date. "
         "Use os dados presentes no texto; se algo faltar, use \"n/d\" ou omita itens da lista. "
         "Responda SOMENTE com o JSON entre <json> e </json>, sem nenhum texto extra.\n\nTEXTO:\n" + text
@@ -181,10 +181,12 @@ def render_panel(items):
 def render_rows(items, cls):
     out = []
     for it in items:
+        preco = it.get("preco", "")
+        preco_html = f'<div class="prc">{esc(preco)}</div>' if preco and preco != "n/d" else ""
         out.append(
             f'        <div class="row"><div><div class="tk">{esc(it["tk"])}</div>'
             f'<div class="nm">{esc(it["nm"])}</div></div>'
-            f'<div class="pc {cls}">{esc(it["pc"])}</div></div>'
+            f'<div class="rt"><div class="pc {cls}">{esc(it["pc"])}</div>{preco_html}</div></div>'
         )
     return "\n".join(out)
 
