@@ -259,10 +259,8 @@ def _advfn_ultimo(page, url):
     return None
 
 
-def coletar_cotacoes_advfn(di_url, tickers):
-    """Navegador headless para ler o DI (rate) e os preços das ações no ADVFN.
-    Retorna {'di': str|None, 'precos': {TICKER: str}}. Nunca levanta exceção."""
-    res = {"di": None, "precos": {}}
+def advfn_di(url):
+    """Lê a taxa do DI ('Último Preço') no ADVFN via navegador headless. Retorna str ou None."""
     try:
         from playwright.sync_api import sync_playwright
         ua = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -270,16 +268,39 @@ def coletar_cotacoes_advfn(di_url, tickers):
         with sync_playwright() as p:
             browser = p.chromium.launch()
             page = browser.new_page(user_agent=ua)
-            res["di"] = _advfn_ultimo(page, di_url)
-            for tk in tickers:
-                page.wait_for_timeout(700)  # pequena pausa entre requisições
-                v = _advfn_ultimo(page, f"https://br.advfn.com/bolsa-de-valores/bovespa/{tk}/cotacao")
-                if v:
-                    res["precos"][tk] = v
+            v = _advfn_ultimo(page, url)
             browser.close()
+            return v
     except Exception as e:
         print(f"ADVFN/Playwright indisponível: {str(e)[:150]}")
-    return res
+        return None
+
+
+def brapi_precos(tickers):
+    """Cotações de fechamento das ações via brapi.dev (JSON estável).
+    Retorna {TICKER: 'R$ x,xx'}. Usa BRAPI_TOKEN se existir (opcional). Nunca levanta exceção."""
+    out = {}
+    if not tickers:
+        return out
+    try:
+        import urllib.request
+        token = os.environ.get("BRAPI_TOKEN", "").strip()
+        url = "https://brapi.dev/api/quote/" + ",".join(tickers)
+        if token:
+            url += "?token=" + token
+        req = urllib.request.Request(url, headers={"User-Agent": "morning-call-bot"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            payload = json.loads(r.read().decode("utf-8"))
+        for it in payload.get("results", []):
+            sym = (it.get("symbol") or "").upper()
+            preco = it.get("regularMarketPrice")
+            if preco is None:
+                preco = it.get("regularMarketPreviousClose")
+            if sym and preco is not None:
+                out[sym] = "R$ " + f"{float(preco):.2f}".replace(".", ",")
+    except Exception as e:
+        print(f"brapi indisponível: {str(e)[:150]}")
+    return out
 
 
 def main():
@@ -359,13 +380,14 @@ def main():
         tk = (it.get("tk") or "").strip().upper()
         if tk and tk not in tickers:
             tickers.append(tk)
-    adv = coletar_cotacoes_advfn("https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao", tickers[:12])
-    # DI e preços vêm SOMENTE do ADVFN (confiável). Sem dado -> "—"/vazio, nunca um valor errado.
-    data["di_2029"] = f'{adv["di"]}%' if adv.get("di") else "—"
+    # DI Jan/2029: ADVFN (navegador headless). Preços das ações: brapi.dev (JSON estável).
+    di = advfn_di("https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao")
+    data["di_2029"] = f"{di}%" if di else "—"
+    precos = brapi_precos(tickers[:15])
     for it in movers:
-        v = adv["precos"].get((it.get("tk") or "").strip().upper())
-        it["preco"] = f"R$ {v}" if v else ""
-    print(f"ADVFN: DI={data.get('di_2029')} | preços obtidos={len(adv['precos'])}/{len(tickers)}.")
+        v = precos.get((it.get("tk") or "").strip().upper())
+        it["preco"] = v if v else ""
+    print(f"DI={data.get('di_2029')} | preços brapi={len(precos)}/{len(tickers)}.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
 
