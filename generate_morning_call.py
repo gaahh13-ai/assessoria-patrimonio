@@ -57,8 +57,10 @@ Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e %), Dólar USD/BRL (cotação e %), Petróleo Brent,
   S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
-  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a taxa do DI futuro
-  para Jan/2029 (ex.: "13,90%").
+  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a taxa do DI futuro para
+  Jan/2029 (ex.: "13,90%"). Para o DI Jan/2029, faça uma busca dedicada por "juros futuros DI hoje" ou
+  "DI janeiro 2029 taxa" (Money Times, InfoMoney, Investing) e pegue a taxa desse contrato; se realmente não
+  encontrar o vencimento 2029, use a taxa do contrato DI longo mais próximo disponível (não deixe como "n/d").
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
   fechamento da ação em reais, ex.: "R$ 5,23"). Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
@@ -262,7 +264,7 @@ def main():
             resp = client.messages.create(
                 model=MODEL,
                 max_tokens=16000,
-                tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 6}],
+                tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 7}],
                 messages=messages,
             )
             sr = resp.stop_reason
