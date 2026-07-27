@@ -58,13 +58,13 @@ Colete:
   S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
   IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a taxa do DI futuro para
-  Jan/2029 (ex.: "13,90%"). Para o DI Jan/2029, use o ADVFN: pesquise "ADVFN DI1F29 cotação" (página
-  https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao) e pegue a taxa/valor de fechamento desse
-  contrato. NÃO deixe como "n/d".
+  Jan/2029 (ex.: "13,90%"). Para o DI Jan/2029, procure a taxa nas matérias diárias de "juros futuros"
+  (Money Times/InfoMoney), que costumam citar contratos específicos; se realmente não encontrar o
+  vencimento Jan/2029, use "n/d".
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
-  fechamento da ação em reais, ex.: "R$ 5,23"). Para a cotação de cada ação use o ADVFN — página
-  https://br.advfn.com/bolsa-de-valores/bovespa/TICKER/cotacao (ex.: PETR4/cotacao) — e pegue o valor de
-  fechamento. Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
+  fechamento da ação em reais, ex.: "R$ 5,23"). A cotação costuma vir ENTRE PARÊNTESES ao lado da variação
+  nas matérias de fechamento do pregão (ex.: Money Times/InfoMoney trazem "MGLU3 ... 7,76% (R$ 4,86)");
+  use esse valor. Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
   (2 a 4 frases, escrito por você, sem copiar o texto da fonte), o veículo e a URL REAL da matéria (verifique cada link).
 - Agenda econômica da semana (4 a 6 itens) com dia e evento; marque o item mais importante com "hl": true.
