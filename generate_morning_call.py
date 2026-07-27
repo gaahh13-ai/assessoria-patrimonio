@@ -51,9 +51,14 @@ SEJA ECONÔMICO NAS BUSCAS: faça no MÁXIMO 6 buscas, bem direcionadas (ex.: 1-
 do pregão e cotações, 1 para altas/baixas, 2-3 para notícias). Reaproveite o que já encontrou; não repita buscas.
 Reserve buscas suficientes para as notícias — você PRECISA entregar 4 de Mercado/Economia e 4 de Política.
 
+Use SEMPRE os dados do FECHAMENTO DO ÚLTIMO PREGÃO (dia útil anterior).
+
 Colete:
-- Painel (fechamento do último pregão): Ibovespa (pontos e variação %), Dólar USD/BRL (cotação e %),
-  Juros Futuros/DI (direção da curva; cite a Selic vigente), Petróleo Brent, S&P 500, Nasdaq, Dow Jones, Stoxx 600.
+- Painel (fechamento do último pregão): Ibovespa (pontos e %), Dólar USD/BRL (cotação e %), Petróleo Brent,
+  S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
+- Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
+  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a taxa do DI futuro
+  para Jan/2029 (ex.: "13,90%").
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
   fechamento da ação em reais, ex.: "R$ 5,23"). Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
@@ -70,13 +75,16 @@ Responda APENAS com um objeto JSON válido entre as marcas <json> e </json>, no 
   "painel": [
     {{"lbl": "Ibovespa", "val": "177.866", "chg": "▲ +2,97%", "bar": "up", "cls": "up"}},
     {{"lbl": "Dólar (USD/BRL)", "val": "R$ 5,1084", "chg": "▼ −0,28%", "bar": "up", "cls": "up"}},
-    {{"lbl": "Juros Futuros (DI)", "val": "Curva ▼", "chg": "Selic 14,25%", "bar": "acc", "cls": "up"}},
     {{"lbl": "Brent (set)", "val": "US$ 76,01", "chg": "▼ −0,38%", "bar": "down", "cls": "down"}},
     {{"lbl": "S&P 500", "val": "7.575,39", "chg": "▲ +0,42%", "bar": "up", "cls": "up"}},
     {{"lbl": "Nasdaq", "val": "26.281,11", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}},
     {{"lbl": "Dow Jones", "val": "52.637,01", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}},
     {{"lbl": "Stoxx 600", "val": "641,10", "chg": "▲ +0,04%", "bar": "up", "cls": "up"}}
   ],
+  "selic": "14,25% a.a.",
+  "ipca_12m": "+5,23%",
+  "ipca_mes": "Junho: +0,16%",
+  "di_2029": "13,90%",
   "altas": [{{"tk": "CMIN3", "nm": "CSN Mineração", "pc": "+8,28%", "preco": "R$ 5,23"}}],
   "baixas": [{{"tk": "PRIO3", "nm": "PRIO", "pc": "−0,29%", "preco": "R$ 55,45"}}],
   "baixas_nota": "Opcional: nota curta se o pregão foi de alta/queda generalizada. Use string vazia se não precisar.",
@@ -145,8 +153,8 @@ def repair_to_json(client, text):
     prompt = (
         "O texto a seguir contém dados de mercado e notícias, possivelmente em prosa. "
         "Converta em UM ÚNICO objeto JSON válido do Morning Call, com as chaves: date, subtitle, "
-        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), altas (lista {tk,nm,pc,preco}), "
-        "baixas (lista {tk,nm,pc,preco}), baixas_nota, noticias_eco e noticias_pol (listas de "
+        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), selic, ipca_12m, ipca_mes, di_2029, "
+        "altas (lista {tk,nm,pc,preco}), baixas (lista {tk,nm,pc,preco}), baixas_nota, noticias_eco e noticias_pol (listas de "
         "{tag,tag_class,titulo,resumo,fonte,url}), agenda (lista {day,ev,hl}) e footer_date. "
         "Use os dados presentes no texto; se algo faltar, use \"n/d\" ou omita itens da lista. "
         "Responda SOMENTE com o JSON entre <json> e </json>, sem nenhum texto extra.\n\nTEXTO:\n" + text
@@ -303,6 +311,10 @@ def main():
     out = out.replace("{{NEWS_ECO}}", render_news(data["noticias_eco"]))
     out = out.replace("{{NEWS_POL}}", render_news(data["noticias_pol"]))
     out = out.replace("{{PANEL}}", render_panel(data["painel"]))
+    out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
+    out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
+    out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
+    out = out.replace("{{DI_2029}}", esc(data.get("di_2029", "n/d")))
     out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
     out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
     out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))

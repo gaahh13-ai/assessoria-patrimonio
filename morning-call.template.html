@@ -59,6 +59,16 @@
   .it-src .arrow{color:var(--gold)}
 
   .side{position:relative}
+  .macro{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+  .mbox{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 13px}
+  .mbox.hl{border-color:rgba(201,169,74,.5);background:linear-gradient(180deg,rgba(201,169,74,.10),var(--ink2))}
+  .mbox.wide{grid-column:1 / -1}
+  .mbox .ml{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .mbox.hl .ml{color:var(--gold)}
+  .mbox .mv{font-family:'Poppins';font-size:18px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+  .mbox.hl .mv{color:var(--gold)}
+  .mbox .mu{font-size:10px;color:var(--muted);font-weight:500}
+  .mbox .ms{font-size:10px;color:var(--muted);margin-top:3px}
   .grid-mini{display:grid;grid-template-columns:1fr 1fr;gap:9px}
   .cmini{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:11px 12px;position:relative;overflow:hidden}
   .cmini .lbl{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);line-height:1.2}
@@ -124,6 +134,11 @@
 
     <aside class="side">
       <div class="sec-title">Painel de Mercado</div>
+      <div class="macro">
+        <div class="mbox hl"><div class="ml">Selic (hoje)</div><div class="mv">{{SELIC}}</div><div class="ms">Taxa básica de juros</div></div>
+        <div class="mbox"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">{{IPCA_12M}}</div><div class="ms">{{IPCA_MES}}</div></div>
+        <div class="mbox wide"><div class="ml">Juros DI · Jan/2029</div><div class="mv">{{DI_2029}}</div><div class="ms">Curva de juros futuros</div></div>
+      </div>
       <div class="grid-mini">
 {{PANEL}}
       </div>
