@@ -64,7 +64,8 @@ Colete:
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
   fechamento da ação em reais, ex.: "R$ 5,23"). A cotação costuma vir ENTRE PARÊNTESES ao lado da variação
   nas matérias de fechamento do pregão (ex.: Money Times/InfoMoney trazem "MGLU3 ... 7,76% (R$ 4,86)");
-  use esse valor. Se quase tudo subiu/caiu, liste o que houver e explique numa nota.
+  use esse valor. Liste APENAS as altas/baixas que você REALMENTE encontrou, com variação % real —
+  NÃO complete a lista com tickers genéricos e NUNCA use "n/d" na variação (é melhor listar menos).
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
   (2 a 4 frases, escrito por você, sem copiar o texto da fonte), o veículo e a URL REAL da matéria (verifique cada link).
 - Agenda econômica da semana (4 a 6 itens) com dia e evento; marque o item mais importante com "hl": true.
@@ -242,15 +243,20 @@ def render_losses(items, nota):
 
 
 def _advfn_ultimo(page, url):
-    """Lê o 'Último Preço' de uma página de cotação do ADVFN. Retorna str (ex.: '14,345') ou None."""
-    try:
-        page.goto(url, timeout=30000, wait_until="domcontentloaded")
-        page.wait_for_timeout(3000)
-        txt = page.inner_text("body")
-        m = re.search(r"Último Preço\s*([\d.]+,\d+)", txt)
-        return m.group(1) if m else None
-    except Exception:
-        return None
+    """Lê o 'Último Preço' de uma página de cotação do ADVFN. Retorna str (ex.: '14,345') ou None.
+    Faz até 2 tentativas com espera maior, para tolerar lentidão/limite do site."""
+    for tentativa in range(2):
+        try:
+            page.goto(url, timeout=35000, wait_until="load")
+            page.wait_for_timeout(3500)
+            txt = page.inner_text("body")
+            m = re.search(r"Último Preço\s*([\d.]+,\d+)", txt)
+            if m:
+                return m.group(1)
+        except Exception:
+            pass
+        page.wait_for_timeout(1500)
+    return None
 
 
 def coletar_cotacoes_advfn(di_url, tickers):
@@ -266,6 +272,7 @@ def coletar_cotacoes_advfn(di_url, tickers):
             page = browser.new_page(user_agent=ua)
             res["di"] = _advfn_ultimo(page, di_url)
             for tk in tickers:
+                page.wait_for_timeout(700)  # pequena pausa entre requisições
                 v = _advfn_ultimo(page, f"https://br.advfn.com/bolsa-de-valores/bovespa/{tk}/cotacao")
                 if v:
                     res["precos"][tk] = v
@@ -341,6 +348,9 @@ def main():
         sys.exit("Não consegui gerar dados completos após 3 tentativas. Página anterior mantida.")
 
     # Cotações exatas via ADVFN (navegador headless): DI Jan/2029 e preços das ações.
+    # descarta linhas sem variação real (evita tickers "n/d" que o modelo às vezes inventa)
+    data["altas"] = [it for it in data.get("altas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
+    data["baixas"] = [it for it in data.get("baixas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
     movers = data.get("altas", []) + data.get("baixas", [])
     tickers = []
     for it in movers:
