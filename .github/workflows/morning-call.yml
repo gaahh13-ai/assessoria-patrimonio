@@ -38,8 +38,8 @@ jobs:
         run: |
           git config user.name "morning-call-bot"
           git config user.email "actions@github.com"
-          if git status --porcelain | grep -q "morning-call.html"; then
-            git add morning-call.html
+          if git status --porcelain | grep -q "index.html"; then
+            git add index.html
             git commit -m "Atualiza Morning Call ($(TZ='America/Sao_Paulo' date '+%d/%m/%Y'))"
             git push
             echo "Morning Call publicado."
