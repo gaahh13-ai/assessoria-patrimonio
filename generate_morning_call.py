@@ -241,6 +241,40 @@ def render_losses(items, nota):
     return body
 
 
+def _advfn_ultimo(page, url):
+    """Lê o 'Último Preço' de uma página de cotação do ADVFN. Retorna str (ex.: '14,345') ou None."""
+    try:
+        page.goto(url, timeout=30000, wait_until="domcontentloaded")
+        page.wait_for_timeout(3000)
+        txt = page.inner_text("body")
+        m = re.search(r"Último Preço\s*([\d.]+,\d+)", txt)
+        return m.group(1) if m else None
+    except Exception:
+        return None
+
+
+def coletar_cotacoes_advfn(di_url, tickers):
+    """Navegador headless para ler o DI (rate) e os preços das ações no ADVFN.
+    Retorna {'di': str|None, 'precos': {TICKER: str}}. Nunca levanta exceção."""
+    res = {"di": None, "precos": {}}
+    try:
+        from playwright.sync_api import sync_playwright
+        ua = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page(user_agent=ua)
+            res["di"] = _advfn_ultimo(page, di_url)
+            for tk in tickers:
+                v = _advfn_ultimo(page, f"https://br.advfn.com/bolsa-de-valores/bovespa/{tk}/cotacao")
+                if v:
+                    res["precos"][tk] = v
+            browser.close()
+    except Exception as e:
+        print(f"ADVFN/Playwright indisponível: {str(e)[:150]}")
+    return res
+
+
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ERRO: ANTHROPIC_API_KEY não definida.")
@@ -305,6 +339,22 @@ def main():
 
     if not valido(data):
         sys.exit("Não consegui gerar dados completos após 3 tentativas. Página anterior mantida.")
+
+    # Cotações exatas via ADVFN (navegador headless): DI Jan/2029 e preços das ações.
+    movers = data.get("altas", []) + data.get("baixas", [])
+    tickers = []
+    for it in movers:
+        tk = (it.get("tk") or "").strip().upper()
+        if tk and tk not in tickers:
+            tickers.append(tk)
+    adv = coletar_cotacoes_advfn("https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao", tickers[:12])
+    if adv["di"]:
+        data["di_2029"] = f'{adv["di"]}%'
+    for it in movers:
+        v = adv["precos"].get((it.get("tk") or "").strip().upper())
+        if v:
+            it["preco"] = f"R$ {v}"
+    print(f"ADVFN: DI={data.get('di_2029')} | preços obtidos={len(adv['precos'])}/{len(tickers)}.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
 
