@@ -321,8 +321,10 @@ def main():
         return "".join(parts), sr
 
     def valido(d):
+        altas_reais = [x for x in (d.get("altas") or []) if re.search(r"\d", str(x.get("pc", "")))]
         return bool(d and d.get("painel") and len(d["painel"]) >= 5
-                    and d.get("noticias_eco") and d.get("noticias_pol"))
+                    and d.get("noticias_eco") and d.get("noticias_pol")
+                    and altas_reais)
 
     # O Haiku às vezes devolve dados incompletos; tentamos algumas vezes antes de desistir.
     data = None
@@ -358,12 +360,11 @@ def main():
         if tk and tk not in tickers:
             tickers.append(tk)
     adv = coletar_cotacoes_advfn("https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao", tickers[:12])
-    if adv["di"]:
-        data["di_2029"] = f'{adv["di"]}%'
+    # DI e preços vêm SOMENTE do ADVFN (confiável). Sem dado -> "—"/vazio, nunca um valor errado.
+    data["di_2029"] = f'{adv["di"]}%' if adv.get("di") else "—"
     for it in movers:
         v = adv["precos"].get((it.get("tk") or "").strip().upper())
-        if v:
-            it["preco"] = f"R$ {v}"
+        it["preco"] = f"R$ {v}" if v else ""
     print(f"ADVFN: DI={data.get('di_2029')} | preços obtidos={len(adv['precos'])}/{len(tickers)}.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
