@@ -350,7 +350,11 @@ def main():
     precos = brapi_precos(tickers[:15])
     for it in movers:
         v = precos.get((it.get("tk") or "").strip().upper())
-        it["preco"] = v if v else ""
+        # prioriza a cotação do brapi; se indisponível, mantém a cotação que o modelo trouxe
+        if v:
+            it["preco"] = v
+        else:
+            it["preco"] = it.get("preco", "") or ""
     print(f"preços brapi={len(precos)}/{len(tickers)}.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
