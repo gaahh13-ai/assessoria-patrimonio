@@ -57,10 +57,10 @@ Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e %), Dólar USD/BRL (cotação e %), Petróleo Brent,
   S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
-  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a taxa do DI futuro para
-  Jan/2029 (ex.: "13,90%"). Para o DI Jan/2029, procure a taxa nas matérias diárias de "juros futuros"
-  (Money Times/InfoMoney), que costumam citar contratos específicos; se realmente não encontrar o
-  vencimento Jan/2029, use "n/d".
+  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a DIREÇÃO da curva de juros
+  futuros (DI) no último pregão: "di_curva" = "Curva ▲" se os juros futuros SUBIRAM no dia, ou "Curva ▼" se
+  RECUARAM; e "di_nota" = uma nota curtíssima (ex.: "Recuo em toda a curva" ou "Alta com fiscal no radar").
+  Isso costuma aparecer nas matérias diárias de "juros futuros" (Money Times/InfoMoney).
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
   fechamento da ação em reais, ex.: "R$ 5,23"). A cotação costuma vir ENTRE PARÊNTESES ao lado da variação
   nas matérias de fechamento do pregão (ex.: Money Times/InfoMoney trazem "MGLU3 ... 7,76% (R$ 4,86)");
@@ -89,7 +89,8 @@ Responda APENAS com um objeto JSON válido entre as marcas <json> e </json>, no 
   "selic": "14,25% a.a.",
   "ipca_12m": "+5,23%",
   "ipca_mes": "Junho: +0,16%",
-  "di_2029": "13,90%",
+  "di_curva": "Curva ▼",
+  "di_nota": "Recuo em toda a curva",
   "altas": [{{"tk": "CMIN3", "nm": "CSN Mineração", "pc": "+8,28%", "preco": "R$ 5,23"}}],
   "baixas": [{{"tk": "PRIO3", "nm": "PRIO", "pc": "−0,29%", "preco": "R$ 55,45"}}],
   "baixas_nota": "Opcional: nota curta se o pregão foi de alta/queda generalizada. Use string vazia se não precisar.",
@@ -158,7 +159,7 @@ def repair_to_json(client, text):
     prompt = (
         "O texto a seguir contém dados de mercado e notícias, possivelmente em prosa. "
         "Converta em UM ÚNICO objeto JSON válido do Morning Call, com as chaves: date, subtitle, "
-        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), selic, ipca_12m, ipca_mes, di_2029, "
+        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), selic, ipca_12m, ipca_mes, di_curva, di_nota, "
         "altas (lista {tk,nm,pc,preco}), baixas (lista {tk,nm,pc,preco}), baixas_nota, noticias_eco e noticias_pol (listas de "
         "{tag,tag_class,titulo,resumo,fonte,url}), agenda (lista {day,ev,hl}) e footer_date. "
         "Use os dados presentes no texto; se algo faltar, use \"n/d\" ou omita itens da lista. "
@@ -240,40 +241,6 @@ def render_losses(items, nota):
     if nota:
         body += f'\n        <div class="pnote">{esc(nota)}</div>'
     return body
-
-
-def _advfn_ultimo(page, url):
-    """Lê o 'Último Preço' de uma página de cotação do ADVFN. Retorna str (ex.: '14,345') ou None.
-    Faz até 2 tentativas com espera maior, para tolerar lentidão/limite do site."""
-    for tentativa in range(2):
-        try:
-            page.goto(url, timeout=35000, wait_until="load")
-            page.wait_for_timeout(3500)
-            txt = page.inner_text("body")
-            m = re.search(r"Último Preço\s*([\d.]+,\d+)", txt)
-            if m:
-                return m.group(1)
-        except Exception:
-            pass
-        page.wait_for_timeout(1500)
-    return None
-
-
-def advfn_di(url):
-    """Lê a taxa do DI ('Último Preço') no ADVFN via navegador headless. Retorna str ou None."""
-    try:
-        from playwright.sync_api import sync_playwright
-        ua = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-              "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
-        with sync_playwright() as p:
-            browser = p.chromium.launch()
-            page = browser.new_page(user_agent=ua)
-            v = _advfn_ultimo(page, url)
-            browser.close()
-            return v
-    except Exception as e:
-        print(f"ADVFN/Playwright indisponível: {str(e)[:150]}")
-        return None
 
 
 def brapi_precos(tickers):
@@ -370,7 +337,7 @@ def main():
     if not valido(data):
         sys.exit("Não consegui gerar dados completos após 3 tentativas. Página anterior mantida.")
 
-    # Cotações exatas via ADVFN (navegador headless): DI Jan/2029 e preços das ações.
+    # Preços das ações via brapi.dev (JSON estável). O DI vem do modelo (direção da curva).
     # descarta linhas sem variação real (evita tickers "n/d" que o modelo às vezes inventa)
     data["altas"] = [it for it in data.get("altas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
     data["baixas"] = [it for it in data.get("baixas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
@@ -380,14 +347,11 @@ def main():
         tk = (it.get("tk") or "").strip().upper()
         if tk and tk not in tickers:
             tickers.append(tk)
-    # DI Jan/2029: ADVFN (navegador headless). Preços das ações: brapi.dev (JSON estável).
-    di = advfn_di("https://br.advfn.com/bolsa-de-valores/bmf/DI1F29/cotacao")
-    data["di_2029"] = f"{di}%" if di else "—"
     precos = brapi_precos(tickers[:15])
     for it in movers:
         v = precos.get((it.get("tk") or "").strip().upper())
         it["preco"] = v if v else ""
-    print(f"DI={data.get('di_2029')} | preços brapi={len(precos)}/{len(tickers)}.")
+    print(f"preços brapi={len(precos)}/{len(tickers)}.")
 
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
 
@@ -401,7 +365,8 @@ def main():
     out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
     out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
     out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
-    out = out.replace("{{DI_2029}}", esc(data.get("di_2029", "n/d")))
+    out = out.replace("{{DI_CURVA}}", esc(data.get("di_curva", "—")))
+    out = out.replace("{{DI_NOTA}}", esc(data.get("di_nota", "Curva de juros futuros")))
     out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
     out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
     out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
