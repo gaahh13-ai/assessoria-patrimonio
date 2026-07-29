@@ -28,9 +28,6 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Instalar navegador (Playwright)
-        run: python -m playwright install --with-deps chromium
-
       - name: Gerar o Morning Call
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
