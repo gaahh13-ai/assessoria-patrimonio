@@ -5,6 +5,11 @@ name: Morning Call diário
 # Também pode ser disparado manualmente pela aba "Actions".
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Forçar geração mesmo em fim de semana"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -33,13 +38,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_MODEL: claude-haiku-4-5-20251001
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
+          FORCE_RUN: ${{ inputs.force }}
         run: python generate_morning_call.py
 
       - name: Publicar (commit e push se houve mudança)
         run: |
           git config user.name "morning-call-bot"
           git config user.email "actions@github.com"
-          git add index.html historico.json historico
+          git add -A
           if git diff --cached --quiet; then
             echo "Sem alterações no Morning Call."
           else
