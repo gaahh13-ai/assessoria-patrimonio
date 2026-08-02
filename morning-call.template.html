@@ -98,6 +98,40 @@
 
   footer{margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:11.5px;line-height:1.7}
   footer .name{font-family:'Poppins';font-weight:600;color:var(--gold);font-size:13px}
+
+  /* Botões do topo: Histórico e Feedback */
+  .navbtns{display:flex;align-items:center;gap:9px}
+  .nbtn{display:inline-flex;align-items:center;gap:7px;background:transparent;color:#d6d6e0;border:1px solid rgba(255,255,255,.18);padding:9px 15px;border-radius:30px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+  .nbtn:hover{border-color:var(--gold);color:var(--gold)}
+  .nbtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+  .hist-wrap{position:relative}
+  .hist-menu{position:absolute;right:0;top:calc(100% + 8px);background:var(--ink2);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:7px;min-width:210px;box-shadow:0 14px 34px rgba(0,0,0,.5);display:none;z-index:60}
+  .hist-menu.open{display:block}
+  .hist-menu .hh{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 10px 8px}
+  .hist-menu a{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:#d6d6e0;font-size:13.5px;padding:9px 11px;border-radius:8px;transition:background .12s}
+  .hist-menu a:hover{background:rgba(255,255,255,.06);color:var(--gold)}
+  .hist-menu a .d{color:var(--muted);font-size:11px;text-transform:capitalize}
+  .hist-empty{color:var(--muted);font-size:12.5px;padding:9px 11px;line-height:1.4}
+
+  /* Modal de feedback */
+  .modal-ov{position:fixed;inset:0;background:rgba(6,6,10,.80);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .modal-ov.open{display:flex}
+  .modal{background:var(--ink2);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;max-width:460px;width:100%;padding:28px 26px 24px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.55)}
+  .modal h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;color:var(--gold);margin-bottom:9px}
+  .modal p.sub{font-size:13.5px;color:#c2c2cf;line-height:1.5;margin-bottom:18px}
+  .modal .fclose{position:absolute;top:12px;right:15px;background:transparent;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1}
+  .modal .fclose:hover{color:var(--white)}
+  .fld{margin-bottom:13px}
+  .fld label{display:block;font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .fld input,.fld textarea{width:100%;background:var(--ink);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:11px 12px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;resize:vertical}
+  .fld input:focus,.fld textarea:focus{outline:none;border-color:var(--gold)}
+  .fld .opt{color:var(--muted);text-transform:none;letter-spacing:0;font-size:10.5px}
+  .fsend{width:100%;background:var(--acc);color:#fff;border:none;border-radius:30px;padding:13px;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:background .15s;margin-top:4px}
+  .fsend:hover{background:var(--acc-d)}
+  .fsend:disabled{opacity:.6;cursor:default}
+  .fmsg{font-size:13px;margin-top:12px;text-align:center;min-height:18px;line-height:1.4}
+  .fmsg.ok{color:var(--up)}.fmsg.err{color:var(--down)}
+  @media(max-width:520px){.navbtns .nbtn{padding:8px 12px;font-size:12.5px}.logo .sub{display:none}}
 </style>
 </head>
 <body>
@@ -105,6 +139,20 @@
 
   <nav class="nav">
     <div class="logo"><div class="mk">GB</div><div><b>Gabriel Barbosa</b><div class="sub">Assessoria de Investimentos</div></div></div>
+    <div class="navbtns">
+      <div class="hist-wrap">
+        <button class="nbtn" id="histBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Histórico
+        </button>
+        <div class="hist-menu" id="histMenu" role="menu">
+          <div class="hh">Últimos Morning Calls</div>
+          <div id="histList"><div class="hist-empty">Carregando…</div></div>
+        </div>
+      </div>
+      <button class="nbtn" id="fbBtn" type="button">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Feedback
+      </button>
+    </div>
   </nav>
 
   <div class="titlerow">
@@ -168,5 +216,63 @@
   </footer>
 
 </div>
+
+<div class="modal-ov" id="fbOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="fbTitle">
+    <button class="fclose" id="fbClose" type="button" aria-label="Fechar">&times;</button>
+    <h2 id="fbTitle">Feedback</h2>
+    <p class="sub">Sua opinião é muito importante para mim. Deixe suas sugestões para o aprimoramento desta ferramenta e do meu trabalho como assessor &mdash; cada comentário me ajuda a entregar um serviço melhor.</p>
+    <form id="fbForm">
+      <div class="fld"><label>Nome <span class="opt">(opcional)</span></label><input type="text" name="nome" autocomplete="name"></div>
+      <div class="fld"><label>E-mail <span class="opt">(opcional)</span></label><input type="email" name="email" autocomplete="email"></div>
+      <div class="fld"><label>Mensagem</label><textarea name="mensagem" rows="4" required placeholder="Escreva seu feedback ou sugestão…"></textarea></div>
+      <button type="submit" class="fsend" id="fbSend">Enviar</button>
+      <div class="fmsg" id="fbStatus" role="status"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---- Histórico ----
+  var histBtn=document.getElementById('histBtn'),histMenu=document.getElementById('histMenu'),histList=document.getElementById('histList');
+  var inHist=location.pathname.indexOf('/historico/')>-1,base=inHist?'../':'',loaded=false;
+  function loadHist(){
+    if(loaded)return;loaded=true;
+    fetch(base+'historico.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(list){
+      if(!list||!list.length){histList.innerHTML='<div class="hist-empty">As edições anteriores aparecerão aqui a partir dos próximos dias.</div>';return;}
+      histList.innerHTML=list.slice(0,5).map(function(e){
+        return '<a href="'+base+'historico/'+e.iso+'.html" role="menuitem"><span>'+e.label+'</span><span class="d">'+(e.dia||'')+'</span></a>';
+      }).join('');
+    }).catch(function(){histList.innerHTML='<div class="hist-empty">Não foi possível carregar o histórico.</div>';});
+  }
+  histBtn.addEventListener('click',function(ev){ev.stopPropagation();var o=histMenu.classList.toggle('open');histBtn.setAttribute('aria-expanded',o);loadHist();});
+  histMenu.addEventListener('click',function(ev){ev.stopPropagation();});
+  document.addEventListener('click',function(){histMenu.classList.remove('open');histBtn.setAttribute('aria-expanded','false');});
+
+  // ---- Feedback ----
+  var ov=document.getElementById('fbOverlay'),fbBtn=document.getElementById('fbBtn'),fbClose=document.getElementById('fbClose');
+  var form=document.getElementById('fbForm'),sendBtn=document.getElementById('fbSend'),statusEl=document.getElementById('fbStatus');
+  function openM(){ov.classList.add('open');statusEl.className='fmsg';statusEl.textContent='';setTimeout(function(){var t=form.querySelector('textarea');if(t)t.focus();},50);}
+  function closeM(){ov.classList.remove('open');}
+  fbBtn.addEventListener('click',openM);
+  fbClose.addEventListener('click',closeM);
+  ov.addEventListener('click',function(ev){if(ev.target===ov)closeM();});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeM();});
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    statusEl.className='fmsg';statusEl.textContent='';
+    var fd=new FormData(form);
+    fd.append('_subject','Novo feedback — Morning Call');
+    fd.append('_captcha','false');
+    fd.append('_template','table');
+    sendBtn.disabled=true;sendBtn.textContent='Enviando…';
+    fetch('https://formsubmit.co/ajax/gaahh.13@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:fd})
+      .then(function(r){return r.json();})
+      .then(function(){statusEl.className='fmsg ok';statusEl.textContent='Obrigado! Seu feedback foi enviado.';form.reset();sendBtn.disabled=false;sendBtn.textContent='Enviar';setTimeout(closeM,2300);})
+      .catch(function(){statusEl.className='fmsg err';statusEl.textContent='Não foi possível enviar agora. Tente novamente em instantes.';sendBtn.disabled=false;sendBtn.textContent='Enviar';});
+  });
+})();
+</script>
 </body>
 </html>

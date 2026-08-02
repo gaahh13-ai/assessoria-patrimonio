@@ -34,8 +34,42 @@ MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
          "agosto", "setembro", "outubro", "novembro", "dezembro"]
 
 
+DIAS_CURTO = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+HIST_DIR = "historico"
+HIST_JSON = "historico.json"
+
+
 def data_extenso(dt):
     return f"{DIAS[dt.weekday()]}, {dt.day} de {MESES[dt.month - 1]} de {dt.year}"
+
+
+def arquivar(out_html, dt):
+    """Salva um snapshot do dia em historico/AAAA-MM-DD.html e atualiza o índice historico.json."""
+    iso = dt.strftime("%Y-%m-%d")
+    os.makedirs(HIST_DIR, exist_ok=True)
+    with open(os.path.join(HIST_DIR, f"{iso}.html"), "w", encoding="utf-8") as f:
+        f.write(out_html)
+
+    entries = []
+    if os.path.exists(HIST_JSON):
+        try:
+            with open(HIST_JSON, encoding="utf-8") as f:
+                entries = json.load(f)
+        except Exception:
+            entries = []
+
+    entries = [e for e in entries if e.get("iso") != iso]
+    entries.insert(0, {
+        "iso": iso,
+        "label": f"{dt.day:02d}/{dt.month:02d}/{dt.year}",
+        "dia": DIAS_CURTO[dt.weekday()],
+    })
+    entries.sort(key=lambda e: e.get("iso", ""), reverse=True)
+    entries = entries[:60]  # mantém ~3 meses de dias úteis
+
+    with open(HIST_JSON, "w", encoding="utf-8") as f:
+        json.dump(entries, f, ensure_ascii=False)
+    print(f"Arquivado: {HIST_DIR}/{iso}.html ({len(entries)} edições no índice).")
 
 
 def build_prompt(hoje):
@@ -382,6 +416,9 @@ def main():
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(out)
     print(f"OK: {OUTPUT_PATH} gerado para {data['date']}.")
+
+    # Guarda a edição do dia para o histórico (dropdown "Histórico" na página).
+    arquivar(out, hoje)
 
 
 if __name__ == "__main__":
