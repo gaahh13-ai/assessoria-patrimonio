@@ -309,8 +309,10 @@ def main():
         sys.exit("ERRO: ANTHROPIC_API_KEY não definida.")
 
     hoje = datetime.now(TZ)
-    # dias úteis apenas (segurança extra caso rode fora do cron)
-    if hoje.weekday() >= 5:
+    # dias úteis apenas (segurança extra caso rode fora do cron).
+    # FORCE_RUN=true (disparo manual com "forçar") permite rodar no fim de semana.
+    forcar = os.environ.get("FORCE_RUN", "").strip().lower() == "true"
+    if hoje.weekday() >= 5 and not forcar:
         print("Fim de semana — nada a gerar.")
         return
 
