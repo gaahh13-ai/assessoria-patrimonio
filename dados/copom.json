@@ -1,9 +1,9 @@
 {
   "proxima": "04–05 ago 2026",
   "reunioes": [
-    {"data": "17–18 jun/26", "decisao": "Mantida", "tipo": "hold", "selic": "14,25%"},
-    {"data": "06–07 mai/26", "decisao": "Mantida", "tipo": "hold", "selic": "14,25%"},
-    {"data": "18–19 mar/26", "decisao": "+25 pb", "tipo": "up", "selic": "14,25%"},
-    {"data": "28–29 jan/26", "decisao": "+50 pb", "tipo": "up", "selic": "14,00%"}
+    {"data": "16–17 jun/26", "decisao": "−25 pb", "tipo": "dn", "selic": "14,25%"},
+    {"data": "28–29 abr/26", "decisao": "−25 pb", "tipo": "dn", "selic": "14,50%"},
+    {"data": "17–18 mar/26", "decisao": "−25 pb", "tipo": "dn", "selic": "14,75%"},
+    {"data": "27–28 jan/26", "decisao": "Mantida", "tipo": "hold", "selic": "15,00%"}
   ]
 }
