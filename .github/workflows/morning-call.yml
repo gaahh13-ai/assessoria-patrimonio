@@ -1,9 +1,13 @@
 name: Morning Call diário
 
-# O agendamento é feito por um serviço externo (cron-job.org) que aciona este workflow
-# pontualmente às 05:53 (horário de Brasília), dias úteis, via a API de workflow_dispatch.
+# O agendamento diário (05:53, dias úteis) é feito por um serviço externo
+# (cron-job.org) que aciona este workflow via a API de workflow_dispatch.
+# Além disso, o "schedule" nativo abaixo dispara a rodada extra de segunda-feira
+# às 09:30 (horário de Brasília = 12:30 UTC) que atualiza SOMENTE o Boletim Focus.
 # Também pode ser disparado manualmente pela aba "Actions".
 on:
+  schedule:
+    - cron: "30 12 * * 1"
   workflow_dispatch:
     inputs:
       force:
@@ -43,7 +47,7 @@ jobs:
           CLAUDE_MODEL: claude-haiku-4-5-20251001
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
           FORCE_RUN: ${{ inputs.force }}
-          FOCUS_ONLY: ${{ inputs.focus_only }}
+          FOCUS_ONLY: ${{ inputs.focus_only || github.event_name == 'schedule' }}
         run: python generate_morning_call.py
 
       - name: Publicar (commit e push se houve mudança)
