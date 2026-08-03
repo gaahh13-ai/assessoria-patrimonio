@@ -1,0 +1,9 @@
+{
+  "proxima": "04–05 ago 2026",
+  "reunioes": [
+    {"data": "17–18 jun/26", "decisao": "Mantida", "tipo": "hold", "selic": "14,25%"},
+    {"data": "06–07 mai/26", "decisao": "Mantida", "tipo": "hold", "selic": "14,25%"},
+    {"data": "18–19 mar/26", "decisao": "+25 pb", "tipo": "up", "selic": "14,25%"},
+    {"data": "28–29 jan/26", "decisao": "+50 pb", "tipo": "up", "selic": "14,00%"}
+  ]
+}
