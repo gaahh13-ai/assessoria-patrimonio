@@ -91,10 +91,7 @@ Colete:
 - Painel (fechamento do último pregão): Ibovespa (pontos e %), Dólar USD/BRL (cotação e %), Petróleo Brent,
   S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
-  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%"); e a DIREÇÃO da curva de juros
-  futuros (DI) no último pregão: "di_curva" = "Curva ▲" se os juros futuros SUBIRAM no dia, ou "Curva ▼" se
-  RECUARAM; e "di_nota" = uma nota curtíssima (ex.: "Recuo em toda a curva" ou "Alta com fiscal no radar").
-  Isso costuma aparecer nas matérias diárias de "juros futuros" (Money Times/InfoMoney).
+  IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%").
 - As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
   fechamento da ação em reais, ex.: "R$ 5,23"). A cotação costuma vir ENTRE PARÊNTESES ao lado da variação
   nas matérias de fechamento do pregão (ex.: Money Times/InfoMoney trazem "MGLU3 ... 7,76% (R$ 4,86)");
@@ -123,8 +120,6 @@ Responda APENAS com um objeto JSON válido entre as marcas <json> e </json>, no 
   "selic": "14,25% a.a.",
   "ipca_12m": "+5,23%",
   "ipca_mes": "Junho: +0,16%",
-  "di_curva": "Curva ▼",
-  "di_nota": "Recuo em toda a curva",
   "altas": [{{"tk": "CMIN3", "nm": "CSN Mineração", "pc": "+8,28%", "preco": "R$ 5,23"}}],
   "baixas": [{{"tk": "PRIO3", "nm": "PRIO", "pc": "−0,29%", "preco": "R$ 55,45"}}],
   "baixas_nota": "Opcional: nota curta se o pregão foi de alta/queda generalizada. Use string vazia se não precisar.",
@@ -193,7 +188,7 @@ def repair_to_json(client, text):
     prompt = (
         "O texto a seguir contém dados de mercado e notícias, possivelmente em prosa. "
         "Converta em UM ÚNICO objeto JSON válido do Morning Call, com as chaves: date, subtitle, "
-        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), selic, ipca_12m, ipca_mes, di_curva, di_nota, "
+        "resumo (lista de 2 strings), painel (lista de {lbl,val,chg,bar,cls}), selic, ipca_12m, ipca_mes, "
         "altas (lista {tk,nm,pc,preco}), baixas (lista {tk,nm,pc,preco}), baixas_nota, noticias_eco e noticias_pol (listas de "
         "{tag,tag_class,titulo,resumo,fonte,url}), agenda (lista {day,ev,hl}) e footer_date. "
         "Use os dados presentes no texto; se algo faltar, use \"n/d\" ou omita itens da lista. "
@@ -279,28 +274,37 @@ def render_losses(items, nota):
 
 def brapi_precos(tickers):
     """Cotações de fechamento das ações via brapi.dev (JSON estável).
-    Retorna {TICKER: 'R$ x,xx'}. Usa BRAPI_TOKEN se existir (opcional). Nunca levanta exceção."""
+    Retorna {TICKER: 'R$ x,xx'}. Usa BRAPI_TOKEN se existir (opcional). Nunca levanta exceção.
+
+    O plano gratuito da brapi aceita apenas UM ativo por requisição (uma lista
+    com vários tickers retorna HTTP 400), então consultamos um a um."""
+    import urllib.request
+    import time
     out = {}
     if not tickers:
         return out
-    try:
-        import urllib.request
-        token = os.environ.get("BRAPI_TOKEN", "").strip()
-        url = "https://brapi.dev/api/quote/" + ",".join(tickers)
-        if token:
-            url += "?token=" + token
-        req = urllib.request.Request(url, headers={"User-Agent": "morning-call-bot"})
-        with urllib.request.urlopen(req, timeout=25) as r:
-            payload = json.loads(r.read().decode("utf-8"))
-        for it in payload.get("results", []):
-            sym = (it.get("symbol") or "").upper()
-            preco = it.get("regularMarketPrice")
-            if preco is None:
-                preco = it.get("regularMarketPreviousClose")
-            if sym and preco is not None:
-                out[sym] = "R$ " + f"{float(preco):.2f}".replace(".", ",")
-    except Exception as e:
-        print(f"brapi indisponível: {str(e)[:150]}")
+    token = os.environ.get("BRAPI_TOKEN", "").strip()
+    falhas = 0
+    for tk in tickers:
+        try:
+            url = "https://brapi.dev/api/quote/" + tk
+            if token:
+                url += "?token=" + token
+            req = urllib.request.Request(url, headers={"User-Agent": "morning-call-bot"})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                payload = json.loads(r.read().decode("utf-8"))
+            for it in payload.get("results", []):
+                sym = (it.get("symbol") or "").upper()
+                preco = it.get("regularMarketPrice")
+                if preco is None:
+                    preco = it.get("regularMarketPreviousClose")
+                if sym and preco is not None:
+                    out[sym] = "R$ " + f"{float(preco):.2f}".replace(".", ",")
+        except Exception as e:
+            falhas += 1
+            if falhas <= 2:
+                print(f"brapi ({tk}) indisponível: {str(e)[:120]}")
+        time.sleep(0.2)  # cortesia com a API
     return out
 
 
@@ -405,8 +409,6 @@ def main():
     out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
     out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
     out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
-    out = out.replace("{{DI_CURVA}}", esc(data.get("di_curva", "—")))
-    out = out.replace("{{DI_NOTA}}", esc(data.get("di_nota", "Curva de juros futuros")))
     out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
     out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
     out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
