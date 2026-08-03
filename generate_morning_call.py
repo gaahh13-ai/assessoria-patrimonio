@@ -65,11 +65,21 @@ def arquivar(out_html, dt):
         "dia": DIAS_CURTO[dt.weekday()],
     })
     entries.sort(key=lambda e: e.get("iso", ""), reverse=True)
-    entries = entries[:60]  # mantém ~3 meses de dias úteis
+    entries = entries[:5]  # mantém apenas os 5 dias mais recentes
 
     with open(HIST_JSON, "w", encoding="utf-8") as f:
         json.dump(entries, f, ensure_ascii=False)
     print(f"Arquivado: {HIST_DIR}/{iso}.html ({len(entries)} edições no índice).")
+
+    # Retenção: remove do disco os snapshots que saíram do índice de 5 dias.
+    manter = {e.get("iso") for e in entries}
+    for nome in os.listdir(HIST_DIR):
+        if nome.endswith(".html") and nome[:-5] not in manter:
+            try:
+                os.remove(os.path.join(HIST_DIR, nome))
+                print(f"Removido do histórico (retenção 5 dias): {nome}")
+            except OSError:
+                pass
 
 
 def build_prompt(hoje):
