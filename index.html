@@ -140,6 +140,54 @@
   .fmsg{font-size:13px;margin-top:12px;text-align:center;min-height:18px;line-height:1.4}
   .fmsg.ok{color:var(--up)}.fmsg.err{color:var(--down)}
   @media(max-width:520px){.navbtns .nbtn{padding:8px 12px;font-size:12.5px}.logo .sub{display:none}}
+
+/* ===== Painéis dinâmicos (Pesquisas / Focus / modais) ===== */
+.poll-badge{font-family:'Poppins';font-weight:600;font-size:9px;letter-spacing:.5px;color:#141414;background:var(--gold);padding:3px 9px;border-radius:20px;margin-left:auto;text-transform:none}
+.poll-wrap{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--gold);border-radius:0 14px 14px 0;padding:16px 18px 14px;margin-bottom:16px}
+.poll-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.poll-scn{font-family:'Poppins';font-weight:700;font-size:14px;color:var(--white)}
+.poll-meta{font-size:11px;color:var(--muted)}
+.poll-row{display:grid;grid-template-columns:130px 1fr 44px;gap:12px;align-items:center;margin:10px 0}
+.poll-nm{font-family:'Poppins';font-size:12.5px;font-weight:600}
+.poll-bar{height:13px;background:rgba(255,255,255,.06);border-radius:7px;overflow:hidden}
+.poll-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#2fae94);border-radius:7px}
+.poll-pct{font-family:'Poppins';font-weight:700;font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.poll-row.sec .poll-bar span{background:rgba(255,255,255,.20)}
+.poll-row.sec .poll-nm,.poll-row.sec .poll-pct{color:var(--muted)}
+.poll-foot{margin-top:13px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07);font-size:10.5px;color:var(--muted)}
+.poll-wrap+.poll-wrap{margin-top:-4px}
+.foc-upd{font-family:'Barlow';font-weight:500;font-size:9px;letter-spacing:.3px;color:var(--muted);text-transform:none;background:rgba(255,255,255,.06);padding:3px 8px;border-radius:20px;margin-left:auto}
+.focus{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:4px 2px;margin-bottom:12px}
+.foc-head{display:grid;grid-template-columns:1fr 46px 46px 46px;gap:3px;padding:10px 12px 6px;font-family:'Poppins';font-size:9.5px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
+.foc-head span:not(:first-child){text-align:right}
+.foc-row{display:grid;grid-template-columns:1fr 46px 46px 46px;gap:3px;align-items:center;padding:9px 12px;border-top:1px solid rgba(255,255,255,.06);font-family:'Poppins';font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.foc-row .foc-lbl{font-weight:600;font-size:12.5px}
+.foc-row .foc-lbl em{display:block;font-family:'Barlow';font-style:normal;font-weight:400;font-size:10px;color:var(--muted);margin-top:1px}
+.foc-row span:not(:first-child){text-align:right}
+.foc-row i{font-style:normal;font-size:8px;margin-left:3px}
+.foc-row i.up{color:#e0a94a}.foc-row i.dn{color:#6fb2ff}.foc-row i.eq{color:var(--muted);font-size:7px}
+.foc-foot{padding:9px 12px 7px;font-size:9.5px;color:var(--muted);line-height:1.4}
+.mbox.clk{cursor:pointer;transition:border-color .15s,transform .08s}
+.mbox.clk:hover{border-color:rgba(201,169,74,.5)}
+.mbox.clk:active{transform:scale(.985)}
+.mbox .tap{font-size:9px;color:var(--gold);opacity:.9;margin-top:6px;letter-spacing:.2px;font-weight:600}
+.dov{position:fixed;inset:0;background:rgba(6,6,10,.55);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:120;padding:20px}
+.dov.on{display:flex}
+.dmodal{background:var(--ink2);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--gold);border-radius:16px;max-width:440px;width:100%;max-height:84vh;overflow:auto;padding:20px 22px 16px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.55);animation:dpop .18s ease}
+@keyframes dpop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.dclose{position:absolute;top:10px;right:14px;background:transparent;border:none;color:var(--muted);font-size:24px;line-height:1;cursor:pointer}
+.dtag{font-family:'Poppins';font-size:10px;font-weight:600;letter-spacing:1px;color:var(--gold);text-transform:uppercase}
+.dhead h3{font-family:'Poppins';font-weight:700;font-size:18px;margin:3px 0 14px}
+.dnext{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(201,169,74,.14),rgba(201,169,74,.04));border:1px solid rgba(201,169,74,.4);border-radius:11px;padding:11px 14px;margin-bottom:14px}
+.dnext span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.dnext b{font-family:'Poppins';font-size:15px;color:var(--gold)}
+.dtable{border:1px solid rgba(255,255,255,.07);border-radius:11px;overflow:hidden}
+.dth{display:grid;grid-template-columns:1.15fr 1fr .82fr;gap:6px;padding:9px 14px;font-family:'Poppins';font-size:9.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.03)}
+.dtr{display:grid;grid-template-columns:1.15fr 1fr .82fr;gap:6px;padding:11px 14px;border-top:1px solid rgba(255,255,255,.06);font-family:'Poppins';font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;align-items:center}
+.dth span:not(:first-child),.dtr span:not(:first-child){text-align:right}
+.dtr .up{color:#f28b82}.dtr .dn{color:var(--up)}.dtr .hold{color:var(--muted)}
+.dtable.ipca .dth,.dtable.ipca .dtr{grid-template-columns:1fr .9fr .9fr}
+.dfoot{padding:11px 2px 0;font-size:10px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -244,8 +292,8 @@
     <aside class="side">
       <div class="sec-title">Painel de Mercado</div>
       <div class="macro">
-        <div class="mbox hl"><div class="ml">Selic (hoje)</div><div class="mv">14,25% a.a.</div><div class="ms">Taxa básica de juros</div></div>
-        <div class="mbox"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">+5,16%</div><div class="ms">junho: +0,16%</div></div>
+        <div class="mbox hl clk" id="cardSelic"><div class="ml">Selic (hoje)</div><div class="mv">14,25% a.a.</div><div class="ms">Taxa básica de juros</div><div class="tap">↳ toque: decisões do Copom</div></div>
+        <div class="mbox clk" id="cardIpca"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">+5,16%</div><div class="ms">junho: +0,16%</div><div class="tap">↳ toque: últimos 12 meses</div></div>
       </div>
       <div class="grid-mini">
         <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">177.999</div><div class="chg up">▲ +0,47%</div></div>
@@ -255,6 +303,18 @@
         <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">25.373,85</div><div class="chg up">▲ +1,00%</div></div>
         <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.485,03</div><div class="chg up">▲ +0,53%</div></div>
       </div>
+
+<!--FOCUS:START-->
+      <div class="sec-title sub">Boletim Focus <span class="foc-upd">seg 03/08</span></div>
+      <div class="focus">
+        <div class="foc-head"><span>Projeção do mercado</span><span>2026</span><span>2027</span><span>2028</span></div>
+        <div class="foc-row"><span class="foc-lbl">IPCA <em>inflação</em></span><span>5,16%<i class="dn">▼</i></span><span>4,00%<i class="eq">■</i></span><span>3,60%<i class="eq">■</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">PIB <em>crescimento</em></span><span>2,20%<i class="up">▲</i></span><span>1,90%<i class="eq">■</i></span><span>2,00%<i class="eq">■</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">Selic <em>fim do ano</em></span><span>14,00%<i class="eq">■</i></span><span>11,50%<i class="dn">▼</i></span><span>10,50%<i class="dn">▼</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">Câmbio <em>R$/US$</em></span><span>5,40<i class="up">▲</i></span><span>5,50<i class="eq">■</i></span><span>5,55<i class="eq">■</i></span></div>
+        <div class="foc-foot">▲▼ = variação vs. semana anterior · fonte: Banco Central.</div>
+      </div>
+<!--FOCUS:END-->
 
       <div class="sec-title sub">Destaques · B3</div>
       <div class="panel gain">
@@ -371,5 +431,55 @@
 })();
 </script>
 
+
+<div class="dov" id="copomOv" aria-hidden="true">
+  <div class="dmodal" role="dialog" aria-label="Histórico do Copom">
+    <button class="dclose" data-close aria-label="Fechar">&times;</button>
+    <div class="dhead"><div class="dtag">Selic &middot; Copom</div><h3>Últimas decisões</h3></div>
+    <div class="dnext"><span>Próxima reunião</span><b>04–05 ago 2026</b></div>
+    <div class="dtable">
+      <div class="dth"><span>Reunião</span><span>Decisão</span><span>Selic</span></div>
+      <div class="dtr"><span>17–18 jun/26</span><span class="hold">Mantida</span><span>14,25%</span></div>
+      <div class="dtr"><span>06–07 mai/26</span><span class="hold">Mantida</span><span>14,25%</span></div>
+      <div class="dtr"><span>18–19 mar/26</span><span class="up">+25 pb</span><span>14,25%</span></div>
+      <div class="dtr"><span>28–29 jan/26</span><span class="up">+50 pb</span><span>14,00%</span></div>
+    </div>
+    <div class="dfoot">pb = pontos-base. Fonte: Banco Central (Copom).</div>
+  </div>
+</div>
+<div class="dov" id="ipcaOv" aria-hidden="true">
+  <div class="dmodal" role="dialog" aria-label="IPCA últimos 12 meses">
+    <button class="dclose" data-close aria-label="Fechar">&times;</button>
+    <div class="dhead"><div class="dtag">IPCA &middot; IBGE</div><h3>Últimos 12 meses</h3></div>
+    <div class="dnext"><span>Acumulado 12 meses</span><b>+5,16%</b></div>
+    <div class="dtable ipca">
+      <div class="dth"><span>Mês</span><span>No mês</span><span>Acum. 12m</span></div>
+      <div class="dtr"><span>jun/26</span><span class="">+0,16%</span><span>+5,16%</span></div>
+      <div class="dtr"><span>mai/26</span><span class="">+0,26%</span><span>+5,30%</span></div>
+      <div class="dtr"><span>abr/26</span><span class="">+0,43%</span><span>+5,53%</span></div>
+      <div class="dtr"><span>mar/26</span><span class="">+0,56%</span><span>+5,48%</span></div>
+      <div class="dtr"><span>fev/26</span><span class="">+0,83%</span><span>+5,06%</span></div>
+      <div class="dtr"><span>jan/26</span><span class="">+0,42%</span><span>+4,50%</span></div>
+      <div class="dtr"><span>dez/25</span><span class="">+0,52%</span><span>+4,62%</span></div>
+      <div class="dtr"><span>nov/25</span><span class="">+0,39%</span><span>+4,87%</span></div>
+      <div class="dtr"><span>out/25</span><span class="">+0,28%</span><span>+4,94%</span></div>
+      <div class="dtr"><span>set/25</span><span class="">+0,44%</span><span>+5,17%</span></div>
+      <div class="dtr"><span>ago/25</span><span class="dn">-0,11%</span><span>+5,13%</span></div>
+      <div class="dtr"><span>jul/25</span><span class="">+0,26%</span><span>+5,23%</span></div>
+    </div>
+    <div class="dfoot">Fonte: IBGE.</div>
+  </div>
+</div>
+<script>
+(function(){
+  function op(id){var o=document.getElementById(id);if(o){o.classList.add('on');document.body.style.overflow='hidden';}}
+  function cl(){document.querySelectorAll('.dov.on').forEach(function(o){o.classList.remove('on');});document.body.style.overflow='';}
+  var s=document.getElementById('cardSelic');if(s)s.addEventListener('click',function(){op('copomOv');});
+  var i=document.getElementById('cardIpca');if(i)i.addEventListener('click',function(){op('ipcaOv');});
+  document.querySelectorAll('.dov').forEach(function(o){o.addEventListener('click',function(ev){if(ev.target===o)cl();});});
+  document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',cl);});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape')cl();});
+})();
+</script>
 </body>
 </html>

@@ -23,6 +23,8 @@ from zoneinfo import ZoneInfo
 
 import anthropic
 
+import paineis  # renderiza os painéis dinâmicos (Focus, Copom, IPCA, Pesquisas)
+
 MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 TEMPLATE_PATH = "morning-call.template.html"
 OUTPUT_PATH = "index.html"
@@ -318,11 +320,173 @@ def brapi_precos(tickers):
     return out
 
 
+
+# ===== Painéis dinâmicos: rolagem (IPCA/Copom) e Boletim Focus =====
+def _save_dado(nome, obj):
+    os.makedirs(paineis.DADOS_DIR, exist_ok=True)
+    with open(os.path.join(paineis.DADOS_DIR, nome), "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2)
+
+
+def _ask_json(client, prompt, max_uses=4):
+    """Pergunta curta com busca na web; devolve o JSON (ou levanta exceção)."""
+    msgs = [{"role": "user", "content": prompt}]
+    parts = []
+    for _ in range(6):
+        resp = client.messages.create(
+            model=MODEL, max_tokens=1500,
+            tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": max_uses}],
+            messages=msgs,
+        )
+        for b in resp.content:
+            if getattr(b, "type", "") == "text":
+                parts.append(b.text)
+        if resp.stop_reason == "pause_turn":
+            msgs.append({"role": "assistant", "content": resp.content})
+            continue
+        break
+    return extract_json("".join(parts))
+
+
+def atualizar_ipca(client):
+    """Se saiu um IPCA mensal novo, adiciona o mês e descarta o mais antigo (12 meses)."""
+    try:
+        ipca = paineis.load_ipca()
+        atual = (ipca.get("meses") or [{}])[0].get("mes", "")
+        d = _ask_json(client,
+            "Qual é o IPCA cheio (IBGE) mais recente já divulgado: variacao no mes e acumulado em 12 meses? "
+            f"O mes mais recente que ja tenho registrado e '{atual}'. Responda SOMENTE com JSON entre <json></json>: "
+            '{"novo": true, "mes": "mmm/aa", "no_mes": "+0,00%", "acum12m": "+0,00%"}. '
+            "Use novo=true APENAS se houver um mes mais recente que o registrado; senao {\"novo\": false}. Formato brasileiro.")
+        if not d or not d.get("novo"):
+            return
+        mes = (d.get("mes") or "").strip(); nm = (d.get("no_mes") or "").strip(); ac = (d.get("acum12m") or "").strip()
+        if not (mes and nm and ac):
+            return
+        try:
+            tp = "dn" if float(nm.replace("%", "").replace(",", ".").replace("+", "")) < 0 else "up"
+        except Exception:
+            tp = "up"
+        meses = [m for m in ipca.get("meses", []) if m.get("mes") != mes]
+        meses.insert(0, {"mes": mes, "no_mes": nm, "tipo": tp, "acum": ac})
+        ipca["meses"] = meses[:12]; ipca["acum12m"] = ac
+        _save_dado("ipca.json", ipca)
+        print(f"IPCA: novo mes adicionado ({mes}).")
+    except Exception as e:
+        print(f"atualizar_ipca ignorado: {str(e)[:140]}")
+
+
+def atualizar_copom(client):
+    """Se houve nova decisão do Copom, adiciona e descarta a mais antiga (4 reuniões)."""
+    try:
+        copom = paineis.load_copom()
+        atual = (copom.get("reunioes") or [{}])[0].get("data", "")
+        d = _ask_json(client,
+            "Houve uma decisao do Copom (Banco Central) MAIS RECENTE do que a reuniao "
+            f"'{atual}'? Se sim, informe: data da reuniao, decisao (ex.: 'Mantida', '+25 pb', '-50 pb'), "
+            "a Selic resultante e a data da PROXIMA reuniao. Responda SOMENTE com JSON entre <json></json>: "
+            '{"novo": true, "data": "dd-dd mmm/aa", "decisao": "...", "tipo": "hold|up|down", "selic": "00,00%", "proxima": "dd-dd mmm aaaa"}. '
+            "Se nao houver decisao nova, {\"novo\": false}.")
+        if not d or not d.get("novo"):
+            return
+        data_r = (d.get("data") or "").strip()
+        if not data_r:
+            return
+        r = {"data": data_r, "decisao": (d.get("decisao") or "").strip(),
+             "tipo": (d.get("tipo") or "hold").strip(), "selic": (d.get("selic") or "").strip()}
+        reun = [x for x in copom.get("reunioes", []) if x.get("data") != data_r]
+        reun.insert(0, r); copom["reunioes"] = reun[:4]
+        if d.get("proxima"):
+            copom["proxima"] = str(d["proxima"]).strip()
+        _save_dado("copom.json", copom)
+        print(f"Copom: nova reuniao adicionada ({data_r}).")
+    except Exception as e:
+        print(f"atualizar_copom ignorado: {str(e)[:140]}")
+
+
+def _anos_focus(hoje):
+    y = hoje.year
+    return [str(y), str(y + 1), str(y + 2)]
+
+
+def atualizar_focus(client, hoje):
+    """Busca o último Boletim Focus e recomputa a tabela (com setas vs. semana anterior)."""
+    focus = paineis.load_focus()
+    anos = _anos_focus(hoje)
+    d = _ask_json(client,
+        f"Traga as projecoes MEDIANAS do ultimo Boletim Focus (Banco Central) para {anos[0]}, {anos[1]} e {anos[2]}: "
+        "IPCA (%), PIB (%), Selic no fim do ano (%) e Cambio R$/US$. Responda SOMENTE com JSON entre <json></json>: "
+        '{"IPCA": ["0,00","0,00","0,00"], "PIB": ["0,00","0,00","0,00"], "Selic": ["0,00","0,00","0,00"], "Cambio": ["0,00","0,00","0,00"]} '
+        "na ordem dos anos, numeros em formato brasileiro sem o simbolo de porcentagem.")
+    if not d:
+        raise ValueError("Focus sem dados")
+    prev = {ln.get("lbl"): [v.get("v", "") for v in ln.get("vals", [])] for ln in focus.get("linhas", [])}
+    conf = [("IPCA", "inflação", "%"), ("PIB", "crescimento", "%"), ("Selic", "fim do ano", "%"), ("Câmbio", "R$/US$", "")]
+    km = {"IPCA": "IPCA", "PIB": "PIB", "Selic": "Selic", "Câmbio": "Cambio"}
+    linhas = []
+    for lbl, sub, suf in conf:
+        arr = d.get(km[lbl]) or []
+        vals = []
+        for i in range(3):
+            raw = str(arr[i]).replace("%", "").strip() if i < len(arr) else ""
+            if not raw:
+                vals.append({"v": "—", "t": "eq"}); continue
+            v = raw + ("%" if suf == "%" else "")
+            t = "eq"; pv = prev.get(lbl, [])
+            try:
+                if i < len(pv) and pv[i]:
+                    a = float(raw.replace(",", ".")); b = float(str(pv[i]).replace("%", "").replace(",", "."))
+                    t = "up" if a > b + 1e-9 else ("dn" if a < b - 1e-9 else "eq")
+            except Exception:
+                t = "eq"
+            vals.append({"v": v, "t": t})
+        linhas.append({"lbl": lbl, "sub": sub, "vals": vals})
+    focus["anos"] = anos
+    focus["linhas"] = linhas
+    focus["atualizado"] = "seg " + hoje.strftime("%d/%m")
+    _save_dado("focus.json", focus)
+    return focus
+
+
+def rodar_focus_only(hoje):
+    """Atualização das 9:30: mexe SOMENTE no Boletim Focus (index + snapshot de hoje)."""
+    client = anthropic.Anthropic()
+    try:
+        focus = atualizar_focus(client, hoje)
+    except Exception as e:
+        print(f"Focus nao atualizado ({str(e)[:140]}). Nada alterado.")
+        return
+    bloco = paineis.render_focus_block(focus)
+    pat = re.compile(r"<!--FOCUS:START-->.*?<!--FOCUS:END-->", re.DOTALL)
+    iso = hoje.strftime("%Y-%m-%d")
+    alvos = [OUTPUT_PATH, os.path.join("historico", iso + ".html")]
+    for path in alvos:
+        try:
+            s = open(path, encoding="utf-8").read()
+        except FileNotFoundError:
+            continue
+        if "<!--FOCUS:START-->" in s:
+            s = pat.sub(lambda m: bloco, s, count=1)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(s)
+            print(f"Boletim Focus atualizado em {path}.")
+        else:
+            print(f"Marcadores de Focus nao encontrados em {path}.")
+
+
+
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ERRO: ANTHROPIC_API_KEY não definida.")
 
     hoje = datetime.now(TZ)
+
+    # Atualização extra das 9:30 (segunda): mexe SÓ na tabela do Boletim Focus.
+    if os.environ.get("FOCUS_ONLY", "").strip().lower() == "true":
+        print("Modo Focus-only (atualização das 9:30).")
+        rodar_focus_only(hoje)
+        return
+
     # dias úteis apenas (segurança extra caso rode fora do cron).
     # FORCE_RUN=true (disparo manual com "forçar") permite rodar no fim de semana.
     forcar = os.environ.get("FORCE_RUN", "").strip().lower() == "true"
@@ -407,6 +571,10 @@ def main():
             it["preco"] = it.get("preco", "") or ""
     print(f"preços brapi={len(precos)}/{len(tickers)}.")
 
+    # Rolagem: se saiu IPCA mensal novo ou nova decisão do Copom, adiciona e descarta o mais antigo.
+    atualizar_ipca(client)
+    atualizar_copom(client)
+
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
 
     out = template
@@ -423,6 +591,12 @@ def main():
     out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
     out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
     out = out.replace("{{FOOTER_DATE}}", esc(data.get("footer_date", data["date"])))
+
+    # Painéis dinâmicos (renderizados de dados/*.json e pesquisas.json)
+    out = out.replace("{{POLLS}}", paineis.render_polls(paineis.load_pesquisas()))
+    out = out.replace("{{FOCUS_BLOCK}}", paineis.render_focus_block(paineis.load_focus()))
+    out = out.replace("{{MODAL_COPOM}}", paineis.render_copom_modal(paineis.load_copom()))
+    out = out.replace("{{MODAL_IPCA}}", paineis.render_ipca_modal(paineis.load_ipca()))
 
     if "{{" in out:
         sys.exit("ERRO: sobraram marcadores não preenchidos no template.")
