@@ -10,6 +10,10 @@ on:
         description: "Forçar geração mesmo em fim de semana"
         type: boolean
         default: false
+      focus_only:
+        description: "Atualizar somente o Boletim Focus (rodada das 9:30 de segunda)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -39,6 +43,7 @@ jobs:
           CLAUDE_MODEL: claude-haiku-4-5-20251001
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
           FORCE_RUN: ${{ inputs.force }}
+          FOCUS_ONLY: ${{ inputs.focus_only }}
         run: python generate_morning_call.py
 
       - name: Publicar (commit e push se houve mudança)
