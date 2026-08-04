@@ -593,9 +593,41 @@ def rodar_focus_only(hoje):
             print(f"Marcadores de Focus nao encontrados em {path}.")
 
 
+_MES_EXT = {"jan": "Janeiro", "fev": "Fevereiro", "mar": "Março", "abr": "Abril",
+            "mai": "Maio", "jun": "Junho", "jul": "Julho", "ago": "Agosto",
+            "set": "Setembro", "out": "Outubro", "nov": "Novembro", "dez": "Dezembro"}
+
+
+def _cards_macro(data):
+    """Selic e IPCA dos cards: usa o modelo se vier número real; senão cai para os
+    dados mantidos em dados/*.json (nunca mostra 'n/d')."""
+    def bom(v):
+        v = str(v).strip()
+        return v and v.lower() != "n/d" and "n/d" not in v.lower() and bool(re.search(r"\d", v))
+
+    selic = str(data.get("selic", "")).strip()
+    if not bom(selic):
+        r = (paineis.load_copom().get("reunioes") or [{}])[0]
+        selic = (r.get("selic", "").strip() + " a.a.") if r.get("selic") else "14,25% a.a."
+
+    ip = paineis.load_ipca()
+    ipca12 = str(data.get("ipca_12m", "")).strip()
+    if not bom(ipca12):
+        ipca12 = ip.get("acum12m", "") or "n/d"
+
+    ipca_mes = str(data.get("ipca_mes", "")).strip()
+    if not bom(ipca_mes):
+        m = (ip.get("meses") or [{}])[0]
+        abbr = (m.get("mes", "")[:3]).lower()
+        nome = _MES_EXT.get(abbr, m.get("mes", ""))
+        ipca_mes = f"{nome}: {m.get('no_mes','')}" if m.get("no_mes") else "n/d"
+    return selic, ipca12, ipca_mes
+
+
 def montar_pagina(template, data, hora):
     """Preenche o template completo (modo main). `hora` = HH:MM da rodada (carimbos)."""
     summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
+    selic, ipca12, ipca_mes = _cards_macro(data)
     out = template
     out = out.replace("{{DATE}}", esc(data["date"]))
     out = out.replace("{{SUMMARY}}", summary_html)
@@ -603,9 +635,9 @@ def montar_pagina(template, data, hora):
     out = out.replace("{{NEWS_POL}}", render_news(data["noticias_pol"]))
     out = out.replace("{{PANEL}}", render_panel(data["painel"]))
     out = out.replace("{{MERCADO_HORA}}", esc(hora))
-    out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
-    out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
-    out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
+    out = out.replace("{{SELIC}}", esc(selic))
+    out = out.replace("{{IPCA_12M}}", esc(ipca12))
+    out = out.replace("{{IPCA_MES}}", esc(ipca_mes))
     out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
     out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
     out = out.replace("{{DESTAQUES_HORA}}", esc(hora))
