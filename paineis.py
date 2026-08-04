@@ -122,30 +122,10 @@ def render_ipca_modal(ipca):
     )
 
 
-# ---------- Painel de Pesquisas (quadro interativo) ----------
-POLL_COR = {"lula": "#e0564f", "flavio": "#4a90e2", "neutro": "#8a8a96",
-            "branco": "#cdd2dc", "indeciso": "#82828f"}
-
-
-def _poll_bars(rows, domain_max):
-    """Renderiza barras horizontais (fallback server-side, espelha o JS)."""
-    out = ['<div class="bars">']
-    for r in rows:
-        try:
-            pct = float(r.get("pct", 0))
-        except Exception:
-            pct = 0
-        w = max(1.5, pct / domain_max * 100) if domain_max else 0
-        cor = POLL_COR.get(r.get("tipo", "neutro"), POLL_COR["neutro"])
-        sig = f'<small>{_e(r.get("sigla"))}</small>' if r.get("sigla") else ""
-        sec = " sec" if r.get("sec") else ""
-        out.append(
-            f'<div class="brow{sec}"><span class="bnm">{_e(r.get("nome",""))}{sig}</span>'
-            f'<div class="btrack"><span class="bfill" style="width:{w:.1f}%;background:{cor}"></span></div>'
-            f'<span class="bpct">{_e(r.get("pct",""))}%</span></div>'
-        )
-    out.append("</div>")
-    return "".join(out)
+# ---------- Painel de Pesquisas (gráficos de linha) ----------
+POLL_COR = {"lula": "#e0564f", "flavio": "#4a90e2", "caiado": "#d6a53c",
+            "zema": "#9a7fb0", "renan": "#57a785", "daciolo": "#c98bbe",
+            "branco": "#cdd2dc", "indeciso": "#82828f", "neutro": "#8a8a96"}
 
 
 def render_polls(pesquisas):
@@ -153,13 +133,7 @@ def render_polls(pesquisas):
     if not insts:
         return ""  # painel oculto enquanto não houver pesquisa curada
     inst0 = insts[0]
-    # fallback server-side: 1º turno do primeiro instituto (o JS re-renderiza ao carregar)
-    prim = inst0.get("primeiro", [])
-    dmax = max([float(r.get("pct", 0)) for r in prim] + [40]) if prim else 40
-    default_view = _poll_bars(prim, dmax)
-    footL = (f'Fonte: <strong>{_e(inst0.get("nome",""))}</strong> · '
-             f'{_e(inst0.get("amostra",""))} · margem {_e(inst0.get("margem",""))}')
-    footR = f'Campo: {_e(inst0.get("campoFull",""))} · Reg. {_e(inst0.get("registro",""))}'
+    footL = f'Fonte: <strong>{_e(inst0.get("nome",""))}</strong> &middot; intenção de voto (%)'
     data_json = json.dumps({"institutos": insts}, ensure_ascii=False)
     return (
         '      <div class="sec-title">Pesquisas Eleitorais <span class="poll-badge">Eleições 2026</span></div>\n'
@@ -178,9 +152,9 @@ def render_polls(pesquisas):
         '          </div>\n'
         '        </div>\n'
         '        <div class="phead2"><div class="pscn" id="scnTitle">Intenção de voto &middot; 1º turno</div>'
-        f'<div class="pmeta" id="scnMeta">estimulado &middot; {_e(inst0.get("nome",""))}</div></div>\n'
-        f'        <div id="pollView">{default_view}</div>\n'
-        f'        <div class="pfoot"><span id="pollFootL">{footL}</span><span id="pollFootR">{footR}</span></div>\n'
+        '<div class="pmeta" id="scnMeta"></div></div>\n'
+        '        <div id="pollView"></div>\n'
+        f'        <div class="pfoot"><span id="pollFootL">{footL}</span><span id="pollFootR"></span></div>\n'
         '      </div>\n'
         f'      <script type="application/json" id="pollData">{data_json}</script>\n'
     )
@@ -287,68 +261,40 @@ def js_block():
   var el=document.getElementById('pollData'); if(!el) return;
   var DADOS; try{ DADOS=JSON.parse(el.textContent); }catch(e){ return; }
   var INST=DADOS.institutos||[]; if(!INST.length) return;
-  var COR={lula:"#e0564f",flavio:"#4a90e2",neutro:"#8a8a96",branco:"#cdd2dc",indeciso:"#82828f"};
+  var COR={lula:"#e0564f",flavio:"#4a90e2",caiado:"#d6a53c",zema:"#9a7fb0",renan:"#57a785",daciolo:"#c98bbe",branco:"#cdd2dc",indeciso:"#82828f",neutro:"#8a8a96"};
   var st={inst:0,view:"primeiro"};
-  function bars(rows,dmax){
-    var h='<div class="bars">';
-    rows.forEach(function(r){
-      var w=Math.max(1.5,r.pct/dmax*100), c=COR[r.tipo]||COR.neutro;
-      var sig=r.sigla?'<small>'+r.sigla+'</small>':'';
-      h+='<div class="brow'+(r.sec?' sec':'')+'"><span class="bnm">'+r.nome+sig+'</span>'
-        +'<div class="btrack"><span class="bfill" style="width:'+w+'%;background:'+c+'"></span></div>'
-        +'<span class="bpct">'+r.pct+'%</span></div>';
-    });
-    return h+'</div>';
-  }
-  function confronto(seg){
-    var a=seg.main[0], b=seg.main[1];
-    var h='<div class="conf"><div class="conf-main">';
-    [a,b].forEach(function(c){
-      h+='<div class="conf-box"><div class="cn"><i style="background:'+COR[c.tipo]+'"></i>'+c.nome
-        +' <small style="color:var(--muted);font-weight:500">'+c.sigla+'</small></div>'
-        +'<div class="cp" style="color:'+COR[c.tipo]+'">'+c.pct+'%</div></div>';
-    });
-    h+='</div>';
-    if(seg.cenarios&&seg.cenarios.length){
-      h+='<div class="conf-sub">Outros confrontos (Lula &times;)</div><div class="bars">';
-      seg.cenarios.forEach(function(c){
-        var w=c.pb/60*100;
-        h+='<div class="brow cmp"><span class="bnm">'+c.a+' &times; '+c.b+'</span>'
-          +'<div class="btrack"><span class="bfill" style="width:'+w+'%;background:'+COR.neutro+'"></span></div>'
-          +'<span class="bpct">'+c.pa+'\\u2013'+c.pb+'</span></div>';
-      });
-      h+='</div>';
-    }
-    return h+'</div>';
-  }
   function line(seg){
-    var x0=46,x1=760,mT=26,mB=372,yMax=52,n=seg.meses.length;
-    var xAt=function(i){return x0+i*(x1-x0)/(n-1);};
+    var x0=46,x1=740,mT=24,mB=360,n=seg.meses.length;
+    var mx=0; seg.series.forEach(function(se){se.vals.forEach(function(v){if(v>mx)mx=v;});});
+    var yMax=Math.max(10,Math.ceil((mx+4)/10)*10);
+    var xAt=function(i){return n===1?(x0+x1)/2:x0+i*(x1-x0)/(n-1);};
     var yAt=function(v){return mB-(v/yMax)*(mB-mT);};
     var s="";
-    for(var g=0;g<=50;g+=10){var yy=yAt(g);
+    for(var g=0;g<=yMax;g+=10){var yy=yAt(g);
       s+='<line x1="'+x0+'" y1="'+yy+'" x2="'+x1+'" y2="'+yy+'" stroke="rgba(255,255,255,.06)"/>';
       s+='<text class="lbl-y" x="'+(x0-10)+'" y="'+(yy+3.5)+'" text-anchor="end">'+g+'</text>';}
     seg.meses.forEach(function(m,i){s+='<text class="lbl-x" x="'+xAt(i)+'" y="'+(mB+22)+'" text-anchor="middle">'+m+'</text>';});
+    seg.series.forEach(function(se){ if(n>1){var pts=se.vals.map(function(v,i){return xAt(i)+','+yAt(v);}).join(' ');
+      s+='<polyline points="'+pts+'" fill="none" stroke="'+COR[se.tipo]+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';}});
+    var lu=null,fl=null; seg.series.forEach(function(se){if(se.tipo==='lula')lu=se; if(se.tipo==='flavio')fl=se;});
     seg.series.forEach(function(se){
-      var pts=se.vals.map(function(v,i){return xAt(i)+','+yAt(v);}).join(' ');
-      s+='<polyline points="'+pts+'" fill="none" stroke="'+COR[se.tipo]+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
-    });
-    var lu=seg.series[0].vals, fl=seg.series[1].vals;
-    var off=function(si,i,v){return si===0?(v>=fl[i]?-12:16):si===1?(v>lu[i]?-12:16):(si===2?-12:16);};
-    seg.series.forEach(function(se,si){
+      var proto=(se.tipo==='lula'||se.tipo==='flavio');
       se.vals.forEach(function(v,i){
         var x=xAt(i),y=yAt(v);
-        s+='<circle cx="'+x+'" cy="'+y+'" r="4.6" fill="#1c1c22"/><circle cx="'+x+'" cy="'+y+'" r="3.1" fill="'+COR[se.tipo]+'"/>';
-        s+='<text class="val" x="'+x+'" y="'+(y+off(si,i,v))+'" text-anchor="middle" fill="'+COR[se.tipo]+'">'+v+'</text>';
+        s+='<circle cx="'+x+'" cy="'+y+'" r="4.4" fill="#1c1c22"/><circle cx="'+x+'" cy="'+y+'" r="3" fill="'+COR[se.tipo]+'"/>';
+        var show=false, off=-11;
+        if(proto){ show=true;
+          if(se.tipo==='lula'&&fl) off=(v>=fl.vals[i]?-11:15);
+          else if(se.tipo==='flavio'&&lu) off=(v>lu.vals[i]?-11:15);
+        } else { show=(i===0||i===se.vals.length-1); off=-11; }
+        if(show) s+='<text class="val" x="'+x+'" y="'+(y+off)+'" text-anchor="middle" fill="'+COR[se.tipo]+'">'+v+'</text>';
       });
-      var ly=yAt(se.vals[n-1]);
-      s+='<circle cx="'+x1+'" cy="'+ly+'" r="3.1" fill="'+COR[se.tipo]+'"/><text class="endlbl" x="'+(x1+12)+'" y="'+(ly+4)+'" fill="'+COR[se.tipo]+'">'+se.nome+'</text>';
+      var li=se.vals.length-1, ex=(n===1?(x0+x1)/2:x1), ly=yAt(se.vals[li]);
+      s+='<text class="endlbl" x="'+(ex+10)+'" y="'+(ly+4)+'" fill="'+COR[se.tipo]+'">'+se.nome.replace(/ \\(.*\\)/,'')+'</text>';
     });
     var leg=seg.series.map(function(se){return '<span class="lg"><i style="background:'+COR[se.tipo]+'"></i>'+se.nome+'</span>';}).join('');
-    return '<svg viewBox="0 0 900 430" role="img" aria-label="Evolucao 2 turno">'+s+'</svg><div class="plegend">'+leg+'</div>';
+    return '<svg viewBox="0 0 900 400" role="img" aria-label="Evolucao da pesquisa">'+s+'</svg><div class="plegend">'+leg+'</div>';
   }
-  function mx(arr,f){return arr.reduce(function(a,r){return Math.max(a,r.pct);},f);}
   function render(){
     var it=INST[st.inst];
     document.getElementById('instNome').textContent=it.nome;
@@ -356,14 +302,11 @@ def js_block():
     document.querySelectorAll('#pollTabs .ptab').forEach(function(t){t.classList.toggle('on',t.getAttribute('data-v')===st.view);});
     var titles={primeiro:"Intenção de voto \\u00b7 1º turno",segundo:"Intenção de voto \\u00b7 2º turno",rejeicao:"Rejeição \\u00b7 não votaria de jeito nenhum"};
     document.getElementById('scnTitle').textContent=titles[st.view];
-    var meta="",view="";
-    if(st.view==="primeiro"){meta="estimulado \\u00b7 "+it.nome;view=bars(it.primeiro,mx(it.primeiro,40));}
-    else if(st.view==="segundo"){meta=(it.segundo.nota||"")+" \\u00b7 "+it.nome;view=it.segundo.tipo==="serie"?line(it.segundo):confronto(it.segundo);}
-    else{meta=it.nome;view=bars(it.rejeicao,mx(it.rejeicao,60));}
-    document.getElementById('scnMeta').textContent=meta;
-    document.getElementById('pollView').innerHTML=view;
-    document.getElementById('pollFootL').innerHTML='Fonte: <strong style="color:var(--white)">'+it.nome+'</strong> \\u00b7 '+it.amostra+' \\u00b7 margem '+it.margem;
-    document.getElementById('pollFootR').textContent='Campo: '+it.campoFull+' \\u00b7 Reg. '+it.registro;
+    var seg=it[st.view];
+    document.getElementById('scnMeta').textContent=(seg.nota||"")+" \\u00b7 "+it.nome;
+    document.getElementById('pollView').innerHTML=line(seg);
+    document.getElementById('pollFootL').innerHTML='Fonte: <strong style="color:var(--white)">'+it.nome+'</strong> \\u00b7 intenção de voto (%)';
+    document.getElementById('pollFootR').textContent=seg.meses.length+' pesquisa(s) \\u00b7 série mensal';
     var menu=document.getElementById('instMenu');
     menu.innerHTML=INST.map(function(x,i){return '<div class="pinst-opt'+(i===st.inst?' on':'')+'" data-i="'+i+'">'+x.nome+'<small>'+x.campo+'</small></div>';}).join('');
     menu.querySelectorAll('.pinst-opt').forEach(function(o){o.addEventListener('click',function(){st.inst=+o.getAttribute('data-i');menu.classList.add('hidden');render();});});

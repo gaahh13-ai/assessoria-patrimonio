@@ -3,23 +3,17 @@
     {
       "id": "quaest",
       "nome": "Genial/Quaest",
-      "campo": "10–13 jul",
-      "campoFull": "10 a 13 de julho de 2026",
-      "amostra": "2.004 entrevistas",
-      "margem": "± 2 p.p.",
-      "registro": "BR-07181/2026",
-      "primeiro": [
-        {"nome": "Lula", "sigla": "PT", "pct": 40, "tipo": "lula"},
-        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 28, "tipo": "flavio"},
-        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 4, "tipo": "neutro"},
-        {"nome": "Renan Santos", "sigla": "Missão", "pct": 3, "tipo": "neutro"},
-        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 2, "tipo": "neutro"},
-        {"nome": "Outros", "sigla": "", "pct": 4, "tipo": "neutro"},
-        {"nome": "Branco/Nulo", "sigla": "", "pct": 8, "tipo": "branco", "sec": true},
-        {"nome": "Indecisos", "sigla": "", "pct": 11, "tipo": "indeciso", "sec": true}
-      ],
+      "campo": "jul/26",
+      "primeiro": {
+        "nota": "1º turno",
+        "meses": ["Fev/26", "Mar/26", "Jul/26"],
+        "series": [
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [41, 39, 40]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [32, 32, 28]},
+          {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [4, 4, 4]}
+        ]
+      },
       "segundo": {
-        "tipo": "serie",
         "nota": "Lula × Flávio Bolsonaro",
         "meses": ["Ago/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
         "series": [
@@ -29,58 +23,47 @@
           {"nome": "Indecisos", "tipo": "indeciso", "vals": [3, 3, 2, 2, 2, 2, 3, 4, 4]}
         ]
       },
-      "rejeicao": [
-        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 57, "tipo": "flavio"},
-        {"nome": "Lula", "sigla": "PT", "pct": 50, "tipo": "lula"},
-        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 34, "tipo": "neutro"},
-        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 31, "tipo": "neutro"},
-        {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 27, "tipo": "neutro"},
-        {"nome": "Joaquim Barbosa", "sigla": "DC", "pct": 18, "tipo": "neutro"},
-        {"nome": "Renan Santos", "sigla": "Missão", "pct": 17, "tipo": "neutro"},
-        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 16, "tipo": "neutro"}
-      ]
+      "rejeicao": {
+        "nota": "não votaria de jeito nenhum",
+        "meses": ["Jul/26"],
+        "series": [
+          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [57]},
+          {"nome": "Lula", "tipo": "lula", "vals": [50]},
+          {"nome": "Ronaldo Caiado", "tipo": "caiado", "vals": [34]},
+          {"nome": "Romeu Zema", "tipo": "zema", "vals": [31]}
+        ]
+      }
     },
     {
       "id": "nexus",
       "nome": "BTG/Nexus",
-      "campo": "24–26 jul",
-      "campoFull": "24 a 26 de julho de 2026",
-      "amostra": "2.004 entrevistas",
-      "margem": "± 2 p.p.",
-      "registro": "BR-01489/2026",
-      "primeiro": [
-        {"nome": "Lula", "sigla": "PT", "pct": 42, "tipo": "lula"},
-        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 33, "tipo": "flavio"},
-        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 6, "tipo": "neutro"},
-        {"nome": "Renan Santos", "sigla": "Missão", "pct": 5, "tipo": "neutro"},
-        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 3, "tipo": "neutro"},
-        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 2, "tipo": "neutro"},
-        {"nome": "Outros", "sigla": "", "pct": 1, "tipo": "neutro"},
-        {"nome": "Branco/Nulo", "sigla": "", "pct": 6, "tipo": "branco", "sec": true},
-        {"nome": "Indecisos", "sigla": "", "pct": 2, "tipo": "indeciso", "sec": true}
-      ],
-      "segundo": {
-        "tipo": "confronto",
-        "nota": "Confronto direto",
-        "main": [
-          {"nome": "Lula", "sigla": "PT", "pct": 47, "tipo": "lula"},
-          {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 43, "tipo": "flavio"}
-        ],
-        "cenarios": [
-          {"a": "Lula", "b": "Ronaldo Caiado", "pa": 45, "pb": 43},
-          {"a": "Lula", "b": "Romeu Zema", "pa": 46, "pb": 42},
-          {"a": "Lula", "b": "Renan Santos", "pa": 47, "pb": 39}
+      "campo": "jul/26",
+      "primeiro": {
+        "nota": "1º turno",
+        "meses": ["Jan/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
+        "series": [
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [41, 41, 40, 42, 42]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [36, 36, 35, 33, 33]}
         ]
       },
-      "rejeicao": [
-        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 50, "tipo": "flavio"},
-        {"nome": "Lula", "sigla": "PT", "pct": 48, "tipo": "lula"},
-        {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 38, "tipo": "neutro"},
-        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 32, "tipo": "neutro"},
-        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 29, "tipo": "neutro"},
-        {"nome": "Renan Santos", "sigla": "Missão", "pct": 27, "tipo": "neutro"},
-        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 26, "tipo": "neutro"}
-      ]
+      "segundo": {
+        "nota": "Lula × Flávio Bolsonaro",
+        "meses": ["Jan/26", "Mar/26", "Mai/26", "Jun/26", "Jul/26"],
+        "series": [
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [47, 46, 47, 47, 47]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [44, 46, 43, 44, 43]}
+        ]
+      },
+      "rejeicao": {
+        "nota": "não votaria de jeito nenhum",
+        "meses": ["Jul/26"],
+        "series": [
+          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [50]},
+          {"nome": "Lula", "tipo": "lula", "vals": [48]},
+          {"nome": "Cabo Daciolo", "tipo": "daciolo", "vals": [38]},
+          {"nome": "Romeu Zema", "tipo": "zema", "vals": [32]}
+        ]
+      }
     }
   ]
 }

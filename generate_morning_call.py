@@ -94,18 +94,16 @@ Como é de manhã cedo, os dados de mercado devem ser do FECHAMENTO DO ÚLTIMO P
 PESQUISE NA WEB (use a ferramenta de busca) e confirme cada dado numa fonte confiável
 (Money Times, InfoMoney, B3, Investing, CNBC, Yahoo Finance). NUNCA invente números ou links.
 SEJA EFICIENTE NAS BUSCAS: faça até 8 buscas, bem direcionadas. Reserve buscas para:
-1-2 do fechamento do pregão e índices (inclua UMA busca dedicada às BOLSAS EUROPEIAS para pegar o
-STOXX 600), 1-2 para as maiores altas/baixas com a cotação das ações, e 2-3 para as notícias.
+1-2 do fechamento do pregão e índices, 1-2 para as maiores altas/baixas com a cotação das ações, e 2-3 para as notícias.
 Reaproveite o que já encontrou; não repita buscas. Você PRECISA entregar 4 notícias de Mercado/Economia e 4 de Política.
 
 Use SEMPRE os dados do FECHAMENTO DO ÚLTIMO PREGÃO (dia útil anterior).
 
 Colete:
-- Painel (fechamento do último pregão), com pontuação/cotação E variação % de CADA um destes SETE índices:
-  Ibovespa, Dólar USD/BRL, Petróleo Brent, S&P 500, Nasdaq, Dow Jones e STOXX 600 (índice das bolsas
-  europeias — busque "STOXX 600 fechamento" ou "STOXX Europe 600 close" se necessário).
-  TODOS os sete são OBRIGATÓRIOS. Se, mesmo após buscar, você NÃO encontrar o valor real de algum índice,
-  OMITA esse índice da lista — JAMAIS escreva "n/d" no painel. NÃO inclua Selic nem DI no painel.
+- Painel (fechamento do último pregão), com pontuação/cotação E variação % de CADA um destes SEIS índices:
+  Ibovespa, Dólar USD/BRL, Petróleo Brent, S&P 500, Nasdaq e Dow Jones. NÃO inclua bolsas europeias
+  (nada de STOXX 600), nem Selic nem DI no painel. Se, mesmo após buscar, você NÃO encontrar o valor real
+  de algum índice, OMITA esse índice da lista — JAMAIS escreva "n/d" no painel.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
   IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%").
 - As 5 a 6 MAIORES ALTAS e as 5 a 6 MAIORES BAIXAS do Ibovespa. Para CADA ação é OBRIGATÓRIO:
@@ -129,8 +127,7 @@ Responda APENAS com um objeto JSON válido entre as marcas <json> e </json>, no 
     {{"lbl": "Brent (set)", "val": "US$ 76,01", "chg": "▼ −0,38%", "bar": "down", "cls": "down"}},
     {{"lbl": "S&P 500", "val": "7.575,39", "chg": "▲ +0,42%", "bar": "up", "cls": "up"}},
     {{"lbl": "Nasdaq", "val": "26.281,11", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}},
-    {{"lbl": "Dow Jones", "val": "52.637,01", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}},
-    {{"lbl": "Stoxx 600", "val": "641,10", "chg": "▲ +0,04%", "bar": "up", "cls": "up"}}
+    {{"lbl": "Dow Jones", "val": "52.637,01", "chg": "▲ +0,29%", "bar": "up", "cls": "up"}}
   ],
   "selic": "14,25% a.a.",
   "ipca_12m": "+5,23%",
@@ -161,8 +158,8 @@ IMPORTANTÍSSIMO — FORMATO DA RESPOSTA:
 - Responda EXCLUSIVAMENTE com o bloco <json>...</json>. NUNCA escreva explicações, comentários ou qualquer
   texto em prosa — nem antes, nem depois, nem para avisar que faltou algum dado.
 - Se não encontrar algum dado, preencha o campo com o melhor valor disponível ou "n/d" e SIGA em frente.
-- O painel deve trazer os sete índices (Ibovespa, Dólar, Brent, S&P 500, Nasdaq, Dow Jones, STOXX 600);
-  inclua o STOXX 600 sempre que encontrar o valor real. Se não encontrar algum, OMITA — nunca "n/d".
+- O painel deve trazer os seis índices (Ibovespa, Dólar, Brent, S&P 500, Nasdaq, Dow Jones), sem bolsas
+  europeias. Se não encontrar o valor real de algum, OMITA aquele índice — nunca escreva "n/d".
 - Para os juros, se não achar a taxa exata, use "Selic 14,25%".
 - Você DEVE concluir a tarefa e devolver o JSON. Se uma busca falhar, tente outra abordagem; JAMAIS responda que "não conseguiu".
 - Comece a resposta com <json>{{ e termine com }}</json>. Retorne SEMPRE o JSON completo, com todos os campos."""
