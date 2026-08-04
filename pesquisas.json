@@ -6,11 +6,11 @@
       "campo": "jul/26",
       "primeiro": {
         "nota": "1º turno",
-        "meses": ["Fev/26", "Mar/26", "Jul/26"],
+        "meses": ["Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
         "series": [
-          {"nome": "Lula (PT)", "tipo": "lula", "vals": [41, 39, 40]},
-          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [32, 32, 28]},
-          {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [4, 4, 4]}
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [38, 39, 37, 39, 39, 40]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [30, 32, 32, 33, 29, 28]},
+          {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [4, 5, 5, 5, 5, 4]}
         ]
       },
       "segundo": {
@@ -25,12 +25,12 @@
       },
       "rejeicao": {
         "nota": "não votaria de jeito nenhum",
-        "meses": ["Jul/26"],
+        "meses": ["Abr/26", "Mai/26", "Jun/26", "Jul/26"],
         "series": [
-          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [57]},
-          {"nome": "Lula", "tipo": "lula", "vals": [50]},
-          {"nome": "Ronaldo Caiado", "tipo": "caiado", "vals": [34]},
-          {"nome": "Romeu Zema", "tipo": "zema", "vals": [31]}
+          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [52, 54, 56, 57]},
+          {"nome": "Lula", "tipo": "lula", "vals": [55, 53, 53, 50]},
+          {"nome": "Ronaldo Caiado", "tipo": "caiado", "vals": [32, 32, 32, 34]},
+          {"nome": "Romeu Zema", "tipo": "zema", "vals": [31, 27, 29, 31]}
         ]
       }
     },
