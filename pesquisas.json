@@ -37,31 +37,30 @@
     {
       "id": "nexus",
       "nome": "BTG/Nexus",
-      "campo": "jul/26",
+      "campo": "ago/26",
       "primeiro": {
         "nota": "1º turno",
-        "meses": ["Jan/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
+        "meses": ["Jun/26", "Jul/26", "Ago/26"],
         "series": [
-          {"nome": "Lula (PT)", "tipo": "lula", "vals": [41, 41, 40, 42, 42]},
-          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [36, 36, 35, 33, 33]}
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [42, 42, 41]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [34, 33, 37]},
+          {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [5, 6, 5]}
         ]
       },
       "segundo": {
         "nota": "Lula × Flávio Bolsonaro",
-        "meses": ["Jan/26", "Mar/26", "Mai/26", "Jun/26", "Jul/26"],
+        "meses": ["Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26"],
         "series": [
-          {"nome": "Lula (PT)", "tipo": "lula", "vals": [47, 46, 47, 47, 47]},
-          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [44, 46, 43, 44, 43]}
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [46, 46, 47, 47, 47, 46]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [46, 45, 43, 44, 43, 45]}
         ]
       },
       "rejeicao": {
         "nota": "não votaria de jeito nenhum",
-        "meses": ["Jul/26"],
+        "meses": ["Abr/26", "Mai/26", "Jul/26"],
         "series": [
-          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [50]},
-          {"nome": "Lula", "tipo": "lula", "vals": [48]},
-          {"nome": "Cabo Daciolo", "tipo": "daciolo", "vals": [38]},
-          {"nome": "Romeu Zema", "tipo": "zema", "vals": [32]}
+          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [48, 50, 50]},
+          {"nome": "Lula", "tipo": "lula", "vals": [48, 47, 48]}
         ]
       }
     }
