@@ -93,22 +93,25 @@ Como é de manhã cedo, os dados de mercado devem ser do FECHAMENTO DO ÚLTIMO P
 
 PESQUISE NA WEB (use a ferramenta de busca) e confirme cada dado numa fonte confiável
 (Money Times, InfoMoney, B3, Investing, CNBC, Yahoo Finance). NUNCA invente números ou links.
-SEJA ECONÔMICO NAS BUSCAS: faça no MÁXIMO 6 buscas, bem direcionadas (ex.: 1-2 para o fechamento
-do pregão e cotações, 1 para altas/baixas, 2-3 para notícias). Reaproveite o que já encontrou; não repita buscas.
-Reserve buscas suficientes para as notícias — você PRECISA entregar 4 de Mercado/Economia e 4 de Política.
+SEJA EFICIENTE NAS BUSCAS: faça até 8 buscas, bem direcionadas. Reserve buscas para:
+1-2 do fechamento do pregão e índices (inclua UMA busca dedicada às BOLSAS EUROPEIAS para pegar o
+STOXX 600), 1-2 para as maiores altas/baixas com a cotação das ações, e 2-3 para as notícias.
+Reaproveite o que já encontrou; não repita buscas. Você PRECISA entregar 4 notícias de Mercado/Economia e 4 de Política.
 
 Use SEMPRE os dados do FECHAMENTO DO ÚLTIMO PREGÃO (dia útil anterior).
 
 Colete:
-- Painel (fechamento do último pregão): Ibovespa (pontos e %), Dólar USD/BRL (cotação e %), Petróleo Brent,
-  S&P 500, Nasdaq, Dow Jones, Stoxx 600. NÃO inclua Selic nem DI no painel — eles vão nos destaques abaixo.
+- Painel (fechamento do último pregão), com pontuação/cotação E variação % de CADA um destes SETE índices:
+  Ibovespa, Dólar USD/BRL, Petróleo Brent, S&P 500, Nasdaq, Dow Jones e STOXX 600 (índice das bolsas
+  europeias — busque "STOXX 600 fechamento" ou "STOXX Europe 600 close" se necessário).
+  TODOS os sete são OBRIGATÓRIOS. Se, mesmo após buscar, você NÃO encontrar o valor real de algum índice,
+  OMITA esse índice da lista — JAMAIS escreva "n/d" no painel. NÃO inclua Selic nem DI no painel.
 - Destaques de juros e inflação: Selic vigente (ex.: "14,25% a.a."); IPCA acumulado em 12 meses (ex.: "+5,23%");
   IPCA do último mês já publicado, com o nome do mês (ex.: "Junho: +0,16%").
-- As 5 maiores altas e as maiores baixas do Ibovespa (ticker, nome curto, variação % E a cotação de
-  fechamento da ação em reais, ex.: "R$ 5,23"). A cotação costuma vir ENTRE PARÊNTESES ao lado da variação
-  nas matérias de fechamento do pregão (ex.: Money Times/InfoMoney trazem "MGLU3 ... 7,76% (R$ 4,86)");
-  use esse valor. Liste APENAS as altas/baixas que você REALMENTE encontrou, com variação % real —
-  NÃO complete a lista com tickers genéricos e NUNCA use "n/d" na variação (é melhor listar menos).
+- As 5 a 6 MAIORES ALTAS e as 5 a 6 MAIORES BAIXAS do Ibovespa. Para CADA ação é OBRIGATÓRIO:
+  ticker, nome curto, variação % real E a cotação de fechamento em reais (ex.: "R$ 5,23"). A cotação costuma
+  vir ENTRE PARÊNTESES ao lado da variação (ex.: "MGLU3 ... 7,76% (R$ 4,86)"). Se você NÃO tiver a cotação
+  em R$ de uma ação, NÃO a inclua. NUNCA use "n/d". Preciso de pelo menos 3 altas e 3 baixas COM cotação.
 - 4 notícias de "Mercado & Economia" e 4 de "Política & Internacional", cada uma com um bom RESUMO autoral
   (2 a 4 frases, escrito por você, sem copiar o texto da fonte), o veículo e a URL REAL da matéria (verifique cada link).
 - Agenda econômica da semana (4 a 6 itens) com dia e evento; marque o item mais importante com "hl": true.
@@ -158,7 +161,8 @@ IMPORTANTÍSSIMO — FORMATO DA RESPOSTA:
 - Responda EXCLUSIVAMENTE com o bloco <json>...</json>. NUNCA escreva explicações, comentários ou qualquer
   texto em prosa — nem antes, nem depois, nem para avisar que faltou algum dado.
 - Se não encontrar algum dado, preencha o campo com o melhor valor disponível ou "n/d" e SIGA em frente.
-- O painel precisa ter no mínimo Ibovespa, Dólar, S&P 500, Nasdaq e Dow Jones (Brent e Stoxx 600 são opcionais).
+- O painel deve trazer os sete índices (Ibovespa, Dólar, Brent, S&P 500, Nasdaq, Dow Jones, STOXX 600);
+  inclua o STOXX 600 sempre que encontrar o valor real. Se não encontrar algum, OMITA — nunca "n/d".
 - Para os juros, se não achar a taxa exata, use "Selic 14,25%".
 - Você DEVE concluir a tarefa e devolver o JSON. Se uma busca falhar, tente outra abordagem; JAMAIS responda que "não conseguiu".
 - Comece a resposta com <json>{{ e termine com }}</json>. Retorne SEMPRE o JSON completo, com todos os campos."""
@@ -219,9 +223,17 @@ def esc(s):
     return html.escape(str(s), quote=True)
 
 
+def _val_ok(v):
+    """True se o valor é numérico de verdade (não vazio, não 'n/d')."""
+    v = str(v).strip().lower()
+    return bool(v) and v != "n/d" and bool(re.search(r"\d", v))
+
+
 def render_panel(items):
     out = []
     for it in items:
+        if not _val_ok(it.get("val", "")):
+            continue  # nunca renderiza card 'n/d'/vazio no painel
         bar = {"up": "bar-up", "down": "bar-down", "acc": "bar-acc"}.get(it.get("bar", "up"), "bar-up")
         cls = "down" if it.get("cls") == "down" else "up"
         out.append(
@@ -319,6 +331,113 @@ def brapi_precos(tickers):
         time.sleep(0.2)  # cortesia com a API
     return out
 
+
+def brapi_cotacoes(tickers):
+    """Como brapi_precos, mas devolve preço E variação % de cada ação:
+    {TICKER: {"preco": "R$ x,xx", "pc": "+x,xx%"}}. Nunca levanta exceção."""
+    import urllib.request
+    import time
+    out = {}
+    if not tickers:
+        return out
+    token = os.environ.get("BRAPI_TOKEN", "").strip()
+    falhas = 0
+    for tk in tickers:
+        try:
+            url = "https://brapi.dev/api/quote/" + tk
+            if token:
+                url += "?token=" + token
+            req = urllib.request.Request(url, headers={"User-Agent": "morning-call-bot"})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                payload = json.loads(r.read().decode("utf-8"))
+            for it in payload.get("results", []):
+                sym = (it.get("symbol") or "").upper()
+                if not sym:
+                    continue
+                info = {}
+                preco = it.get("regularMarketPrice")
+                if preco is None:
+                    preco = it.get("regularMarketPreviousClose")
+                if preco is not None:
+                    info["preco"] = "R$ " + f"{float(preco):.2f}".replace(".", ",")
+                chg = it.get("regularMarketChangePercent")
+                if chg is not None:
+                    sinal = "+" if float(chg) >= 0 else "−"
+                    info["pc"] = sinal + f"{abs(float(chg)):.2f}".replace(".", ",") + "%"
+                if info:
+                    out[sym] = info
+        except Exception as e:
+            falhas += 1
+            if falhas <= 2:
+                print(f"brapi ({tk}) indisponível: {str(e)[:120]}")
+        time.sleep(0.2)
+    return out
+
+
+# Índices que o painel deve conter (grupos de palavras-chave para casar o rótulo).
+PAINEL_CORE = [["ibov"], ["usd/brl", "dólar", "dolar"], ["s&p"], ["nasdaq"], ["dow"]]
+
+
+def limpar_painel(data):
+    """Remove do painel qualquer índice sem valor real (evita cards 'n/d')."""
+    data["painel"] = [it for it in (data.get("painel") or []) if _val_ok(it.get("val", ""))]
+    return data
+
+
+def _pc_valido(it):
+    return bool(re.search(r"\d", str(it.get("pc", "")))) and str(it.get("pc", "")).strip().lower() != "n/d"
+
+
+def preparar_movers(data):
+    """Garante que altas/baixas tenham preço: pega a cotação e a variação na brapi
+    (fonte estável) e, na falta, usa o que o modelo trouxe. Descarta quem ficar sem
+    preço e limita a 3 de cada lado (os maiores)."""
+    altas = [it for it in (data.get("altas") or []) if _pc_valido(it)]
+    baixas = [it for it in (data.get("baixas") or []) if _pc_valido(it)]
+    tickers = []
+    for it in altas + baixas:
+        tk = (it.get("tk") or "").strip().upper()
+        if tk and tk not in tickers:
+            tickers.append(tk)
+    cot = brapi_cotacoes(tickers[:20])
+
+    def enrich(lst):
+        out = []
+        for it in lst:
+            tk = (it.get("tk") or "").strip().upper()
+            c = cot.get(tk, {})
+            preco = c.get("preco") or (it.get("preco") or "").strip()
+            if not preco or preco == "n/d":
+                continue  # sem preço confiável: fora (nunca mostra ação sem cotação)
+            it2 = dict(it)
+            it2["preco"] = preco
+            it2["pc"] = c.get("pc") or it.get("pc")  # variação da brapi quando houver
+            out.append(it2)
+        return out[:3]
+
+    data["altas"] = enrich(altas)
+    data["baixas"] = enrich(baixas)
+    print(f"movers: {len(data['altas'])} altas / {len(data['baixas'])} baixas com preço "
+          f"(brapi {len(cot)}/{len(tickers)}).")
+    return data
+
+
+def dados_validos(d, mode):
+    """Validação por modo. main/market exigem painel-core completo + 3 altas e 3 baixas
+    com preço. agenda exige a lista de agenda. main também exige as notícias."""
+    if not d:
+        return False
+    if mode == "agenda":
+        return len(d.get("agenda") or []) >= 3
+    painel = [it for it in (d.get("painel") or []) if _val_ok(it.get("val", ""))]
+    labels = " ".join((it.get("lbl", "") or "").lower() for it in painel)
+    painel_ok = all(any(k in labels for k in grp) for grp in PAINEL_CORE)
+    altas_ok = len([x for x in (d.get("altas") or []) if x.get("preco") and _pc_valido(x)]) >= 3
+    baixas_ok = len([x for x in (d.get("baixas") or []) if x.get("preco") and _pc_valido(x)]) >= 3
+    mercado_ok = painel_ok and altas_ok and baixas_ok
+    if mode == "market":
+        return mercado_ok
+    return mercado_ok and bool(d.get("noticias_eco")) and bool(d.get("noticias_pol"))
 
 
 # ===== Painéis dinâmicos: rolagem (IPCA/Copom) e Boletim Focus =====
@@ -588,7 +707,7 @@ def main():
             resp = client.messages.create(
                 model=MODEL,
                 max_tokens=16000,
-                tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 7}],
+                tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 8}],
                 messages=messages,
             )
             sr = resp.stop_reason
@@ -601,15 +720,11 @@ def main():
             break
         return "".join(parts), sr
 
-    def valido(d):
-        altas_reais = [x for x in (d.get("altas") or []) if re.search(r"\d", str(x.get("pc", "")))]
-        return bool(d and d.get("painel") and len(d["painel"]) >= 5
-                    and d.get("noticias_eco") and d.get("noticias_pol")
-                    and altas_reais)
-
-    # O Haiku às vezes devolve dados incompletos; tentamos algumas vezes antes de desistir.
+    # Gera; a cada tentativa já enriquece movers (preço/variação via brapi) e limpa o
+    # painel ANTES de validar, para exigir 3 altas + 3 baixas com preço e o painel-core
+    # completo. Só publica dados que passam na validação do modo.
     data = None
-    for tentativa in range(3):
+    for tentativa in range(4):
         text, sr = gerar_texto()
         print(f"Tentativa {tentativa + 1}: {len(text)} caracteres (stop_reason={sr}).")
         d = None
@@ -622,33 +737,16 @@ def main():
             except Exception as e2:
                 print(f"Reparo falhou: {str(e2)[:100]}")
                 d = None
-        if valido(d):
+        if d and mode in ("main", "market"):
+            limpar_painel(d)
+            preparar_movers(d)
+        if dados_validos(d, mode):
             data = d
             break
-        print(f"Tentativa {tentativa + 1} incompleta; nova tentativa...")
+        print(f"Tentativa {tentativa + 1} incompleta para o modo '{mode}'; nova tentativa...")
 
-    if not valido(data):
-        sys.exit("Não consegui gerar dados completos após 3 tentativas. Página anterior mantida.")
-
-    # Preços das ações via brapi.dev (JSON estável). O DI vem do modelo (direção da curva).
-    # descarta linhas sem variação real (evita tickers "n/d" que o modelo às vezes inventa)
-    data["altas"] = [it for it in data.get("altas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
-    data["baixas"] = [it for it in data.get("baixas", []) if re.search(r"\d", it.get("pc", "")) and it.get("pc") != "n/d"]
-    movers = data.get("altas", []) + data.get("baixas", [])
-    tickers = []
-    for it in movers:
-        tk = (it.get("tk") or "").strip().upper()
-        if tk and tk not in tickers:
-            tickers.append(tk)
-    precos = brapi_precos(tickers[:15])
-    for it in movers:
-        v = precos.get((it.get("tk") or "").strip().upper())
-        # prioriza a cotação do brapi; se indisponível, mantém a cotação que o modelo trouxe
-        if v:
-            it["preco"] = v
-        else:
-            it["preco"] = it.get("preco", "") or ""
-    print(f"preços brapi={len(precos)}/{len(tickers)}.")
+    if not dados_validos(data, mode):
+        sys.exit(f"Não consegui gerar dados completos ({mode}) após 4 tentativas. Página anterior mantida.")
 
     hora = hoje.strftime("%H:%M")
 
