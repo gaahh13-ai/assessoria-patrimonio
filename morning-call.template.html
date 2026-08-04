@@ -43,6 +43,8 @@
   .titlerow h1 span{color:var(--acc)}
   .date{color:var(--muted);font-size:13.5px;text-align:right}
   .date strong{color:var(--white);display:block;font-size:14.5px}
+  .upd-stamp{font-size:9px;color:var(--muted);text-align:right;letter-spacing:.3px;margin:5px 2px 14px;opacity:.85}
+  .upd-stamp::before{content:"⟳ ";color:var(--gold);opacity:.9}
   .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
   .summary p{font-size:14.5px;color:#cfd3dc}
   .summary p+p{margin-top:10px}
@@ -246,7 +248,7 @@
 
   <div class="titlerow">
     <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
-    <div class="date"><strong>{{DATE}}</strong>{{SUBTITLE}}</div>
+    <div class="date"><strong>{{DATE}}</strong></div>
   </div>
 
   <div class="summary">
@@ -275,13 +277,17 @@
         <div class="mbox hl clk" id="cardSelic"><div class="ml">Selic (hoje)</div><div class="mv">{{SELIC}}</div><div class="ms">Taxa básica de juros</div><div class="tap">↳ toque: decisões do Copom</div></div>
         <div class="mbox clk" id="cardIpca"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">{{IPCA_12M}}</div><div class="ms">{{IPCA_MES}}</div><div class="tap">↳ toque: últimos 12 meses</div></div>
       </div>
+<!--MERCADO:START-->
       <div class="grid-mini">
 {{PANEL}}
       </div>
+      <div class="upd-stamp">Atualizado às {{MERCADO_HORA}}</div>
+<!--MERCADO:END-->
 
 {{FOCUS_BLOCK}}
 
       <div class="sec-title sub">Destaques · B3</div>
+<!--DESTAQUES:START-->
       <div class="panel gain">
         <h4>▲ Maiores Altas</h4>
 {{GAINS}}
@@ -290,11 +296,15 @@
         <h4>▼ Maiores Baixas</h4>
 {{LOSSES}}
       </div>
+      <div class="upd-stamp">Atualizado às {{DESTAQUES_HORA}}</div>
+<!--DESTAQUES:END-->
 
       <div class="sec-title sub">Agenda da Semana</div>
+<!--AGENDA:START-->
       <div class="agenda">
 {{AGENDA}}
       </div>
+<!--AGENDA:END-->
     </aside>
 
   </div>

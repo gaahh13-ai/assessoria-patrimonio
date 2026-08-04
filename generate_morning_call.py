@@ -474,6 +474,76 @@ def rodar_focus_only(hoje):
             print(f"Marcadores de Focus nao encontrados em {path}.")
 
 
+def montar_pagina(template, data, hora):
+    """Preenche o template completo (modo main). `hora` = HH:MM da rodada (carimbos)."""
+    summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
+    out = template
+    out = out.replace("{{DATE}}", esc(data["date"]))
+    out = out.replace("{{SUMMARY}}", summary_html)
+    out = out.replace("{{NEWS_ECO}}", render_news(data["noticias_eco"]))
+    out = out.replace("{{NEWS_POL}}", render_news(data["noticias_pol"]))
+    out = out.replace("{{PANEL}}", render_panel(data["painel"]))
+    out = out.replace("{{MERCADO_HORA}}", esc(hora))
+    out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
+    out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
+    out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
+    out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
+    out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
+    out = out.replace("{{DESTAQUES_HORA}}", esc(hora))
+    out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
+    out = out.replace("{{FOOTER_DATE}}", esc(data.get("footer_date", data["date"])))
+    out = out.replace("{{POLLS}}", paineis.render_polls(paineis.load_pesquisas()))
+    out = out.replace("{{FOCUS_BLOCK}}", paineis.render_focus_block(paineis.load_focus()))
+    out = out.replace("{{MODAL_COPOM}}", paineis.render_copom_modal(paineis.load_copom()))
+    out = out.replace("{{MODAL_IPCA}}", paineis.render_ipca_modal(paineis.load_ipca()))
+    return out
+
+
+def _extrai_bloco(template, tag):
+    m = re.search(r"<!--%s:START-->.*?<!--%s:END-->" % (tag, tag), template, re.DOTALL)
+    return m.group(0) if m else None
+
+
+def _preenche_bloco(bloco, data, hora):
+    """Preenche os placeholders que aparecem dentro dos blocos parciais."""
+    b = bloco
+    b = b.replace("{{PANEL}}", render_panel(data["painel"]))
+    b = b.replace("{{MERCADO_HORA}}", esc(hora))
+    b = b.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
+    b = b.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
+    b = b.replace("{{DESTAQUES_HORA}}", esc(hora))
+    b = b.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
+    return b
+
+
+def substituir_blocos(hoje, tags, template, data, hora):
+    """Atualiza só os blocos indicados (por marcadores) no index e no snapshot de hoje."""
+    novos = {}
+    for tag in tags:
+        tpl = _extrai_bloco(template, tag)
+        if tpl:
+            novos[tag] = _preenche_bloco(tpl, data, hora)
+        else:
+            print(f"Bloco {tag} nao existe no template.")
+    iso = hoje.strftime("%Y-%m-%d")
+    for path in [OUTPUT_PATH, os.path.join(HIST_DIR, iso + ".html")]:
+        try:
+            s = open(path, encoding="utf-8").read()
+        except FileNotFoundError:
+            continue
+        feito = []
+        for tag, novo in novos.items():
+            pat = re.compile(r"<!--%s:START-->.*?<!--%s:END-->" % (tag, tag), re.DOTALL)
+            if pat.search(s):
+                s = pat.sub(lambda m: novo, s, count=1)
+                feito.append(tag)
+            else:
+                print(f"Marcadores {tag} nao encontrados em {path}.")
+        if feito:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(s)
+            print(f"Blocos {feito} atualizados em {path}.")
+
 
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
@@ -481,9 +551,18 @@ def main():
 
     hoje = datetime.now(TZ)
 
-    # Atualização extra das 9:30 (segunda): mexe SÓ na tabela do Boletim Focus.
-    if os.environ.get("FOCUS_ONLY", "").strip().lower() == "true":
-        print("Modo Focus-only (atualização das 9:30).")
+    # Modo de atualização:
+    #   main   – 5:45, dias úteis (página completa: data, resumo, notícias + tudo)
+    #   market – 13:00 e 18:30 (só Painel de Mercado + Destaques B3, com carimbo de horário)
+    #   focus  – segunda 9:30 (só Boletim Focus)
+    #   agenda – sexta 18:30 (só Agenda da Semana, referente à semana seguinte)
+    # Compatível com o antigo FOCUS_ONLY.
+    mode = os.environ.get("MODE", "").strip().lower()
+    if not mode:
+        mode = "focus" if os.environ.get("FOCUS_ONLY", "").strip().lower() == "true" else "main"
+
+    if mode == "focus":
+        print("Modo focus (Boletim Focus, segunda 9:30).")
         rodar_focus_only(hoje)
         return
 
@@ -571,32 +650,24 @@ def main():
             it["preco"] = it.get("preco", "") or ""
     print(f"preços brapi={len(precos)}/{len(tickers)}.")
 
+    hora = hoje.strftime("%H:%M")
+
+    # Modos parciais: atualizam só os blocos indicados no index + snapshot de hoje.
+    if mode == "market":
+        print(f"Modo market ({hora}): Painel de Mercado + Destaques B3.")
+        substituir_blocos(hoje, ["MERCADO", "DESTAQUES"], template, data, hora)
+        return
+    if mode == "agenda":
+        print(f"Modo agenda ({hora}): Agenda da Semana.")
+        substituir_blocos(hoje, ["AGENDA"], template, data, hora)
+        return
+
+    # mode == main: página completa
     # Rolagem: se saiu IPCA mensal novo ou nova decisão do Copom, adiciona e descarta o mais antigo.
     atualizar_ipca(client)
     atualizar_copom(client)
 
-    summary_html = "\n".join(f"    <p>{p}</p>" for p in data["resumo"])
-
-    out = template
-    out = out.replace("{{DATE}}", esc(data["date"]))
-    out = out.replace("{{SUBTITLE}}", esc(data.get("subtitle", "")))
-    out = out.replace("{{SUMMARY}}", summary_html)
-    out = out.replace("{{NEWS_ECO}}", render_news(data["noticias_eco"]))
-    out = out.replace("{{NEWS_POL}}", render_news(data["noticias_pol"]))
-    out = out.replace("{{PANEL}}", render_panel(data["painel"]))
-    out = out.replace("{{SELIC}}", esc(data.get("selic", "14,25% a.a.")))
-    out = out.replace("{{IPCA_12M}}", esc(data.get("ipca_12m", "n/d")))
-    out = out.replace("{{IPCA_MES}}", esc(data.get("ipca_mes", "n/d")))
-    out = out.replace("{{GAINS}}", render_rows(data.get("altas", []), "up"))
-    out = out.replace("{{LOSSES}}", render_losses(data.get("baixas", []), data.get("baixas_nota", "")))
-    out = out.replace("{{AGENDA}}", render_agenda(data.get("agenda", [])))
-    out = out.replace("{{FOOTER_DATE}}", esc(data.get("footer_date", data["date"])))
-
-    # Painéis dinâmicos (renderizados de dados/*.json e pesquisas.json)
-    out = out.replace("{{POLLS}}", paineis.render_polls(paineis.load_pesquisas()))
-    out = out.replace("{{FOCUS_BLOCK}}", paineis.render_focus_block(paineis.load_focus()))
-    out = out.replace("{{MODAL_COPOM}}", paineis.render_copom_modal(paineis.load_copom()))
-    out = out.replace("{{MODAL_IPCA}}", paineis.render_ipca_modal(paineis.load_ipca()))
+    out = montar_pagina(template, data, hora)
 
     if "{{" in out:
         sys.exit("ERRO: sobraram marcadores não preenchidos no template.")
