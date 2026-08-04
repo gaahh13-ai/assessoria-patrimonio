@@ -385,36 +385,55 @@ def _pc_valido(it):
     return bool(re.search(r"\d", str(it.get("pc", "")))) and str(it.get("pc", "")).strip().lower() != "n/d"
 
 
+def _pc_num(pc):
+    """Converte '+1,08%' / '−2,34%' em float (+1.08 / -2.34). None se não der."""
+    s = str(pc).replace("%", "").replace("+", "").strip()
+    s = s.replace("−", "-").replace("–", "-").replace("—", "-")
+    s = s.replace(".", "").replace(",", ".")  # formato BR: vírgula decimal
+    try:
+        return float(s)
+    except Exception:
+        return None
+
+
 def preparar_movers(data):
-    """Garante que altas/baixas tenham preço: pega a cotação e a variação na brapi
-    (fonte estável) e, na falta, usa o que o modelo trouxe. Descarta quem ficar sem
-    preço e limita a 3 de cada lado (os maiores)."""
-    altas = [it for it in (data.get("altas") or []) if _pc_valido(it)]
-    baixas = [it for it in (data.get("baixas") or []) if _pc_valido(it)]
+    """Monta as 3 maiores altas e as 3 maiores baixas de forma consistente:
+    pega preço e variação na brapi (fonte estável; usa o modelo na falta), descarta
+    quem ficar sem preço, RE-CLASSIFICA pelo sinal real (positivo=alta, negativo=baixa)
+    e ORDENA (altas do maior para o menor; baixas da maior queda para a menor)."""
+    cand = [it for it in (data.get("altas") or []) + (data.get("baixas") or []) if _pc_valido(it)]
     tickers = []
-    for it in altas + baixas:
+    for it in cand:
         tk = (it.get("tk") or "").strip().upper()
         if tk and tk not in tickers:
             tickers.append(tk)
     cot = brapi_cotacoes(tickers[:20])
 
-    def enrich(lst):
-        out = []
-        for it in lst:
-            tk = (it.get("tk") or "").strip().upper()
-            c = cot.get(tk, {})
-            preco = c.get("preco") or (it.get("preco") or "").strip()
-            if not preco or preco == "n/d":
-                continue  # sem preço confiável: fora (nunca mostra ação sem cotação)
-            it2 = dict(it)
-            it2["preco"] = preco
-            it2["pc"] = c.get("pc") or it.get("pc")  # variação da brapi quando houver
-            out.append(it2)
-        return out[:3]
+    enr, vistos = [], set()
+    for it in cand:
+        tk = (it.get("tk") or "").strip().upper()
+        if not tk or tk in vistos:
+            continue
+        c = cot.get(tk, {})
+        preco = c.get("preco") or (it.get("preco") or "").strip()
+        pc = c.get("pc") or it.get("pc")
+        n = _pc_num(pc)
+        if not preco or preco == "n/d" or n is None or n == 0:
+            continue  # sem preço/variação confiável, ou variação zero
+        vistos.add(tk)
+        it2 = dict(it)
+        it2["preco"] = preco
+        it2["pc"] = pc
+        it2["_n"] = n
+        enr.append(it2)
 
-    data["altas"] = enrich(altas)
-    data["baixas"] = enrich(baixas)
-    print(f"movers: {len(data['altas'])} altas / {len(data['baixas'])} baixas com preço "
+    altas = sorted([x for x in enr if x["_n"] > 0], key=lambda x: -x["_n"])[:3]
+    baixas = sorted([x for x in enr if x["_n"] < 0], key=lambda x: x["_n"])[:3]
+    for x in altas + baixas:
+        x.pop("_n", None)
+    data["altas"] = altas
+    data["baixas"] = baixas
+    print(f"movers: {len(altas)} altas / {len(baixas)} baixas com preço "
           f"(brapi {len(cot)}/{len(tickers)}).")
     return data
 
