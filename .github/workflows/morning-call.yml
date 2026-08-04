@@ -1,23 +1,30 @@
 name: Morning Call diário
 
-# O agendamento diário (05:53, dias úteis) é feito por um serviço externo
-# (cron-job.org) que aciona este workflow via a API de workflow_dispatch.
-# Além disso, o "schedule" nativo abaixo dispara a rodada extra de segunda-feira
-# às 09:30 (horário de Brasília = 12:30 UTC) que atualiza SOMENTE o Boletim Focus.
-# Também pode ser disparado manualmente pela aba "Actions".
+# Horários (Brasília, BRT = UTC-3):
+#   main   – 5:45 dias úteis  → página completa (data, resumo, notícias + tudo).
+#            Disparado por serviço externo (cron-job.org) via workflow_dispatch,
+#            que é mais pontual que o schedule nativo do GitHub.
+#   market – 13:00 e 18:30 dias úteis → só Painel de Mercado + Destaques B3.
+#   focus  – segunda 9:30 → só o Boletim Focus.
+#   agenda – sexta 18:30 → só a Agenda da Semana (referente à semana seguinte).
+# Os modos market/focus/agenda usam o schedule nativo abaixo (UTC).
 on:
   schedule:
-    - cron: "30 12 * * 1"
+    - cron: "0 16 * * 1-5"    # market · 13:00 BRT (dias úteis)
+    - cron: "30 21 * * 1-5"   # market · 18:30 BRT (dias úteis)
+    - cron: "30 12 * * 1"     # focus  · 09:30 BRT (segunda)
+    - cron: "30 21 * * 5"     # agenda · 18:30 BRT (sexta)
   workflow_dispatch:
     inputs:
       force:
         description: "Forçar geração mesmo em fim de semana"
         type: boolean
         default: false
-      focus_only:
-        description: "Atualizar somente o Boletim Focus (rodada das 9:30 de segunda)"
-        type: boolean
-        default: false
+      mode:
+        description: "Modo de atualização"
+        type: choice
+        default: main
+        options: [main, market, focus, agenda]
 
 permissions:
   contents: write
@@ -47,7 +54,12 @@ jobs:
           CLAUDE_MODEL: claude-haiku-4-5-20251001
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
           FORCE_RUN: ${{ inputs.force }}
-          FOCUS_ONLY: ${{ inputs.focus_only || github.event_name == 'schedule' }}
+          MODE: >-
+            ${{ inputs.mode
+                || (github.event.schedule == '30 12 * * 1' && 'focus')
+                || (github.event.schedule == '30 21 * * 5' && 'agenda')
+                || (github.event.schedule && 'market')
+                || 'main' }}
         run: python generate_morning_call.py
 
       - name: Publicar (commit e push se houve mudança)
@@ -58,7 +70,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "Sem alterações no Morning Call."
           else
-            git commit -m "Atualiza Morning Call ($(TZ='America/Sao_Paulo' date '+%d/%m/%Y'))"
+            git commit -m "Atualiza Morning Call ($(TZ='America/Sao_Paulo' date '+%d/%m/%Y %H:%M'))"
             git push
             echo "Morning Call publicado."
           fi
