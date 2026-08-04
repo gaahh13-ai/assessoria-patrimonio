@@ -1,1 +1,86 @@
-{"cenarios": []}
+{
+  "institutos": [
+    {
+      "id": "quaest",
+      "nome": "Genial/Quaest",
+      "campo": "10–13 jul",
+      "campoFull": "10 a 13 de julho de 2026",
+      "amostra": "2.004 entrevistas",
+      "margem": "± 2 p.p.",
+      "registro": "BR-07181/2026",
+      "primeiro": [
+        {"nome": "Lula", "sigla": "PT", "pct": 40, "tipo": "lula"},
+        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 28, "tipo": "flavio"},
+        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 4, "tipo": "neutro"},
+        {"nome": "Renan Santos", "sigla": "Missão", "pct": 3, "tipo": "neutro"},
+        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 2, "tipo": "neutro"},
+        {"nome": "Outros", "sigla": "", "pct": 4, "tipo": "neutro"},
+        {"nome": "Branco/Nulo", "sigla": "", "pct": 8, "tipo": "branco", "sec": true},
+        {"nome": "Indecisos", "sigla": "", "pct": 11, "tipo": "indeciso", "sec": true}
+      ],
+      "segundo": {
+        "tipo": "serie",
+        "nota": "Lula × Flávio Bolsonaro",
+        "meses": ["Ago/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"],
+        "series": [
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [48, 46, 45, 43, 41, 40, 42, 44, 45]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [32, 36, 38, 38, 41, 42, 41, 38, 37]},
+          {"nome": "Branco/Nulo", "tipo": "branco", "vals": [17, 15, 15, 17, 16, 16, 14, 14, 14]},
+          {"nome": "Indecisos", "tipo": "indeciso", "vals": [3, 3, 2, 2, 2, 2, 3, 4, 4]}
+        ]
+      },
+      "rejeicao": [
+        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 57, "tipo": "flavio"},
+        {"nome": "Lula", "sigla": "PT", "pct": 50, "tipo": "lula"},
+        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 34, "tipo": "neutro"},
+        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 31, "tipo": "neutro"},
+        {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 27, "tipo": "neutro"},
+        {"nome": "Joaquim Barbosa", "sigla": "DC", "pct": 18, "tipo": "neutro"},
+        {"nome": "Renan Santos", "sigla": "Missão", "pct": 17, "tipo": "neutro"},
+        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 16, "tipo": "neutro"}
+      ]
+    },
+    {
+      "id": "nexus",
+      "nome": "BTG/Nexus",
+      "campo": "24–26 jul",
+      "campoFull": "24 a 26 de julho de 2026",
+      "amostra": "2.004 entrevistas",
+      "margem": "± 2 p.p.",
+      "registro": "BR-01489/2026",
+      "primeiro": [
+        {"nome": "Lula", "sigla": "PT", "pct": 42, "tipo": "lula"},
+        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 33, "tipo": "flavio"},
+        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 6, "tipo": "neutro"},
+        {"nome": "Renan Santos", "sigla": "Missão", "pct": 5, "tipo": "neutro"},
+        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 3, "tipo": "neutro"},
+        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 2, "tipo": "neutro"},
+        {"nome": "Outros", "sigla": "", "pct": 1, "tipo": "neutro"},
+        {"nome": "Branco/Nulo", "sigla": "", "pct": 6, "tipo": "branco", "sec": true},
+        {"nome": "Indecisos", "sigla": "", "pct": 2, "tipo": "indeciso", "sec": true}
+      ],
+      "segundo": {
+        "tipo": "confronto",
+        "nota": "Confronto direto",
+        "main": [
+          {"nome": "Lula", "sigla": "PT", "pct": 47, "tipo": "lula"},
+          {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 43, "tipo": "flavio"}
+        ],
+        "cenarios": [
+          {"a": "Lula", "b": "Ronaldo Caiado", "pa": 45, "pb": 43},
+          {"a": "Lula", "b": "Romeu Zema", "pa": 46, "pb": 42},
+          {"a": "Lula", "b": "Renan Santos", "pa": 47, "pb": 39}
+        ]
+      },
+      "rejeicao": [
+        {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 50, "tipo": "flavio"},
+        {"nome": "Lula", "sigla": "PT", "pct": 48, "tipo": "lula"},
+        {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 38, "tipo": "neutro"},
+        {"nome": "Romeu Zema", "sigla": "Novo", "pct": 32, "tipo": "neutro"},
+        {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 29, "tipo": "neutro"},
+        {"nome": "Renan Santos", "sigla": "Missão", "pct": 27, "tipo": "neutro"},
+        {"nome": "Augusto Cury", "sigla": "Avante", "pct": 26, "tipo": "neutro"}
+      ]
+    }
+  ]
+}
