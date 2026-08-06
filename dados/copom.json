@@ -1,6 +1,12 @@
 {
-  "proxima": "04-05 ago 2026",
+  "proxima": "15-16 set 2026",
   "reunioes": [
+    {
+      "data": "04-05 ago/26",
+      "decisao": "-25 pb",
+      "tipo": "down",
+      "selic": "14,00%"
+    },
     {
       "data": "28-29 jul/26",
       "decisao": "Mantida",
@@ -18,12 +24,6 @@
       "decisao": "−25 pb",
       "tipo": "dn",
       "selic": "14,50%"
-    },
-    {
-      "data": "17–18 mar/26",
-      "decisao": "−25 pb",
-      "tipo": "dn",
-      "selic": "14,75%"
     }
   ]
 }
