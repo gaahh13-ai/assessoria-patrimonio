@@ -4,19 +4,16 @@ name: Morning Call diário
 # main – 5:45 dias úteis → página completa (data, resumo, notícias + tudo).
 # Disparado por serviço externo (cron-job.org) via workflow_dispatch,
 # que é mais pontual que o schedule nativo do GitHub.
-# market – 13:00 e 18:30 dias úteis → só Painel de Mercado + Destaques B3.
-# focus – segunda 9:30 → só o Boletim Focus.
-# agenda – sexta 18:30 → só a Agenda da Semana (referente à semana seguinte).
-# Os modos market/focus/agenda usam o schedule nativo abaixo (UTC).
+# focus – segunda 9:30 → só o Boletim Focus (schedule nativo abaixo, em UTC).
+#
+# Os modos market/agenda continuam disponíveis para disparo MANUAL (input "mode"),
+# mas não têm mais horário automático — foram removidos para enxugar custo.
 #
 # Resiliência: se a geração falhar, envia e-mail (FormSubmit), espera 15 min,
 # tenta gerar de novo e, se falhar outra vez, envia um segundo e-mail.
 on:
   schedule:
-    - cron: "0 16 * * 1-5"   # market · 13:00 BRT (dias úteis)
-    - cron: "30 21 * * 1-5"  # market · 18:30 BRT (dias úteis)
     - cron: "30 12 * * 1"    # focus · 09:30 BRT (segunda)
-    - cron: "30 21 * * 5"    # agenda · 18:30 BRT (sexta)
   workflow_dispatch:
     inputs:
       force:
@@ -57,7 +54,7 @@ jobs:
       - name: Definir o modo
         id: mode
         run: |
-          MODE="${{ inputs.mode || (github.event.schedule == '30 12 * * 1' && 'focus') || (github.event.schedule == '30 21 * * 5' && 'agenda') || (github.event.schedule && 'market') || 'main' }}"
+          MODE="${{ inputs.mode || (github.event.schedule == '30 12 * * 1' && 'focus') || 'main' }}"
           echo "value=$MODE" >> "$GITHUB_OUTPUT"
           echo "Modo: $MODE"
 
