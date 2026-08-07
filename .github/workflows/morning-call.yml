@@ -1,19 +1,22 @@
 name: Morning Call diário
 
 # Horários (Brasília, BRT = UTC-3):
-#   main   – 5:45 dias úteis  → página completa (data, resumo, notícias + tudo).
-#            Disparado por serviço externo (cron-job.org) via workflow_dispatch,
-#            que é mais pontual que o schedule nativo do GitHub.
-#   market – 13:00 e 18:30 dias úteis → só Painel de Mercado + Destaques B3.
-#   focus  – segunda 9:30 → só o Boletim Focus.
-#   agenda – sexta 18:30 → só a Agenda da Semana (referente à semana seguinte).
+# main – 5:45 dias úteis → página completa (data, resumo, notícias + tudo).
+# Disparado por serviço externo (cron-job.org) via workflow_dispatch,
+# que é mais pontual que o schedule nativo do GitHub.
+# market – 13:00 e 18:30 dias úteis → só Painel de Mercado + Destaques B3.
+# focus – segunda 9:30 → só o Boletim Focus.
+# agenda – sexta 18:30 → só a Agenda da Semana (referente à semana seguinte).
 # Os modos market/focus/agenda usam o schedule nativo abaixo (UTC).
+#
+# Resiliência: se a geração falhar, envia e-mail (FormSubmit), espera 15 min,
+# tenta gerar de novo e, se falhar outra vez, envia um segundo e-mail.
 on:
   schedule:
-    - cron: "0 16 * * 1-5"    # market · 13:00 BRT (dias úteis)
-    - cron: "30 21 * * 1-5"   # market · 18:30 BRT (dias úteis)
-    - cron: "30 12 * * 1"     # focus  · 09:30 BRT (segunda)
-    - cron: "30 21 * * 5"     # agenda · 18:30 BRT (sexta)
+    - cron: "0 16 * * 1-5"   # market · 13:00 BRT (dias úteis)
+    - cron: "30 21 * * 1-5"  # market · 18:30 BRT (dias úteis)
+    - cron: "30 12 * * 1"    # focus · 09:30 BRT (segunda)
+    - cron: "30 21 * * 5"    # agenda · 18:30 BRT (sexta)
   workflow_dispatch:
     inputs:
       force:
@@ -33,6 +36,9 @@ concurrency:
   group: morning-call
   cancel-in-progress: false
 
+env:
+  NOTIFY_URL: "https://formsubmit.co/ajax/gaahh.13@gmail.com"
+
 jobs:
   gerar-e-publicar:
     runs-on: ubuntu-latest
@@ -48,21 +54,62 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Gerar o Morning Call
+      - name: Definir o modo
+        id: mode
+        run: |
+          MODE="${{ inputs.mode || (github.event.schedule == '30 12 * * 1' && 'focus') || (github.event.schedule == '30 21 * * 5' && 'agenda') || (github.event.schedule && 'market') || 'main' }}"
+          echo "value=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Modo: $MODE"
+
+      - name: Gerar o Morning Call (tentativa 1)
+        id: gen1
+        continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_MODEL: claude-haiku-4-5-20251001
           BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
           FORCE_RUN: ${{ inputs.force }}
-          MODE: >-
-            ${{ inputs.mode
-                || (github.event.schedule == '30 12 * * 1' && 'focus')
-                || (github.event.schedule == '30 21 * * 5' && 'agenda')
-                || (github.event.schedule && 'market')
-                || 'main' }}
+          MODE: ${{ steps.mode.outputs.value }}
         run: python generate_morning_call.py
 
+      - name: Avisar por e-mail (falhou a 1ª tentativa)
+        if: steps.gen1.outcome == 'failure'
+        run: |
+          MODE="${{ steps.mode.outputs.value }}"
+          AGORA="$(TZ='America/Sao_Paulo' date '+%d/%m/%Y %H:%M')"
+          curl -s -X POST "$NOTIFY_URL" \
+            -d "_subject=Morning Call nao atualizou (1a tentativa) - modo $MODE" \
+            -d "mensagem=A geracao automatica (modo $MODE) falhou em $AGORA. Vou tentar novamente em 15 minutos e aviso se nao der certo." \
+            -d "_template=table" || true
+
+      - name: Esperar 15 minutos antes de tentar de novo
+        if: steps.gen1.outcome == 'failure'
+        run: sleep 900
+
+      - name: Gerar o Morning Call (tentativa 2)
+        id: gen2
+        if: steps.gen1.outcome == 'failure'
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: claude-haiku-4-5-20251001
+          BRAPI_TOKEN: ${{ secrets.BRAPI_TOKEN }}
+          FORCE_RUN: ${{ inputs.force }}
+          MODE: ${{ steps.mode.outputs.value }}
+        run: python generate_morning_call.py
+
+      - name: Avisar por e-mail (falhou a 2ª tentativa)
+        if: steps.gen1.outcome == 'failure' && steps.gen2.outcome == 'failure'
+        run: |
+          MODE="${{ steps.mode.outputs.value }}"
+          AGORA="$(TZ='America/Sao_Paulo' date '+%d/%m/%Y %H:%M')"
+          curl -s -X POST "$NOTIFY_URL" \
+            -d "_subject=Morning Call segue sem atualizar (apos 2 tentativas) - modo $MODE" \
+            -d "mensagem=A segunda tentativa (modo $MODE) tambem falhou em $AGORA. A pagina NAO foi atualizada; a ultima edicao valida continua no ar. Voce pode rodar manualmente pela aba Actions do GitHub." \
+            -d "_template=table" || true
+
       - name: Publicar (commit e push se houve mudança)
+        if: steps.gen1.outcome == 'success' || steps.gen2.outcome == 'success'
         run: |
           git config user.name "morning-call-bot"
           git config user.email "actions@github.com"
@@ -74,3 +121,9 @@ jobs:
             git push
             echo "Morning Call publicado."
           fi
+
+      - name: Marcar execução como falha (ambas tentativas falharam)
+        if: steps.gen1.outcome == 'failure' && steps.gen2.outcome == 'failure'
+        run: |
+          echo "Ambas as tentativas de geração falharam."
+          exit 1
