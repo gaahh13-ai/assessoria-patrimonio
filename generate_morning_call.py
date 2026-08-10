@@ -712,6 +712,25 @@ def substituir_blocos(hoje, tags, template, data, hora):
             print(f"Blocos {feito} atualizados em {path}.")
 
 
+def _copom_vencido(hoje):
+    """True se hoje ja passou do ultimo dia da reuniao registrada como "proxima".
+    A busca de Selic/Copom so roda um dia apos a reuniao prevista no site."""
+    from datetime import date
+    prox = (paineis.load_copom().get("proxima") or "").lower()
+    meses = {"jan": 1, "fev": 2, "mar": 3, "abr": 4, "mai": 5, "jun": 6,
+             "jul": 7, "ago": 8, "set": 9, "out": 10, "nov": 11, "dez": 12}
+    mes = next((n for ab, n in meses.items() if ab in prox), 0)
+    anos = re.findall(r"20\d{2}", prox)
+    dias = re.findall(r"\b(\d{1,2})\b", re.sub(r"20\d{2}", "", prox))
+    if not (mes and anos and dias):
+        return False
+    try:
+        fim = date(int(anos[0]), mes, max(int(d) for d in dias))
+    except ValueError:
+        return False
+    return hoje.date() > fim
+
+
 def main():
     if not os.environ.get("ANTHROPIC_API_KEY"):
         sys.exit("ERRO: ANTHROPIC_API_KEY não definida.")
@@ -810,8 +829,10 @@ def main():
 
     # mode == main: página completa
     # Rolagem: se saiu IPCA mensal novo ou nova decisão do Copom, adiciona e descarta o mais antigo.
-    atualizar_ipca(client)
-    # atualizar_copom(client)  # desativado: Copom agora e manual (modelo duplicava)
+    if hoje.day == 13:
+        atualizar_ipca(client)
+    if _copom_vencido(hoje):
+        atualizar_copom(client)
 
     out = montar_pagina(template, data, hora)
 
