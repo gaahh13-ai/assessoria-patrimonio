@@ -42,8 +42,8 @@
         "nota": "1º turno",
         "meses": ["Jun/26", "Jul/26", "Ago/26"],
         "series": [
-          {"nome": "Lula (PT)", "tipo": "lula", "vals": [42, 42, 41]},
-          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [34, 33, 37]},
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [42, 42, 40]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [34, 33, 35]},
           {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [5, 6, 5]}
         ]
       },
@@ -51,16 +51,16 @@
         "nota": "Lula × Flávio Bolsonaro",
         "meses": ["Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26"],
         "series": [
-          {"nome": "Lula (PT)", "tipo": "lula", "vals": [46, 46, 47, 47, 47, 46]},
-          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [46, 45, 43, 44, 43, 45]}
+          {"nome": "Lula (PT)", "tipo": "lula", "vals": [46, 46, 47, 47, 47, 47]},
+          {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [46, 45, 43, 44, 43, 44]}
         ]
       },
       "rejeicao": {
         "nota": "não votaria de jeito nenhum",
-        "meses": ["Abr/26", "Mai/26", "Jul/26"],
+        "meses": ["Abr/26", "Mai/26", "Jul/26", "Ago/26"],
         "series": [
-          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [48, 50, 50]},
-          {"nome": "Lula", "tipo": "lula", "vals": [48, 47, 48]}
+          {"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [48, 50, 50, 50]},
+          {"nome": "Lula", "tipo": "lula", "vals": [48, 47, 48, 48]}
         ]
       }
     }
