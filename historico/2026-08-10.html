@@ -43,6 +43,8 @@
   .titlerow h1 span{color:var(--acc)}
   .date{color:var(--muted);font-size:13.5px;text-align:right}
   .date strong{color:var(--white);display:block;font-size:14.5px}
+  .upd-stamp{font-size:9px;color:var(--muted);text-align:right;letter-spacing:.3px;margin:5px 2px 14px;opacity:.85}
+  .upd-stamp::before{content:"⟳ ";color:var(--gold);opacity:.9}
   .summary{background:var(--ink2);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--acc);border-radius:0 14px 14px 0;padding:20px 24px;margin-top:22px}
   .summary p{font-size:14.5px;color:#cfd3dc}
   .summary p+p{margin-top:10px}
@@ -246,12 +248,12 @@
 
   <div class="titlerow">
     <h1>Morning Call <span>— Resumo Diário de Mercado</span></h1>
-    <div class="date"><strong>Segunda-feira, 3 de agosto de 2026</strong></div>
+    <div class="date"><strong>Segunda-feira, 10 de agosto de 2026</strong></div>
   </div>
 
   <div class="summary">
-    <p>Ibovespa encerrou julho em alta de 0,47%, atingindo 177.999 pontos, recuperando-se de uma sequência de quatro meses de perdas com ganhos de 3,47% no mês. Petrobras e setor financeiro lideraram os ganhos, com Santander disparando 13,35% após anúncio de OPA. Nos EUA, S&P 500 (+0,70%), Nasdaq (+1,00%) e Dow Jones (+0,53%) fecharam positivos.</p>
-    <p>Dólar encerrou em alta de 0,18% a R$ 5,0704, enquanto o Brent subiu 1,21% a US$ 87,93, refletindo tensões persistentes no Oriente Médio. Mercado aguarda decisão do Copom (4-5 de agosto) sobre a Selic, com expectativa de possível redução ou pausa nos cortes de juros diante da inflação pressionada.</p>
+    <p>O Ibovespa fechou a sexta em queda de 1,23% aos 175.546,36 pontos, reflexo da volatilidade geopolítica e reação do mercado à decisão do Copom de reduzir a Selic para 14% a.a. Na contramão, o petróleo Brent subiu para cerca de US$ 83,50 por barril, impulsionado pelas incertezas no Estreito de Ormuz.</p>
+    <p>Nos EUA, o S&P 500 avançou 0,62% para 7.757,64 pontos e o Nasdaq subiu 1,3% para 26.690,62, enquanto o Dow Jones ganhou 0,28% a 54.036,93 pontos. O dólar comercial fechou em queda de 0,46% a R$ 5,0836, em reação a dados fracos do mercado de trabalho americano.</p>
   </div>
 
   <div class="layout">
@@ -261,7 +263,7 @@
       <div class="pcard" id="pollCard">
         <div class="pctrl">
           <div class="pinst">
-            <div class="pinst-btn" id="instBtn"><span class="dot"></span><span id="instNome">Genial/Quaest</span><span class="cv" id="instCampo">10–13 jul</span><span class="car">▼</span></div>
+            <div class="pinst-btn" id="instBtn"><span class="dot"></span><span id="instNome">Genial/Quaest</span><span class="cv" id="instCampo">jul/26</span><span class="car">▼</span></div>
             <div class="pinst-menu hidden" id="instMenu"></div>
           </div>
           <div class="ptabs" id="pollTabs">
@@ -270,72 +272,72 @@
             <button class="ptab" data-v="rejeicao">Rejeição</button>
           </div>
         </div>
-        <div class="phead2"><div class="pscn" id="scnTitle">Intenção de voto &middot; 1º turno</div><div class="pmeta" id="scnMeta">estimulado &middot; Genial/Quaest</div></div>
-        <div id="pollView"><div class="bars"><div class="brow"><span class="bnm">Lula<small>PT</small></span><div class="btrack"><span class="bfill" style="width:100.0%;background:#e0564f"></span></div><span class="bpct">40%</span></div><div class="brow"><span class="bnm">Flávio Bolsonaro<small>PL</small></span><div class="btrack"><span class="bfill" style="width:70.0%;background:#4a90e2"></span></div><span class="bpct">28%</span></div><div class="brow"><span class="bnm">Ronaldo Caiado<small>PSD</small></span><div class="btrack"><span class="bfill" style="width:10.0%;background:#8a8a96"></span></div><span class="bpct">4%</span></div><div class="brow"><span class="bnm">Renan Santos<small>Missão</small></span><div class="btrack"><span class="bfill" style="width:7.5%;background:#8a8a96"></span></div><span class="bpct">3%</span></div><div class="brow"><span class="bnm">Romeu Zema<small>Novo</small></span><div class="btrack"><span class="bfill" style="width:5.0%;background:#8a8a96"></span></div><span class="bpct">2%</span></div><div class="brow"><span class="bnm">Outros</span><div class="btrack"><span class="bfill" style="width:10.0%;background:#8a8a96"></span></div><span class="bpct">4%</span></div><div class="brow sec"><span class="bnm">Branco/Nulo</span><div class="btrack"><span class="bfill" style="width:20.0%;background:#cdd2dc"></span></div><span class="bpct">8%</span></div><div class="brow sec"><span class="bnm">Indecisos</span><div class="btrack"><span class="bfill" style="width:27.5%;background:#82828f"></span></div><span class="bpct">11%</span></div></div></div>
-        <div class="pfoot"><span id="pollFootL">Fonte: <strong>Genial/Quaest</strong> · 2.004 entrevistas · margem ± 2 p.p.</span><span id="pollFootR">Campo: 10 a 13 de julho de 2026 · Reg. BR-07181/2026</span></div>
+        <div class="phead2"><div class="pscn" id="scnTitle">Intenção de voto &middot; 1º turno</div><div class="pmeta" id="scnMeta"></div></div>
+        <div id="pollView"></div>
+        <div class="pfoot"><span id="pollFootL">Fonte: <strong>Genial/Quaest</strong> &middot; intenção de voto (%)</span><span id="pollFootR"></span></div>
       </div>
-      <script type="application/json" id="pollData">{"institutos": [{"id": "quaest", "nome": "Genial/Quaest", "campo": "10–13 jul", "campoFull": "10 a 13 de julho de 2026", "amostra": "2.004 entrevistas", "margem": "± 2 p.p.", "registro": "BR-07181/2026", "primeiro": [{"nome": "Lula", "sigla": "PT", "pct": 40, "tipo": "lula"}, {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 28, "tipo": "flavio"}, {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 4, "tipo": "neutro"}, {"nome": "Renan Santos", "sigla": "Missão", "pct": 3, "tipo": "neutro"}, {"nome": "Romeu Zema", "sigla": "Novo", "pct": 2, "tipo": "neutro"}, {"nome": "Outros", "sigla": "", "pct": 4, "tipo": "neutro"}, {"nome": "Branco/Nulo", "sigla": "", "pct": 8, "tipo": "branco", "sec": true}, {"nome": "Indecisos", "sigla": "", "pct": 11, "tipo": "indeciso", "sec": true}], "segundo": {"tipo": "serie", "nota": "Lula × Flávio Bolsonaro", "meses": ["Ago/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"], "series": [{"nome": "Lula (PT)", "tipo": "lula", "vals": [48, 46, 45, 43, 41, 40, 42, 44, 45]}, {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [32, 36, 38, 38, 41, 42, 41, 38, 37]}, {"nome": "Branco/Nulo", "tipo": "branco", "vals": [17, 15, 15, 17, 16, 16, 14, 14, 14]}, {"nome": "Indecisos", "tipo": "indeciso", "vals": [3, 3, 2, 2, 2, 2, 3, 4, 4]}]}, "rejeicao": [{"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 57, "tipo": "flavio"}, {"nome": "Lula", "sigla": "PT", "pct": 50, "tipo": "lula"}, {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 34, "tipo": "neutro"}, {"nome": "Romeu Zema", "sigla": "Novo", "pct": 31, "tipo": "neutro"}, {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 27, "tipo": "neutro"}, {"nome": "Joaquim Barbosa", "sigla": "DC", "pct": 18, "tipo": "neutro"}, {"nome": "Renan Santos", "sigla": "Missão", "pct": 17, "tipo": "neutro"}, {"nome": "Augusto Cury", "sigla": "Avante", "pct": 16, "tipo": "neutro"}]}, {"id": "nexus", "nome": "BTG/Nexus", "campo": "24–26 jul", "campoFull": "24 a 26 de julho de 2026", "amostra": "2.004 entrevistas", "margem": "± 2 p.p.", "registro": "BR-01489/2026", "primeiro": [{"nome": "Lula", "sigla": "PT", "pct": 42, "tipo": "lula"}, {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 33, "tipo": "flavio"}, {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 6, "tipo": "neutro"}, {"nome": "Renan Santos", "sigla": "Missão", "pct": 5, "tipo": "neutro"}, {"nome": "Romeu Zema", "sigla": "Novo", "pct": 3, "tipo": "neutro"}, {"nome": "Augusto Cury", "sigla": "Avante", "pct": 2, "tipo": "neutro"}, {"nome": "Outros", "sigla": "", "pct": 1, "tipo": "neutro"}, {"nome": "Branco/Nulo", "sigla": "", "pct": 6, "tipo": "branco", "sec": true}, {"nome": "Indecisos", "sigla": "", "pct": 2, "tipo": "indeciso", "sec": true}], "segundo": {"tipo": "confronto", "nota": "Confronto direto", "main": [{"nome": "Lula", "sigla": "PT", "pct": 47, "tipo": "lula"}, {"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 43, "tipo": "flavio"}], "cenarios": [{"a": "Lula", "b": "Ronaldo Caiado", "pa": 45, "pb": 43}, {"a": "Lula", "b": "Romeu Zema", "pa": 46, "pb": 42}, {"a": "Lula", "b": "Renan Santos", "pa": 47, "pb": 39}]}, "rejeicao": [{"nome": "Flávio Bolsonaro", "sigla": "PL", "pct": 50, "tipo": "flavio"}, {"nome": "Lula", "sigla": "PT", "pct": 48, "tipo": "lula"}, {"nome": "Cabo Daciolo", "sigla": "Mobiliza", "pct": 38, "tipo": "neutro"}, {"nome": "Romeu Zema", "sigla": "Novo", "pct": 32, "tipo": "neutro"}, {"nome": "Ronaldo Caiado", "sigla": "PSD", "pct": 29, "tipo": "neutro"}, {"nome": "Renan Santos", "sigla": "Missão", "pct": 27, "tipo": "neutro"}, {"nome": "Augusto Cury", "sigla": "Avante", "pct": 26, "tipo": "neutro"}]}]}</script>
+      <script type="application/json" id="pollData">{"institutos": [{"id": "quaest", "nome": "Genial/Quaest", "campo": "jul/26", "primeiro": {"nota": "1º turno", "meses": ["Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"], "series": [{"nome": "Lula (PT)", "tipo": "lula", "vals": [38, 39, 37, 39, 39, 40]}, {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [30, 32, 32, 33, 29, 28]}, {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [4, 5, 5, 5, 5, 4]}]}, "segundo": {"nota": "Lula × Flávio Bolsonaro", "meses": ["Ago/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26"], "series": [{"nome": "Lula (PT)", "tipo": "lula", "vals": [48, 46, 45, 43, 41, 40, 42, 44, 45]}, {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [32, 36, 38, 38, 41, 42, 41, 38, 37]}, {"nome": "Branco/Nulo", "tipo": "branco", "vals": [17, 15, 15, 17, 16, 16, 14, 14, 14]}, {"nome": "Indecisos", "tipo": "indeciso", "vals": [3, 3, 2, 2, 2, 2, 3, 4, 4]}]}, "rejeicao": {"nota": "não votaria de jeito nenhum", "meses": ["Abr/26", "Mai/26", "Jun/26", "Jul/26"], "series": [{"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [52, 54, 56, 57]}, {"nome": "Lula", "tipo": "lula", "vals": [55, 53, 53, 50]}, {"nome": "Ronaldo Caiado", "tipo": "caiado", "vals": [32, 32, 32, 34]}, {"nome": "Romeu Zema", "tipo": "zema", "vals": [31, 27, 29, 31]}]}}, {"id": "nexus", "nome": "BTG/Nexus", "campo": "ago/26", "primeiro": {"nota": "1º turno", "meses": ["Jun/26", "Jul/26", "Ago/26"], "series": [{"nome": "Lula (PT)", "tipo": "lula", "vals": [42, 42, 40]}, {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [34, 33, 35]}, {"nome": "Ronaldo Caiado (PSD)", "tipo": "caiado", "vals": [5, 6, 5]}]}, "segundo": {"nota": "Lula × Flávio Bolsonaro", "meses": ["Mar/26", "Abr/26", "Mai/26", "Jun/26", "Jul/26", "Ago/26"], "series": [{"nome": "Lula (PT)", "tipo": "lula", "vals": [46, 46, 47, 47, 47, 47]}, {"nome": "Flávio Bolsonaro (PL)", "tipo": "flavio", "vals": [46, 45, 43, 44, 43, 44]}]}, "rejeicao": {"nota": "não votaria de jeito nenhum", "meses": ["Abr/26", "Mai/26", "Jul/26", "Ago/26"], "series": [{"nome": "Flávio Bolsonaro", "tipo": "flavio", "vals": [48, 50, 50, 50]}, {"nome": "Lula", "tipo": "lula", "vals": [48, 47, 48, 48]}]}}]}</script>
       <div class="sec-title">Principais Notícias</div>
 
       <div class="ncol">
         <h3>Mercado &amp; Economia</h3>
-        <a class="item" href="https://forbes.com.br/forbes-money/2026/07/ibovespa-alta-atraso-b3-dolar-estavel-petroleo-ira/" target="_blank" rel="noopener">
+        <a class="item" href="https://agenciabrasil.ebc.com.br/economia/noticia/2026-08/expectativa-do-mercado-para-inflacao-de-2026-cai-para-502" target="_blank" rel="noopener">
           <div class="it-tag mkt">Mercado</div>
-          <div class="it-title">Santander Brasil dispara 13,35% com anúncio de OPA</div>
-          <div class="it-sum">Units do Santander lideraram os ganhos do Ibovespa nesta sexta-feira após a matriz espanhola anunciar intenção de lançar oferta pública para aquisição das ações em circulação de sua operação brasileira. O movimento encerra especulações sobre eventual transação envolvendo a participação remanescente no mercado.</div>
-          <div class="it-src">Forbes Money <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://investalk.bb.com.br/noticias/mercado/mercado-agora-31-07-26" target="_blank" rel="noopener">
-          <div class="it-tag mkt">Mercado</div>
-          <div class="it-title">Petrobras sustenta Ibovespa com altas de 1,01% e 1,35%</div>
-          <div class="it-sum">Ações da Petrobras deram sustentação ao índice desde a abertura do pregão. Além do avanço do petróleo, motivado por tensões no Oriente Médio e redução de fluxo no Estreito de Ormuz, os papéis se beneficiaram de otimismo em torno da divulgação de produção do 2º trimestre.</div>
-          <div class="it-src">B3/Invest.talk <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://agenciabrasil.ebc.com.br/economia/noticia/2026-07/mercado-reduz-para-512-expectativa-de-inflacao-em-2026" target="_blank" rel="noopener">
-          <div class="it-tag mkt">Economia</div>
-          <div class="it-title">Mercado reduz expectativa de inflação para 5,16% em 2026</div>
-          <div class="it-sum">Segundo o Boletim Focus, o mercado reduziu pela quarta semana consecutiva as projeções de inflação para 2026, refletindo sinais de desaceleração de preços. A taxa Selic permanece em 14% de expectativa para o fim do ano, com próxima reunião do Copom prevista para 4-5 de agosto.</div>
+          <div class="it-title">Copom reduz Selic para 14% a.a.; mercado projeta IPCA de 5,02% para 2026</div>
+          <div class="it-sum">O Banco Central reduziu a Selic em 0,25 ponto percentual na última reunião do Copom, marcando a quarta redução consecutiva. Com a decisão, as expectativas do mercado para a inflação em 2026 caíram para 5,02%, conforme o Boletim Focus divulgado nesta segunda (10), refletindo menor pressão inflacionária na economia brasileira.</div>
           <div class="it-src">Agência Brasil <span class="arrow">↗</span></div>
         </a>
 
-        <a class="item" href="https://investalk.bb.com.br/noticias/mercado/mercado-agora-31-07-26" target="_blank" rel="noopener">
+        <a class="item" href="https://divulgardinheiro.com/dolar-encerra-em-queda-de-046-a-r-50836-apos-dados-fracos-do-mercado-de-trabalho-nos-eua/" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Economia</div>
+          <div class="it-title">Dólar fecha em queda após dados fracos de emprego nos EUA</div>
+          <div class="it-sum">O dólar comercial encerrou sexta-feira em baixa de 0,46%, cotado a R$ 5,0836, reação a um relatório de payroll americano que mostrou fechamento de 23 mil postos de trabalho em julho, bem abaixo das expectativas de mercado de 83 mil novas vagas.</div>
+          <div class="it-src">DivulgarDinheiro <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://diariofiscal.com.br/iframe-noticia/0826.htm" target="_blank" rel="noopener">
+          <div class="it-tag mkt">Economia</div>
+          <div class="it-title">Petróleo Brent sobe 4% com incertezas no Estreito de Ormuz</div>
+          <div class="it-sum">Os preços do petróleo Brent dispararam para US$ 83,50 por barril, pressionados pelo recrudescimento das tensões geopolíticas no Oriente Médio, com bloqueio do Estreito de Ormuz restringindo 20% do fluxo diário global de energia, elevando preocupações com inflação global.</div>
+          <div class="it-src">Diário Fiscal <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.cnbc.com/2026/08/06/stock-market-today-live-updates.html" target="_blank" rel="noopener">
           <div class="it-tag mkt">Mercado</div>
-          <div class="it-title">Apple decepciona em guidance e cai 7% no pós-lucros</div>
-          <div class="it-sum">A Apple registrou sua maior queda pós-lucros desde janeiro de 2013 após divulgar guidance fraco para o trimestre em curso. A queda de 7% contrastou com a disparada de 15% da Amazon, que entregou resultados superiores às expectativas, refletindo otimismo com investimentos em IA.</div>
-          <div class="it-src">B3/Invest.talk <span class="arrow">↗</span></div>
+          <div class="it-title">Wall Street fecha misto: S&amp;P 500 bate recorde em sessão volátil</div>
+          <div class="it-sum">O S&amp;P 500 registrou novo recorde de fechamento a 7.757,64 pontos, avançando 0,62%, enquanto o Nasdaq ganhou força com alta de 1,3% para 26.690,62 pontos. O Dow Jones subiu moderadamente 0,28% a 54.036,93, em movimento que reflete esperança de pausa nos aumentos de juros americanos.</div>
+          <div class="it-src">CNBC <span class="arrow">↗</span></div>
         </a>
       </div>
 
       <div class="ncol">
         <h3>Política &amp; Internacional</h3>
-        <a class="item" href="https://cnnespanol.cnn.com/2026/07/27/eeuu/analisis-encrucijada-iran-trump-opciones-trax" target="_blank" rel="noopener">
-          <div class="it-tag pol">Internacional</div>
-          <div class="it-title">Trump enfrenta &#x27;encrucijada&#x27; em Irã com opções cada vez mais limitadas</div>
-          <div class="it-sum">Após cinco meses de guerra com Irã, o presidente Donald Trump chegou a outro ponto crítico de decisão, com opções militares e diplomáticas cada vez mais restritas e custos crescentes. Conflito continua pressionando preços de petróleo globalmente e afetando a confiança de investidores internacionais.</div>
-          <div class="it-src">CNN Español <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://cnnespanol.cnn.com/2026/07/27/eeuu/analisis-encrucijada-iran-trump-opciones-trax" target="_blank" rel="noopener">
-          <div class="it-tag pol">Internacional</div>
-          <div class="it-title">Bloqueio econômico aos portos iranianos é opção de Trump</div>
-          <div class="it-sum">A administração Trump considera estender sanções econômicas aos navios e portos iranianos como estratégia para cortar financiamento do governo iraniano e receitas da Guarda Revolucionária Islâmica. Medida visa complementar operações militares em curso no Oriente Médio.</div>
-          <div class="it-src">CNN Español <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://www.pbs.org/weta/washingtonweek/episodes-and-videos" target="_blank" rel="noopener">
-          <div class="it-tag pol">Internacional</div>
-          <div class="it-title">Oposição dentro da MAGA cresce contra continuidade da guerra no Irã</div>
-          <div class="it-sum">Críticas à guerra com Irã expandem-se para dentro da base eleitoral de Trump, além de aliados europeus e líderes democratas. Pesquisas indicam deterioração na aprovação presidencial, com guerra e altos preços de combustível impactando negivamente a imagem do presidente.</div>
-          <div class="it-src">PBS Washington Week <span class="arrow">↗</span></div>
-        </a>
-
-        <a class="item" href="https://esquinasucupira.substack.com/p/trump-balanca-mercados-e-abre-oficialmente" target="_blank" rel="noopener">
+        <a class="item" href="https://www.moneytimes.com.br/tempo-real-ibovespa-hoje-mercado-ao-vivo-03-08-2026-jals-lils-apsa/" target="_blank" rel="noopener">
           <div class="it-tag pol">Política</div>
-          <div class="it-title">Eleições 2026 no Brasil: debate sobre soberania se intensifica</div>
-          <div class="it-sum">Discussão sobre soberania econômica abre oficialmente a campanha eleitoral de 2026 no Brasil. Contexto inclui incertezas sobre política econômica global, tensões geopolíticas e impactos nas tarifas comerciais, particularmente na relação EUA-Brasil.</div>
-          <div class="it-src">Esquina Sucupira <span class="arrow">↗</span></div>
+          <div class="it-title">Eleições 2026: Flávio Bolsonaro avança em pesquisa BTG/Nexus contra Lula</div>
+          <div class="it-sum">Em nova pesquisa de intenção de voto da BTG/Nexus, o senador Flávio Bolsonaro ganhou um ponto percentual em eventual segundo turno contra o presidente Luiz Inácio Lula, que recuou um ponto. A eleição presidencial de 2026 continua com polarização e incertezas sobre os principais candidatos.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://www.moneytimes.com.br/tempo-real-ibovespa-hoje-mercado-ao-vivo-03-08-2026-jals-lils-apsa/" target="_blank" rel="noopener">
+          <div class="it-tag pol">Política</div>
+          <div class="it-title">Tereza Cristina volta a defender candidatura para vice ao lado de Flávio Bolsonaro</div>
+          <div class="it-sum">A senadora Tereza Cristina (PP-MS) reafirmou interesse em compor chapa como vice-presidencial ao lado do senador Flávio Bolsonaro (PL-RJ), apesar de seu partido ter vetado tal possibilidade semanas antes e declarado neutralidade na corrida presidencial.</div>
+          <div class="it-src">Money Times <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://pt.tradingeconomics.com/commodity/brent-crude-oil" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional</div>
+          <div class="it-title">Oriente Médio: EUA intensifica ataques contra alvos iranianos</div>
+          <div class="it-sum">O Secretário de Defesa dos EUA anunciou a maior onda de ataques até o momento contra alvos iranianos, provocando escalada significativa no conflito regional. A ação efetivamente paralisou tráfego marítimo comercial padrão e forçou produtores do Golfo a reduzir produção ante capacidade crítica de armazenamento.</div>
+          <div class="it-src">Trading Economics <span class="arrow">↗</span></div>
+        </a>
+
+        <a class="item" href="https://pt.tradingeconomics.com/commodity/brent-crude-oil" target="_blank" rel="noopener">
+          <div class="it-tag pol">Internacional</div>
+          <div class="it-title">Ceasefire temporário entre Israel e Irã continua frágil; mercados em alerta</div>
+          <div class="it-sum">Apesar de um cessar-fogo temporário anunciado entre Israel e Irã, a situação segue instável com novas hostilidades persistindo. O bloqueio do Estreito de Ormuz mantém incerteza sobre fluxos de energia global, pressionando commodities e afetando expectativas de inflação em mercados emergentes.</div>
+          <div class="it-src">Trading Economics <span class="arrow">↗</span></div>
         </a>
       </div>
     </main>
@@ -343,29 +345,29 @@
     <aside class="side">
       <div class="sec-title">Painel de Mercado</div>
       <div class="macro">
-        <div class="mbox hl clk" id="cardSelic"><div class="ml">Selic (hoje)</div><div class="mv">14,25% a.a.</div><div class="ms">Taxa básica de juros</div><div class="tap">↳ toque: decisões do Copom</div></div>
-        <div class="mbox clk" id="cardIpca"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">+5,16%</div><div class="ms">junho: +0,16%</div><div class="tap">↳ toque: últimos 12 meses</div></div>
+        <div class="mbox hl clk" id="cardSelic"><div class="ml">Selic (hoje)</div><div class="mv">14,00% a.a.</div><div class="ms">Taxa básica de juros</div><div class="tap">↳ toque: decisões do Copom</div></div>
+        <div class="mbox clk" id="cardIpca"><div class="ml">IPCA<span class="mu"> · 12 meses</span></div><div class="mv">+4,64%</div><div class="ms">Junho: +0,16%</div><div class="tap">↳ toque: últimos 12 meses</div></div>
       </div>
 <!--MERCADO:START-->
       <div class="grid-mini">
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Ibovespa</div><div class="val">177.999</div><div class="chg up">▲ +0,47%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,0704</div><div class="chg up">▲ +0,18%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Brent (out)</div><div class="val">US$ 87,93</div><div class="chg up">▲ +1,21%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.489,72</div><div class="chg up">▲ +0,70%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">25.373,85</div><div class="chg up">▲ +1,00%</div></div>
-        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">52.485,03</div><div class="chg up">▲ +0,53%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Ibovespa</div><div class="val">175.546,36</div><div class="chg down">▼ −1,23%</div></div>
+        <div class="cmini"><div class="bar bar-down"></div><div class="lbl">Dólar (USD/BRL)</div><div class="val">R$ 5,0836</div><div class="chg down">▼ −0,46%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Brent (set)</div><div class="val">US$ 83,50</div><div class="chg up">▲ +3,95%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">S&amp;P 500</div><div class="val">7.757,64</div><div class="chg up">▲ +0,62%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Nasdaq</div><div class="val">26.690,62</div><div class="chg up">▲ +1,30%</div></div>
+        <div class="cmini"><div class="bar bar-up"></div><div class="lbl">Dow Jones</div><div class="val">54.036,93</div><div class="chg up">▲ +0,28%</div></div>
       </div>
-      <div class="upd-stamp">Atualizado às 05:45</div>
+      <div class="upd-stamp">Atualizado às 11:34</div>
 <!--MERCADO:END-->
 
 <!--FOCUS:START-->
-      <div class="sec-title sub">Boletim Focus <span class="foc-upd">seg 03/08</span></div>
+      <div class="sec-title sub">Boletim Focus <span class="foc-upd">seg 10/08</span></div>
       <div class="focus">
         <div class="foc-head"><span>Projeção do mercado</span><span>2026</span><span>2027</span><span>2028</span></div>
-        <div class="foc-row"><span class="foc-lbl">IPCA <em>inflação</em></span><span>5,16%<i class="dn">▼</i></span><span>4,00%<i class="eq">■</i></span><span>3,60%<i class="eq">■</i></span></div>
-        <div class="foc-row"><span class="foc-lbl">PIB <em>crescimento</em></span><span>2,20%<i class="up">▲</i></span><span>1,90%<i class="eq">■</i></span><span>2,00%<i class="eq">■</i></span></div>
-        <div class="foc-row"><span class="foc-lbl">Selic <em>fim do ano</em></span><span>14,00%<i class="eq">■</i></span><span>11,50%<i class="dn">▼</i></span><span>10,50%<i class="dn">▼</i></span></div>
-        <div class="foc-row"><span class="foc-lbl">Câmbio <em>R$/US$</em></span><span>5,40<i class="up">▲</i></span><span>5,50<i class="eq">■</i></span><span>5,55<i class="eq">■</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">IPCA <em>inflação</em></span><span>5,02%<i class="dn">▼</i></span><span>4,20%<i class="up">▲</i></span><span>3,80%<i class="up">▲</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">PIB <em>crescimento</em></span><span>1,98%<i class="dn">▼</i></span><span>1,52%<i class="dn">▼</i></span><span>2,00%<i class="eq">■</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">Selic <em>fim do ano</em></span><span>13,75%<i class="dn">▼</i></span><span>12,00%<i class="up">▲</i></span><span>10,50%<i class="eq">■</i></span></div>
+        <div class="foc-row"><span class="foc-lbl">Câmbio <em>R$/US$</em></span><span>5,20<i class="dn">▼</i></span><span>5,28<i class="dn">▼</i></span><span>5,30<i class="dn">▼</i></span></div>
         <div class="foc-foot">▲▼ = variação vs. semana anterior · fonte: Banco Central.</div>
       </div>
 <!--FOCUS:END-->
@@ -374,28 +376,27 @@
 <!--DESTAQUES:START-->
       <div class="panel gain">
         <h4>▲ Maiores Altas</h4>
-        <div class="row"><div><div class="tk">SANB11</div><div class="nm">Santander Brasil Unit</div></div><div class="rt"><div class="pc up">+13,35%</div><div class="prc">R$ 28,62</div></div></div>
-        <div class="row"><div><div class="tk">AZZA3</div><div class="nm">Azul</div></div><div class="rt"><div class="pc up">+3,53%</div><div class="prc">R$ 16,42</div></div></div>
-        <div class="row"><div><div class="tk">HAPV3</div><div class="nm">Hapvida</div></div><div class="rt"><div class="pc up">+2,45%</div><div class="prc">R$ 11,28</div></div></div>
+        <div class="row"><div><div class="tk">PETR4</div><div class="nm">Petrobras ON</div></div><div class="rt"><div class="pc up">+1,47%</div><div class="prc">R$ 41,47</div></div></div>
+        <div class="row"><div><div class="tk">PETR3</div><div class="nm">Petrobras PN</div></div><div class="rt"><div class="pc up">+1,44%</div><div class="prc">R$ 46,35</div></div></div>
+        <div class="row"><div><div class="tk">VALE3</div><div class="nm">Vale ON</div></div><div class="rt"><div class="pc up">+0,52%</div><div class="prc">R$ 75,36</div></div></div>
       </div>
       <div class="panel loss">
         <h4>▼ Maiores Baixas</h4>
-        <div class="row"><div><div class="tk">BRAV3</div><div class="nm">Brava Energia</div></div><div class="rt"><div class="pc down">−2,89%</div><div class="prc">R$ 19,80</div></div></div>
-        <div class="row"><div><div class="tk">VAMO3</div><div class="nm">Vamos</div></div><div class="rt"><div class="pc down">−2,34%</div><div class="prc">R$ 3,34</div></div></div>
-        <div class="row"><div><div class="tk">MBRF3</div><div class="nm">Marfrig</div></div><div class="rt"><div class="pc down">−2,34%</div><div class="prc">R$ 17,54</div></div></div>
-        <div class="pnote">Pregão com sessão reduzida em 2h30 de atraso técnico na B3, mas encerrou em alta com suporte de commodities e setor financeiro.</div>
+        <div class="row"><div><div class="tk">MBRF4</div><div class="nm">Minerva ON</div></div><div class="rt"><div class="pc down">−1,85%</div><div class="prc">R$ 16,46</div></div></div>
+        <div class="row"><div><div class="tk">BBDC4</div><div class="nm">Bradesco PN</div></div><div class="rt"><div class="pc down">−1,21%</div><div class="prc">R$ 17,10</div></div></div>
+        <div class="row"><div><div class="tk">ITUB4</div><div class="nm">Itaú PN</div></div><div class="rt"><div class="pc down">−0,71%</div><div class="prc">R$ 40,46</div></div></div>
+        <div class="pnote">Pregão de queda generalizada, com perdas em blue chips; petróleo em alta nas geopolíticas pesa na avaliação de investidores.</div>
       </div>
-
-      <div class="upd-stamp">Atualizado às 05:45</div>
+      <div class="upd-stamp">Atualizado às 11:34</div>
 <!--DESTAQUES:END-->
+
       <div class="sec-title sub">Agenda da Semana</div>
 <!--AGENDA:START-->
       <div class="agenda">
-        <div class="ar"><span class="day">TER 04</span><div class="ev"><b>Boletim Focus</b> (Banco Central) – Expectativas de inflação e juros para o restante do ano</div></div>
-        <div class="ar hl"><span class="day">TER-QUA 04-05</span><div class="ev"><b>Reunião Copom (280ª)</b> – Decisão sobre Selic; mercado precifica possível corte de 0,25pp ou pausa</div></div>
-        <div class="ar"><span class="day">QUA 05</span><div class="ev">Produção Industrial brasileira (IBGE)</div></div>
-        <div class="ar"><span class="day">RADAR</span><div class="ev"><b>Petróleo e Oriente Médio:</b> Sem perspectiva de acordo, conflito EUA-Irã mantém Brent elevado; Estreito de Ormuz continua em risco.</div></div>
-        <div class="ar"><span class="day">RADAR</span><div class="ev"><b>Confiança:</b> Índice de Confiança da Indústria caiu em março; expectativas permanecem negativas em contexto de juros altos.</div></div>
+        <div class="ar"><span class="day">SEG 13</span><div class="ev"><b>Boletim Focus</b> (BC) – Divulgação das novas projeções</div></div>
+        <div class="ar"><span class="day">TER 14</span><div class="ev"><b>IBC-Br</b> (Banco Central) – Atividade econômica de junho</div></div>
+        <div class="ar"><span class="day">QUA 15</span><div class="ev"><b>IPCA-15</b> (IBGE) – Inflação de agosto (prévia)</div></div>
+        <div class="ar hl"><span class="day">RADAR</span><div class="ev"><b>Próximo Copom (16-17/09):</b> Mercado precifica novo corte de juros; expectativas dependem de IPCA e Focus.</div></div>
       </div>
 <!--AGENDA:END-->
     </aside>
@@ -404,7 +405,7 @@
 
   <footer>
     <p class="name">Gabriel Barbosa · Assessoria de Investimentos</p>
-    <p>Morning Call atualizado em 3 de agosto de 2026. Cotações e variações referentes ao fechamento do pregão anterior.</p>
+    <p>Morning Call atualizado em 10 de agosto de 2026. Cotações e variações referentes ao fechamento do pregão anterior.</p>
     <p>Este material tem caráter meramente informativo e educacional, elaborado a partir de fontes públicas. <strong>Não constitui recomendação de investimento</strong>, oferta ou solicitação de compra ou venda de qualquer ativo. Rentabilidade passada não é garantia de resultados futuros. Gerado automaticamente e pode conter imprecisões.</p>
   </footer>
 
@@ -490,18 +491,17 @@
 })();
 </script>
 
-
 <div class="dov" id="copomOv" aria-hidden="true">
   <div class="dmodal" role="dialog" aria-label="Histórico do Copom">
     <button class="dclose" data-close aria-label="Fechar">&times;</button>
     <div class="dhead"><div class="dtag">Selic &middot; Copom</div><h3>Últimas decisões</h3></div>
-    <div class="dnext"><span>Próxima reunião</span><b>04–05 ago 2026</b></div>
+    <div class="dnext"><span>Próxima reunião</span><b>15-16 set 2026</b></div>
     <div class="dtable">
       <div class="dth"><span>Reunião</span><span>Decisão</span><span>Selic</span></div>
+      <div class="dtr"><span>04-05 ago/26</span><span class="dn">-25 pb</span><span>14,00%</span></div>
+      <div class="dtr"><span>04–05 ago/26</span><span class="dn">−25 pb</span><span>14,00%</span></div>
       <div class="dtr"><span>16–17 jun/26</span><span class="dn">−25 pb</span><span>14,25%</span></div>
       <div class="dtr"><span>28–29 abr/26</span><span class="dn">−25 pb</span><span>14,50%</span></div>
-      <div class="dtr"><span>17–18 mar/26</span><span class="dn">−25 pb</span><span>14,75%</span></div>
-      <div class="dtr"><span>27–28 jan/26</span><span class="hold">Mantida</span><span>15,00%</span></div>
     </div>
     <div class="dfoot">pb = pontos-base. Fonte: Banco Central (Copom).</div>
   </div>
@@ -543,68 +543,40 @@
   var el=document.getElementById('pollData'); if(!el) return;
   var DADOS; try{ DADOS=JSON.parse(el.textContent); }catch(e){ return; }
   var INST=DADOS.institutos||[]; if(!INST.length) return;
-  var COR={lula:"#e0564f",flavio:"#4a90e2",neutro:"#8a8a96",branco:"#cdd2dc",indeciso:"#82828f"};
+  var COR={lula:"#e0564f",flavio:"#4a90e2",caiado:"#d6a53c",zema:"#9a7fb0",renan:"#57a785",daciolo:"#c98bbe",branco:"#cdd2dc",indeciso:"#82828f",neutro:"#8a8a96"};
   var st={inst:0,view:"primeiro"};
-  function bars(rows,dmax){
-    var h='<div class="bars">';
-    rows.forEach(function(r){
-      var w=Math.max(1.5,r.pct/dmax*100), c=COR[r.tipo]||COR.neutro;
-      var sig=r.sigla?'<small>'+r.sigla+'</small>':'';
-      h+='<div class="brow'+(r.sec?' sec':'')+'"><span class="bnm">'+r.nome+sig+'</span>'
-        +'<div class="btrack"><span class="bfill" style="width:'+w+'%;background:'+c+'"></span></div>'
-        +'<span class="bpct">'+r.pct+'%</span></div>';
-    });
-    return h+'</div>';
-  }
-  function confronto(seg){
-    var a=seg.main[0], b=seg.main[1];
-    var h='<div class="conf"><div class="conf-main">';
-    [a,b].forEach(function(c){
-      h+='<div class="conf-box"><div class="cn"><i style="background:'+COR[c.tipo]+'"></i>'+c.nome
-        +' <small style="color:var(--muted);font-weight:500">'+c.sigla+'</small></div>'
-        +'<div class="cp" style="color:'+COR[c.tipo]+'">'+c.pct+'%</div></div>';
-    });
-    h+='</div>';
-    if(seg.cenarios&&seg.cenarios.length){
-      h+='<div class="conf-sub">Outros confrontos (Lula &times;)</div><div class="bars">';
-      seg.cenarios.forEach(function(c){
-        var w=c.pb/60*100;
-        h+='<div class="brow cmp"><span class="bnm">'+c.a+' &times; '+c.b+'</span>'
-          +'<div class="btrack"><span class="bfill" style="width:'+w+'%;background:'+COR.neutro+'"></span></div>'
-          +'<span class="bpct">'+c.pa+'\u2013'+c.pb+'</span></div>';
-      });
-      h+='</div>';
-    }
-    return h+'</div>';
-  }
   function line(seg){
-    var x0=46,x1=760,mT=26,mB=372,yMax=52,n=seg.meses.length;
-    var xAt=function(i){return x0+i*(x1-x0)/(n-1);};
+    var x0=46,x1=740,mT=24,mB=360,n=seg.meses.length;
+    var mx=0; seg.series.forEach(function(se){se.vals.forEach(function(v){if(v>mx)mx=v;});});
+    var yMax=Math.max(10,Math.ceil((mx+4)/10)*10);
+    var xAt=function(i){return n===1?(x0+x1)/2:x0+i*(x1-x0)/(n-1);};
     var yAt=function(v){return mB-(v/yMax)*(mB-mT);};
     var s="";
-    for(var g=0;g<=50;g+=10){var yy=yAt(g);
+    for(var g=0;g<=yMax;g+=10){var yy=yAt(g);
       s+='<line x1="'+x0+'" y1="'+yy+'" x2="'+x1+'" y2="'+yy+'" stroke="rgba(255,255,255,.06)"/>';
       s+='<text class="lbl-y" x="'+(x0-10)+'" y="'+(yy+3.5)+'" text-anchor="end">'+g+'</text>';}
     seg.meses.forEach(function(m,i){s+='<text class="lbl-x" x="'+xAt(i)+'" y="'+(mB+22)+'" text-anchor="middle">'+m+'</text>';});
+    seg.series.forEach(function(se){ if(n>1){var pts=se.vals.map(function(v,i){return xAt(i)+','+yAt(v);}).join(' ');
+      s+='<polyline points="'+pts+'" fill="none" stroke="'+COR[se.tipo]+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';}});
+    var lu=null,fl=null; seg.series.forEach(function(se){if(se.tipo==='lula')lu=se; if(se.tipo==='flavio')fl=se;});
     seg.series.forEach(function(se){
-      var pts=se.vals.map(function(v,i){return xAt(i)+','+yAt(v);}).join(' ');
-      s+='<polyline points="'+pts+'" fill="none" stroke="'+COR[se.tipo]+'" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
-    });
-    var lu=seg.series[0].vals, fl=seg.series[1].vals;
-    var off=function(si,i,v){return si===0?(v>=fl[i]?-12:16):si===1?(v>lu[i]?-12:16):(si===2?-12:16);};
-    seg.series.forEach(function(se,si){
+      var proto=(se.tipo==='lula'||se.tipo==='flavio');
       se.vals.forEach(function(v,i){
         var x=xAt(i),y=yAt(v);
-        s+='<circle cx="'+x+'" cy="'+y+'" r="4.6" fill="#1c1c22"/><circle cx="'+x+'" cy="'+y+'" r="3.1" fill="'+COR[se.tipo]+'"/>';
-        s+='<text class="val" x="'+x+'" y="'+(y+off(si,i,v))+'" text-anchor="middle" fill="'+COR[se.tipo]+'">'+v+'</text>';
+        s+='<circle cx="'+x+'" cy="'+y+'" r="4.4" fill="#1c1c22"/><circle cx="'+x+'" cy="'+y+'" r="3" fill="'+COR[se.tipo]+'"/>';
+        var show=false, off=-11;
+        if(proto){ show=true;
+          if(se.tipo==='lula'&&fl) off=(v>=fl.vals[i]?-11:15);
+          else if(se.tipo==='flavio'&&lu) off=(v>lu.vals[i]?-11:15);
+        } else { show=(i===0||i===se.vals.length-1); off=-11; }
+        if(show) s+='<text class="val" x="'+x+'" y="'+(y+off)+'" text-anchor="middle" fill="'+COR[se.tipo]+'">'+v+'</text>';
       });
-      var ly=yAt(se.vals[n-1]);
-      s+='<circle cx="'+x1+'" cy="'+ly+'" r="3.1" fill="'+COR[se.tipo]+'"/><text class="endlbl" x="'+(x1+12)+'" y="'+(ly+4)+'" fill="'+COR[se.tipo]+'">'+se.nome+'</text>';
+      var li=se.vals.length-1, ex=(n===1?(x0+x1)/2:x1), ly=yAt(se.vals[li]);
+      s+='<text class="endlbl" x="'+(ex+10)+'" y="'+(ly+4)+'" fill="'+COR[se.tipo]+'">'+se.nome.replace(/ \(.*\)/,'')+'</text>';
     });
     var leg=seg.series.map(function(se){return '<span class="lg"><i style="background:'+COR[se.tipo]+'"></i>'+se.nome+'</span>';}).join('');
-    return '<svg viewBox="0 0 900 430" role="img" aria-label="Evolucao 2 turno">'+s+'</svg><div class="plegend">'+leg+'</div>';
+    return '<svg viewBox="0 0 900 400" role="img" aria-label="Evolucao da pesquisa">'+s+'</svg><div class="plegend">'+leg+'</div>';
   }
-  function mx(arr,f){return arr.reduce(function(a,r){return Math.max(a,r.pct);},f);}
   function render(){
     var it=INST[st.inst];
     document.getElementById('instNome').textContent=it.nome;
@@ -612,14 +584,11 @@
     document.querySelectorAll('#pollTabs .ptab').forEach(function(t){t.classList.toggle('on',t.getAttribute('data-v')===st.view);});
     var titles={primeiro:"Intenção de voto \u00b7 1º turno",segundo:"Intenção de voto \u00b7 2º turno",rejeicao:"Rejeição \u00b7 não votaria de jeito nenhum"};
     document.getElementById('scnTitle').textContent=titles[st.view];
-    var meta="",view="";
-    if(st.view==="primeiro"){meta="estimulado \u00b7 "+it.nome;view=bars(it.primeiro,mx(it.primeiro,40));}
-    else if(st.view==="segundo"){meta=(it.segundo.nota||"")+" \u00b7 "+it.nome;view=it.segundo.tipo==="serie"?line(it.segundo):confronto(it.segundo);}
-    else{meta=it.nome;view=bars(it.rejeicao,mx(it.rejeicao,60));}
-    document.getElementById('scnMeta').textContent=meta;
-    document.getElementById('pollView').innerHTML=view;
-    document.getElementById('pollFootL').innerHTML='Fonte: <strong style="color:var(--white)">'+it.nome+'</strong> \u00b7 '+it.amostra+' \u00b7 margem '+it.margem;
-    document.getElementById('pollFootR').textContent='Campo: '+it.campoFull+' \u00b7 Reg. '+it.registro;
+    var seg=it[st.view];
+    document.getElementById('scnMeta').textContent=(seg.nota||"")+" \u00b7 "+it.nome;
+    document.getElementById('pollView').innerHTML=line(seg);
+    document.getElementById('pollFootL').innerHTML='Fonte: <strong style="color:var(--white)">'+it.nome+'</strong> \u00b7 intenção de voto (%)';
+    document.getElementById('pollFootR').textContent=seg.meses.length+' pesquisa(s) \u00b7 série mensal';
     var menu=document.getElementById('instMenu');
     menu.innerHTML=INST.map(function(x,i){return '<div class="pinst-opt'+(i===st.inst?' on':'')+'" data-i="'+i+'">'+x.nome+'<small>'+x.campo+'</small></div>';}).join('');
     menu.querySelectorAll('.pinst-opt').forEach(function(o){o.addEventListener('click',function(){st.inst=+o.getAttribute('data-i');menu.classList.add('hidden');render();});});
