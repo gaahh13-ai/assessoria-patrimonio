@@ -811,7 +811,7 @@ def main():
     # mode == main: página completa
     # Rolagem: se saiu IPCA mensal novo ou nova decisão do Copom, adiciona e descarta o mais antigo.
     atualizar_ipca(client)
-    atualizar_copom(client)
+    # atualizar_copom(client)  # desativado: Copom agora e manual (modelo duplicava)
 
     out = montar_pagina(template, data, hora)
 
