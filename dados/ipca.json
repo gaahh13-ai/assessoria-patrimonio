@@ -1,17 +1,77 @@
 {
-  "acum12m": "+5,16%",
+  "acum12m": "+4,44%",
   "meses": [
-    {"mes": "jun/26", "no_mes": "+0,16%", "tipo": "up", "acum": "+5,16%"},
-    {"mes": "mai/26", "no_mes": "+0,26%", "tipo": "up", "acum": "+5,30%"},
-    {"mes": "abr/26", "no_mes": "+0,43%", "tipo": "up", "acum": "+5,53%"},
-    {"mes": "mar/26", "no_mes": "+0,56%", "tipo": "up", "acum": "+5,48%"},
-    {"mes": "fev/26", "no_mes": "+0,83%", "tipo": "up", "acum": "+5,06%"},
-    {"mes": "jan/26", "no_mes": "+0,42%", "tipo": "up", "acum": "+4,50%"},
-    {"mes": "dez/25", "no_mes": "+0,52%", "tipo": "up", "acum": "+4,62%"},
-    {"mes": "nov/25", "no_mes": "+0,39%", "tipo": "up", "acum": "+4,87%"},
-    {"mes": "out/25", "no_mes": "+0,28%", "tipo": "up", "acum": "+4,94%"},
-    {"mes": "set/25", "no_mes": "+0,44%", "tipo": "up", "acum": "+5,17%"},
-    {"mes": "ago/25", "no_mes": "-0,11%", "tipo": "dn", "acum": "+5,13%"},
-    {"mes": "jul/25", "no_mes": "+0,26%", "tipo": "up", "acum": "+5,23%"}
+    {
+      "mes": "jul/26",
+      "no_mes": "+0,07%",
+      "tipo": "up",
+      "acum": "+4,44%"
+    },
+    {
+      "mes": "jun/26",
+      "no_mes": "+0,16%",
+      "tipo": "up",
+      "acum": "+5,16%"
+    },
+    {
+      "mes": "mai/26",
+      "no_mes": "+0,26%",
+      "tipo": "up",
+      "acum": "+5,30%"
+    },
+    {
+      "mes": "abr/26",
+      "no_mes": "+0,43%",
+      "tipo": "up",
+      "acum": "+5,53%"
+    },
+    {
+      "mes": "mar/26",
+      "no_mes": "+0,56%",
+      "tipo": "up",
+      "acum": "+5,48%"
+    },
+    {
+      "mes": "fev/26",
+      "no_mes": "+0,83%",
+      "tipo": "up",
+      "acum": "+5,06%"
+    },
+    {
+      "mes": "jan/26",
+      "no_mes": "+0,42%",
+      "tipo": "up",
+      "acum": "+4,50%"
+    },
+    {
+      "mes": "dez/25",
+      "no_mes": "+0,52%",
+      "tipo": "up",
+      "acum": "+4,62%"
+    },
+    {
+      "mes": "nov/25",
+      "no_mes": "+0,39%",
+      "tipo": "up",
+      "acum": "+4,87%"
+    },
+    {
+      "mes": "out/25",
+      "no_mes": "+0,28%",
+      "tipo": "up",
+      "acum": "+4,94%"
+    },
+    {
+      "mes": "set/25",
+      "no_mes": "+0,44%",
+      "tipo": "up",
+      "acum": "+5,17%"
+    },
+    {
+      "mes": "ago/25",
+      "no_mes": "-0,11%",
+      "tipo": "dn",
+      "acum": "+5,13%"
+    }
   ]
 }
