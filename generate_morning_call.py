@@ -578,7 +578,9 @@ def atualizar_focus(client, hoje):
         linhas.append({"lbl": lbl, "sub": sub, "vals": vals})
     focus["anos"] = anos
     focus["linhas"] = linhas
-    focus["atualizado"] = "seg " + hoje.strftime("%d/%m")
+    from datetime import timedelta
+    _seg = hoje - timedelta(days=hoje.weekday())
+    focus["atualizado"] = "seg " + _seg.strftime("%d/%m")
     _save_dado("focus.json", focus)
     return focus
 
@@ -833,6 +835,12 @@ def main():
         atualizar_ipca(client)
     if _copom_vencido(hoje):
         atualizar_copom(client)
+
+    if hoje.weekday() == 1:  # terca: atualiza o Boletim Focus (BC divulga na segunda)
+        try:
+            atualizar_focus(client, hoje)
+        except Exception as e:
+            print(f"Focus (terca) nao atualizado: {str(e)[:140]}")
 
     out = montar_pagina(template, data, hora)
 
